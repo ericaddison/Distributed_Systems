@@ -3,11 +3,14 @@ package store;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
+	
+
 	
 	
 	
@@ -32,11 +35,11 @@ public class Client {
     // - out lets you send to the server
     // - in lets you receive from the server
     Socket sock = null;
-    PrintWriter out = null;
+    ObjectOutputStream out = null;
     BufferedReader in = null;
     try {
 		sock = new Socket(hostAddress, tcpPort);
-		out = new PrintWriter(sock.getOutputStream(), true);
+		out = new ObjectOutputStream(sock.getOutputStream());
 		in = new BufferedReader( new InputStreamReader(sock.getInputStream()));
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -57,6 +60,21 @@ public class Client {
       else if (tokens[0].equals("purchase")) {
         // TODO: send appropriate command to the server and display the
         // appropriate responses form the server
+    	  
+    	  // purchase <user-name> <product-name> <quantity>
+    	  if (tokens.length < 4) {
+    		  System.out.println("ERROR: Not enough tokens in purchase string");
+    		  System.out.println("ERROR: Expected format: purchase <user-name> <product-name> <quantity>");
+    	  }
+    	  String userName = tokens[1];
+    	  String productName = tokens[2];
+    	  int quantity = Integer.parseInt(tokens[3]);
+    	  System.out.println("Purchase order received: " + userName + " to purchase " + quantity + " " + productName + " items");
+      	  
+    	  ClientOrder order = new ClientOrder(userName, productName, quantity);
+    	  out.writeObject(order);
+    	
+    	  
       } else if (tokens[0].equals("cancel")) {
         // TODO: send appropriate command to the server and display the
         // appropriate responses form the server
