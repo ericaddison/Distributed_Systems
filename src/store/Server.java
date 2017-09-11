@@ -43,6 +43,10 @@ public class Server {
             Object receivedObject;
             while ((receivedObject = in.readObject()) != null) {
             	System.out.println("Server received: " + receivedObject.getClass());
+            	if(receivedObject.getClass()==ClientOrder.class){
+            		ClientOrder co = (ClientOrder)receivedObject;
+            		System.out.println("Purchase order received: " + co.userName + " to purchase " + co.quantity + " " + co.productName + " items");
+            	}
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Exception caught when trying to listen on port "
