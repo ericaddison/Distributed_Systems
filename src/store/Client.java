@@ -72,12 +72,26 @@ public class Client {
     	  System.out.println("Purchase order received: " + userName + " to purchase " + quantity + " " + productName + " items");
       	  
     	  ClientOrder order = new ClientOrder(userName, productName, quantity);
-    	  out.writeObject(order);
+    	  try {
+			out.writeObject(order);
+    	  } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+    	  }
     	
     	  
       } else if (tokens[0].equals("cancel")) {
         // TODO: send appropriate command to the server and display the
         // appropriate responses form the server
+    	  
+    	  if (tokens.length < 3) {
+    		  System.out.println("ERROR: Not enough tokens in cancel string");
+    		  System.out.println("ERROR: Expected format: cancel <order-id>");
+    	  }
+    	  String orderID = tokens[1];
+    	  
+    	  
+    	  
       } else if (tokens[0].equals("search")) {
         // TODO: send appropriate command to the server and display the
         // appropriate responses form the server
@@ -85,7 +99,6 @@ public class Client {
         // TODO: send appropriate command to the server and display the
         // appropriate responses form the server
       } else {
-    	out.println(cmd);
     	try {
 			System.out.println(in.readLine());
 		} catch (IOException e) {
