@@ -29,9 +29,9 @@ public class Inventory{
 	}
 	
 	
-	public void removeItem(String item){
+	public void removeItem(String item, int amount){
 		if(inventory.containsKey(item) && inventory.get(item)>0)
-			inventory.put(item, inventory.get(item)-1);
+			inventory.put(item, inventory.get(item)-amount);
 	}
 	
 	
