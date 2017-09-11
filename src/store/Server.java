@@ -23,6 +23,8 @@ public class Server {
 	    udpPort = Integer.parseInt(args[1]);
 	    String fileName = args[2];
 
+	    // parse the inventory file
+	    
 	    // set up server tcp socket
 	    try (
             ServerSocket serverSocket =
@@ -47,7 +49,7 @@ public class Server {
 
 	    
 	    
-	    // parse the inventory file
+
 
 	    // TODO: handle request from clients
 	  }
