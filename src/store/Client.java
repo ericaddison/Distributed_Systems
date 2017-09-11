@@ -1,8 +1,16 @@
 package store;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
+	
+	
+	
   public static void main (String[] args) {
     String hostAddress;
     int tcpPort;
@@ -19,7 +27,24 @@ public class Client {
     hostAddress = args[0];
     tcpPort = Integer.parseInt(args[1]);
     udpPort = Integer.parseInt(args[2]);
-
+    
+    // connect a socket
+    // - out lets you send to the server
+    // - in lets you receive from the server
+    Socket sock = null;
+    PrintWriter out = null;
+    BufferedReader in = null;
+    try {
+		sock = new Socket(hostAddress, tcpPort);
+		out = new PrintWriter(sock.getOutputStream(), true);
+		in = new BufferedReader( new InputStreamReader(sock.getInputStream()));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    
+    
+    
     Scanner sc = new Scanner(System.in);
     while(sc.hasNextLine()) {
       String cmd = sc.nextLine();
@@ -42,6 +67,12 @@ public class Client {
         // TODO: send appropriate command to the server and display the
         // appropriate responses form the server
       } else {
+    	out.println(cmd);
+    	try {
+			System.out.println(in.readLine());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         System.out.println("ERROR: No such command");
       }
     }
