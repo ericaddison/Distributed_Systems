@@ -28,10 +28,10 @@ public class OrderHistory {
 	}	
 	
 	public ClientOrder cancelOrderByID(int id) {
-		if(id<0 || orders.size()>id)
+		if(id<1 || id>orders.size())
 			return null;
-		orders.get(id).isActive = false;
-		return orders.get(id);
+		orders.get(id-1).isActive = false;
+		return orders.get(id-1);
 	}
 	
 	public static void main(String[] args) {
