@@ -33,7 +33,14 @@ public class Inventory{
 		if(inventory.containsKey(item) && inventory.get(item)>0)
 			inventory.put(item, inventory.get(item)-amount);
 	}
+
 	
+	public void addItem(String item, int amount){
+		if(inventory.containsKey(item))
+			inventory.put(item, inventory.get(item)+amount);
+		else
+			inventory.put(item, amount);
+	}
 	
 	private void parseFile(String inputFile) {
 		

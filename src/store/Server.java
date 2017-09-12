@@ -41,6 +41,8 @@ public class Server {
             	System.out.println("Server received: " + receivedObject.getClass());
             	if(receivedObject.getClass()==ClientOrder.class)
             		processClientOrder((ClientOrder)receivedObject, out);
+            	if(receivedObject.getClass()==ClientCancel.class)
+            		processClientCancel((ClientCancel)receivedObject, out);
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Exception caught when trying to listen on port "
@@ -81,6 +83,18 @@ public class Server {
 			  response.append(order.quantity);
 		  }
 		  out.println(response);
+	  }
+	  
+	  public void processClientCancel(ClientCancel cancel, PrintWriter out) {
+		  
+		  ClientOrder order = orders.cancelOrderByID(cancel.orderID);
+		  
+		  if( order!=null ) {
+			  inv.addItem(order.productName, order.quantity);
+			  out.println("Order " + cancel.orderID + " is cancelled");
+		  } else
+			  out.println(cancel.orderID + " not found, no such order");
+		  
 	  }
 	  
 	  

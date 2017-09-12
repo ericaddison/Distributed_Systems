@@ -4,10 +4,14 @@ import java.io.Serializable;
 
 public class ClientCancel implements Serializable {
 	
-	String orderID;
+	int orderID;
 	
-	public ClientCancel(String id) {
+	public ClientCancel(int id) {
 		orderID = id;
 	}
+	
+	public ClientCancel(String id) {
+		this(Integer.parseInt(id));
+	}	
 
 }

@@ -2,7 +2,6 @@ package store;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -12,7 +11,7 @@ public class OrderHistory {
 	
 	public void addOrder(ClientOrder order) {
 		orders.add(order);
-		order.orderID = orders.size()-1;
+		order.orderID = orders.size();
 	}
 	
 	public List<ClientOrder> searchOrdersByUser(String user){
@@ -21,8 +20,18 @@ public class OrderHistory {
 		.collect(Collectors.toList());
 	}
 	
-	public void cancelOrderByID(int id) {
+	public ClientOrder searchOrdersById(int id){
+		List<ClientOrder> result = orders.stream()
+		.filter(order -> order.orderID==id)
+		.collect(Collectors.toList());
+		return (result.isEmpty()?null:result.get(0));
+	}	
+	
+	public ClientOrder cancelOrderByID(int id) {
+		if(id<0 || orders.size()>id)
+			return null;
 		orders.get(id).isActive = false;
+		return orders.get(id);
 	}
 	
 	public static void main(String[] args) {
