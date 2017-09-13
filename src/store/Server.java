@@ -171,6 +171,7 @@ public class Server {
 				response.append(order.productName);
 				response.append(", ");
 				response.append(order.quantity);
+				response.append( (order.isActive)?"":" (cancelled)");
 				response.append(":");
 			}
 		logInfo("Processed search request: user=" + search.username);
