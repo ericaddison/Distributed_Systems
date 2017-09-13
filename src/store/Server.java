@@ -26,6 +26,9 @@ public class Server {
 
 		// set up server tcp socket
 		// remember need to multi-thread
+		
+		
+		
 		try (ServerSocket serverSocket = new ServerSocket(tcpPort);
 				Socket clientSocket = serverSocket.accept();
 				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -52,6 +55,9 @@ public class Server {
 		// TODO: handle request from clients
 	}
 
+	
+	
+	
 	public void processClientOrder(ClientOrder order, PrintWriter out) {
 		StringBuilder response = new StringBuilder();
 		int stock = inv.getItemCount(order.productName);
@@ -76,6 +82,8 @@ public class Server {
 		out.println(response);
 	}
 
+	
+	
 	public void processClientCancel(ClientCancel cancel, PrintWriter out) {
 
 		ClientOrder order = orders.cancelOrderByID(cancel.orderID);
@@ -86,6 +94,27 @@ public class Server {
 		} else
 			out.println(cancel.orderID + " not found, no such order");
 
+	}
+	
+	
+	
+	
+	private class TcpServerTask implements Runnable{
+
+		@Override
+		public void run() {
+			
+		}
+		
+	}
+	
+	private class UdpServerTask implements Runnable{
+
+		@Override
+		public void run() {
+			
+		}
+		
 	}
 
 	public static void main(String[] args) {

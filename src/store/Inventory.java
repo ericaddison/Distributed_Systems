@@ -29,13 +29,13 @@ public class Inventory{
 	}
 	
 	
-	public void removeItem(String item, int amount){
+	public synchronized void removeItem(String item, int amount){
 		if(inventory.containsKey(item) && inventory.get(item)>0)
 			inventory.put(item, inventory.get(item)-amount);
 	}
 
 	
-	public void addItem(String item, int amount){
+	public synchronized void addItem(String item, int amount){
 		if(inventory.containsKey(item))
 			inventory.put(item, inventory.get(item)+amount);
 		else

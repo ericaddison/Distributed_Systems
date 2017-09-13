@@ -9,7 +9,7 @@ public class OrderHistory {
 
 	List<ClientOrder> orders = new ArrayList<>();
 	
-	public void addOrder(ClientOrder order) {
+	public synchronized void addOrder(ClientOrder order) {
 		orders.add(order);
 		order.orderID = orders.size();
 	}
@@ -27,8 +27,8 @@ public class OrderHistory {
 		return (result.isEmpty()?null:result.get(0));
 	}	
 	
-	public ClientOrder cancelOrderByID(int id) {
-		if(id<1 || id>orders.size())
+	public synchronized ClientOrder cancelOrderByID(int id) {
+		if(id<1 || id>orders.size() || !orders.get(id-1).isActive)
 			return null;
 		orders.get(id-1).isActive = false;
 		return orders.get(id-1);
