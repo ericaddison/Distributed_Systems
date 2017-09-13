@@ -12,15 +12,14 @@ import java.net.SocketException;
 import java.util.Scanner;
 
 public class Client {
-	String hostAddress;
-	int tcpPort;
-	int udpPort;
-	boolean modeIsTCP = false; // TCP is default mode, other mode is UDP
-	Socket tcpSocket = null;
-	ObjectOutputStream out = null;
-	BufferedReader in = null;
-	DatagramSocket udpSocket;
-	
+	private String hostAddress;
+	private int tcpPort;
+	private int udpPort;
+	private boolean modeIsTCP = false; // TCP is default mode, other mode is UDP
+	private Socket tcpSocket = null;
+	private ObjectOutputStream out = null;
+	private BufferedReader in = null;
+	private DatagramSocket udpSocket;
 	
 	
 	public Client(String hostAddress, int tcpPort, int udpPort) {
@@ -37,6 +36,10 @@ public class Client {
 	}
 
 	
+	/**
+	 * Send an object to the server, method depending on whether mode is TCP or UDP
+	 * @param o the object to send
+	 */
 	public void sendObject(Object o){
 		
 		try {
@@ -48,7 +51,12 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+
 	
+	/**
+	 * receive a String from the server, method depending on whether mode is TCP or UDP
+	 * @param o the object to send
+	 */
 	public String receiveString() {
 		try {
 			if (modeIsTCP) {
@@ -64,6 +72,9 @@ public class Client {
 	}
 
 	
+	/**
+	 * Connect to the server via TCP
+	 */
 	public void connectTCP(){
 		if(modeIsTCP)
 			return;
@@ -78,109 +89,158 @@ public class Client {
 		}
 	}
 	
-	public void run(){
-
-		// connect a socket
-		// - out lets you send to the server
-		// - in lets you receive from the server
-
-		connectTCP();
-
-		Scanner sc = new Scanner(System.in);
-		System.out.print(">>>");
-		
-		while (sc.hasNextLine()) {
-			String cmd = sc.nextLine();
-			String[] tokens = cmd.split(" ");
-
-			if (tokens[0].equals("setmode")) {
 	
-				// expecting setmode T | U
-				if (tokens.length < 2) {
-					System.out.println("ERROR: Not enough tokens in setmode string");
-					System.out.println("ERROR: Expected format: setmode T | U");
-				} else {
+	/**
+	 * Set the network protocol to TCP or UDP
+	 * @param tokens string input from command line
+	 * @return server response
+	 */
+	public String setMode(String[] tokens){
+		// expecting setmode T | U
+		if (tokens.length < 2) {
+			return "ERROR: Not enough tokens in setmode string" 
+				+ "\nERROR: Expected format: setmode T | U";
+		} else {
 
-					String mode = tokens[1].toUpperCase();
-					if (mode.equals("T")) {
-						udpSocket.close();
-						connectTCP();
-						System.out.println("mode: TCP");
-					} else if (mode.equals("U")) {
-						modeIsTCP = false;
-						try {
-							tcpSocket.close();
-							udpSocket.connect(InetAddress.getByName(hostAddress), udpPort);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						System.out.println("mode: UDP");
-					} else {
-						// unrecognized mode, setting to TCP (since that is the default mode)
-						System.out.println("ERROR: unrecognized mode: " + mode);
-						System.out.println("mode: TCP");
-						udpSocket.close();
-						connectTCP();
-					}
+			String mode = tokens[1].toUpperCase();
+			if (mode.equals("T")) {
+				udpSocket.close();
+				connectTCP();
+				return "mode: TCP";
+			} else if (mode.equals("U")) {
+				modeIsTCP = false;
+				try {
+					tcpSocket.close();
+					udpSocket.connect(InetAddress.getByName(hostAddress), udpPort);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-
-			} else if (tokens[0].equals("purchase")) {
-	
-				if (tokens.length < 4) {
-					System.out.println("ERROR: Not enough tokens in purchase string");
-					System.out.println("ERROR: Expected format: purchase <user-name> <product-name> <quantity>");
-				} else {
-					String userName = tokens[1];
-					String productName = tokens[2];
-					int quantity = Integer.parseInt(tokens[3]);
-					ClientOrder order = new ClientOrder(userName, productName, quantity);
-					sendObject(order);
-					System.out.println(receiveString());
-				}
-			} else if (tokens[0].equals("cancel")) {
-		
-				if (tokens.length < 2) {
-					System.out.println("ERROR: Not enough tokens in cancel string");
-					System.out.println("ERROR: Expected format: cancel <order-id>");
-				} else {
-					String orderID = tokens[1];
-					
-					sendObject(new ClientCancel(orderID));
-					String cancelConf = receiveString().replace(":", "\n");
-					System.out.println(cancelConf);
-				}
-				
-
-			} else if (tokens[0].equals("search")) {
-		
-				if (tokens.length < 2) {
-					System.out.println("ERROR: Not enough tokens in search string");
-					System.out.println("ERROR: Expected format: search <user-name>");
-				} else {
-					String userName = tokens[1];
-	
-					sendObject(new ClientSearch(userName));
-					String orders = receiveString().replace(":", "\n");
-					System.out.println(orders);
-				}
-
-			} else if (tokens[0].equals("list")) {
-
-				sendObject(new ClientProductList());
-				String list = receiveString().replace(":", "\n");
-				System.out.println(list);
-
-
+				return "mode: UDP";
 			} else {
-
-				System.out.println("ERROR: No such command");
-
+				// unrecognized mode, setting to TCP (since that is the default mode)
+				udpSocket.close();
+				connectTCP();
+				return ("ERROR: unrecognized mode: " + mode + "\nmode:TCP");
 			}
-			
-			System.out.print(">>>");
 		}
 	}
 	
+	
+	/**
+	 * Create and send a purchase order to the server
+	 * @param tokens string input from command line
+	 * @return server response
+	 */
+	public String purchase(String[] tokens){
+		if (tokens.length < 4) {
+			return ("ERROR: Not enough tokens in purchase string" 
+				+ "\nERROR: Expected format: purchase <user-name> <product-name> <quantity>");
+		} else {
+			String userName = tokens[1];
+			String productName = tokens[2];
+			int quantity = Integer.parseInt(tokens[3]);
+			ClientOrder order = new ClientOrder(userName, productName, quantity);
+			sendObject(order);
+			return receiveString();
+		}
+	}
+	
+	
+	/**
+	 * Create and send an order cancel request to the server
+	 * @param tokens string input from command line
+	 * @return server response
+	 */
+	public String cancel(String[] tokens){
+		if (tokens.length < 2) {
+			return ("ERROR: Not enough tokens in cancel string"
+					+ "\nERROR: Expected format: cancel <order-id>");
+		} else {
+			String orderID = tokens[1];
+			
+			sendObject(new ClientCancel(orderID));
+			String cancelConf = receiveString().replace(":", "\n");
+			return cancelConf;
+		}
+	}
+	
+	
+	/**
+	 * Create and send a user search request to the server
+	 * @param tokens string input from command line
+	 * @return server response
+	 */
+	public String search(String[] tokens){
+		if (tokens.length < 2) {
+			return("ERROR: Not enough tokens in search string"
+					+ "\nERROR: Expected format: search <user-name>");
+		} else {
+			String userName = tokens[1];
+
+			sendObject(new ClientSearch(userName));
+			String orders = receiveString().replace(":", "\n");
+			return orders;
+		}
+	}
+	
+	
+	/**
+	 * Create and send an inventory list request to the server
+	 * @return server response
+	 */
+	public String list(){
+		sendObject(new ClientProductList());
+		String list = receiveString().replace(":", "\n");
+		return list;	
+	}
+	
+	
+	/**
+	 * Run the client command-line interface
+	 */
+	public void run(){
+
+		try(Scanner sc = new Scanner(System.in);){
+			System.out.print(">>>");
+			
+			// connect TCP by default
+			connectTCP();
+	
+			// main command loop
+			while (sc.hasNextLine()) {
+				String[] tokens = sc.nextLine().split(" ");
+				String response = "";
+	
+				if (tokens[0].equals("setmode")) 
+					response = setMode(tokens);
+	
+				else if (tokens[0].equals("purchase"))
+					response = purchase(tokens);
+		
+				else if (tokens[0].equals("cancel"))
+					response = cancel(tokens);
+					
+	
+				else if (tokens[0].equals("search"))
+					response = search(tokens);
+	
+				else if (tokens[0].equals("list"))
+					response = list();
+	
+				else
+					response = "ERROR: No such command\n";
+	
+				System.out.print(response + "\n>>>");
+			}
+			
+		}
+		
+	}
+	
+	
+	/**
+	 * Main function.
+	 */
 	public static void main(String[] args) {
 
 		if (args.length != 3) {
