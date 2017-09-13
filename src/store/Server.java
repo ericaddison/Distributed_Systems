@@ -1,5 +1,6 @@
 package store;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -26,28 +27,18 @@ public class Server {
 
 		// set up server tcp socket
 		// remember need to multi-thread
-		
-		
-		
-		try (ServerSocket serverSocket = new ServerSocket(tcpPort);
+
+		// start async udp responder here
+
+		try (ServerSocket serverSocket = new ServerSocket(tcpPort);) {
+			while (true) {
 				Socket clientSocket = serverSocket.accept();
-				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-				ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());) {
-
-			System.out.println("Accepted connection from " + clientSocket.getInetAddress());
-
-			Object receivedObject;
-			while ((receivedObject = in.readObject()) != null) {
-				System.out.println("Server received: " + receivedObject.getClass());
-				if (receivedObject.getClass() == ClientOrder.class)
-					processClientOrder((ClientOrder) receivedObject, out);
-				if (receivedObject.getClass() == ClientCancel.class)
-					processClientCancel((ClientCancel) receivedObject, out);
+				Thread t = new Thread(new TcpServerTask(clientSocket));
+				t.start();
 			}
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println(
-					"Exception caught when trying to listen on port " + tcpPort + " or listening for a connection");
-			System.out.println(e.getMessage());
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		// END SAMPLE CODE
@@ -55,9 +46,6 @@ public class Server {
 		// TODO: handle request from clients
 	}
 
-	
-	
-	
 	public void processClientOrder(ClientOrder order, PrintWriter out) {
 		StringBuilder response = new StringBuilder();
 		int stock = inv.getItemCount(order.productName);
@@ -82,8 +70,6 @@ public class Server {
 		out.println(response);
 	}
 
-	
-	
 	public void processClientCancel(ClientCancel cancel, PrintWriter out) {
 
 		ClientOrder order = orders.cancelOrderByID(cancel.orderID);
@@ -95,44 +81,71 @@ public class Server {
 			out.println(cancel.orderID + " not found, no such order");
 
 	}
+
 	
 	
 	
-	
-	private class TcpServerTask implements Runnable{
+	private class TcpServerTask implements Runnable {
+
+		Socket clientSocket;
+
+		public TcpServerTask(Socket clientSocket) {
+			super();
+			this.clientSocket = clientSocket;
+		}
 
 		@Override
 		public void run() {
-			
-		}
+			try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+			ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());){
+
+				System.out.println("Accepted connection from " + clientSocket.getInetAddress());
 		
+				Object receivedObject;
+				while ((receivedObject = in.readObject()) != null) {
+					System.out.println("Server received: " + receivedObject.getClass());
+					if (receivedObject.getClass() == ClientOrder.class)
+						processClientOrder((ClientOrder) receivedObject, out);
+					else if (receivedObject.getClass() == ClientCancel.class)
+						processClientCancel((ClientCancel) receivedObject, out);
+						
+				}
+			} catch (EOFException e){
+				System.out.println("Connection to " + clientSocket.getInetAddress() + " ended unexpectedly.");
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
+		}
 	}
+
 	
-	private class UdpServerTask implements Runnable{
+	
+	
+		private class UdpServerTask implements Runnable {
 
-		@Override
-		public void run() {
-			
+			@Override
+			public void run() {
+
+			}
+
 		}
-		
-	}
 
-	public static void main(String[] args) {
-		int tcpPort;
-		int udpPort;
-		if (args.length != 3) {
-			System.out.println("ERROR: Provide 3 arguments");
-			System.out.println("\t(1) <tcpPort>: the port number for TCP connection");
-			System.out.println("\t(2) <udpPort>: the port number for UDP connection");
-			System.out.println("\t(3) <file>: the file of inventory");
+		public static void main(String[] args) {
+			int tcpPort;
+			int udpPort;
+			if (args.length != 3) {
+				System.out.println("ERROR: Provide 3 arguments");
+				System.out.println("\t(1) <tcpPort>: the port number for TCP connection");
+				System.out.println("\t(2) <udpPort>: the port number for UDP connection");
+				System.out.println("\t(3) <file>: the file of inventory");
 
-			System.exit(-1);
+				System.exit(-1);
+			}
+			tcpPort = Integer.parseInt(args[0]);
+			udpPort = Integer.parseInt(args[1]);
+			String fileName = args[2];
+
+			Server server = new Server(tcpPort, udpPort, fileName);
+			server.run();
 		}
-		tcpPort = Integer.parseInt(args[0]);
-		udpPort = Integer.parseInt(args[1]);
-		String fileName = args[2];
-
-		Server server = new Server(tcpPort, udpPort, fileName);
-		server.run();
-	}
 }

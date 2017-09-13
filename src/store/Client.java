@@ -101,10 +101,12 @@ public class Client {
     	  ClientOrder order = new ClientOrder(userName, productName, quantity);
     	  try {
     		  out.writeObject(order);
+    		  System.out.println(in.readLine());
     	  } catch (IOException e) {
     		  // TODO Auto-generated catch block
     		  e.printStackTrace();
     	  }
+    	  
     	
     	  
       } else if (tokens[0].equals("cancel")) {
