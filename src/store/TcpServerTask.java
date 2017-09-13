@@ -20,34 +20,37 @@ public class TcpServerTask implements Runnable {
 	@Override
 	public void run() {
 		try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-		ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());){
+				ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());) {
 
 			System.out.println("Accepted connection from " + clientSocket.getInetAddress());
-	
+
 			Object receivedObject;
 			while ((receivedObject = in.readObject()) != null) {
 				System.out.println("Server received: " + receivedObject.getClass());
-				
+
 				String response = "Unkown or bad command received";
-				
+
+				server.logInfo("Received " + receivedObject.getClass().getCanonicalName() + " request from "
+						+ clientSocket.getInetAddress());
+
 				if (receivedObject.getClass() == ClientOrder.class)
 					response = server.processRequest((ClientOrder) receivedObject);
-				
+
 				else if (receivedObject.getClass() == ClientCancel.class)
 					response = server.processRequest((ClientCancel) receivedObject);
-				
+
 				else if (receivedObject.getClass() == ClientSearch.class)
 					response = server.processRequest((ClientSearch) receivedObject);
-				
+
 				else if (receivedObject.getClass() == ClientProductList.class)
 					response = server.processRequest((ClientProductList) receivedObject);
-				
-				out.write(response);
+
+				out.println(response);
 			}
-		} catch (EOFException e){
-			System.out.println("Connection to " + clientSocket.getInetAddress() + " ended unexpectedly.");
+		} catch (EOFException e) {
+			server.logWarn("Connection to " + clientSocket.getInetAddress() + " ended unexpectedly.");
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 }

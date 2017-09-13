@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Server {
 
@@ -11,6 +15,7 @@ public class Server {
 	private int udpPort;
 	private Inventory inv;
 	private OrderHistory orders;
+	private final Logger log = Logger.getLogger(Server.class.getCanonicalName());
 
 	public Server(int tcpPort, int udpPort, String fileName) {
 		super();
@@ -18,36 +23,63 @@ public class Server {
 		this.udpPort = udpPort;
 		inv = new Inventory(fileName);
 		orders = new OrderHistory();
+
+		try {
+			FileHandler fh = new FileHandler("server_log_" + System.currentTimeMillis() + ".log");
+			fh.setFormatter(new SimpleFormatter());
+			log.addHandler(fh);
+			logInfo("Server initializing...");
+			logInfo("Server TCP Port: " + tcpPort);
+			logInfo("Server UDP Port: " + udpPort);
+			logInfo("Server Inventory File: " + fileName);
+			logInfo("Server init complete");
+			logInfo("--------------------------------");
+		} catch (SecurityException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	
+	public synchronized void logInfo(String mesg) {
+		log.log(Level.INFO, mesg);
+	}
+
+	public synchronized void logWarn(String mesg) {
+		log.log(Level.WARNING, mesg);
+	}
+
 	/**
-	 * Run the server. Creates an new thread running the UDP listener, 
-	 * and new threads for each incoming TCP connection.
+	 * Run the server. Creates an new thread running the UDP listener, and new
+	 * threads for each incoming TCP connection.
 	 */
 	public void run() {
 
 		// start async udp responder here
+		logInfo("Starting UDP thread");
 		Thread udp_thread = new Thread(new UdpServerTask(udpPort));
 		udp_thread.start();
 
 		// listen for incoming TCP requests
+		logInfo("Starting TCP listen loop");
 		try (ServerSocket serverSocket = new ServerSocket(tcpPort);) {
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
+				logInfo("Accepted TCP connection from " + clientSocket.getInetAddress() + " on port "
+						+ clientSocket.getLocalPort());
 				Thread t = new Thread(new TcpServerTask(this, clientSocket));
 				t.start();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			logWarn("ERROR in TCP loop: " + e.getMessage());
 		}
 
 	}
 
-	
 	/**
 	 * Process an order request.
-	 * @param order a ClientOrder object with purchase details
+	 * 
+	 * @param order
+	 *            a ClientOrder object with purchase details
 	 * @return response string
 	 */
 	public String processRequest(ClientOrder order) {
@@ -71,13 +103,15 @@ public class Server {
 			response.append(" ");
 			response.append(order.quantity);
 		}
+		logInfo("Processed purchase request: " + order);
 		return response.toString();
 	}
 
-	
 	/**
 	 * Process a cancel request: cancel an active order.
-	 * @param cancel a ClientCancel object with orderID
+	 * 
+	 * @param cancel
+	 *            a ClientCancel object with orderID
 	 * @return response string
 	 */
 	public String processRequest(ClientCancel cancel) {
@@ -88,25 +122,27 @@ public class Server {
 			inv.addItem(order.productName, order.quantity);
 			return "Order " + cancel.orderID + " is cancelled";
 		}
+		logInfo("Processed cancel request: " + order);
 		return (cancel.orderID + " not found, no such order");
 
 	}
-	
-	
+
 	/**
 	 * Process a search request: search for orders by username.
-	 * @param search a ClientSearch object with username
+	 * 
+	 * @param search
+	 *            a ClientSearch object with username
 	 * @return response string
 	 */
 	public String processRequest(ClientSearch search) {
 		List<ClientOrder> orderList = orders.searchOrdersByUser(search.username);
 		StringBuilder response = new StringBuilder();
-		
-		if(orderList.size()==0){
+
+		if (orderList.size() == 0) {
 			response.append("No order found for ");
 			response.append(search.username);
 		} else
-			for(ClientOrder order : orderList){
+			for (ClientOrder order : orderList) {
 				response.append(order.orderID);
 				response.append(", ");
 				response.append(order.productName);
@@ -114,30 +150,35 @@ public class Server {
 				response.append(order.quantity);
 				response.append(":");
 			}
+		logInfo("Processed search request: user=" + search.username);
 		return response.toString();
 	}
-	
-	
+
 	/**
 	 * Process an list request: list the inventory.
-	 * @param list a ClientList object
+	 * 
+	 * @param list
+	 *            a ClientList object
 	 * @return response string
 	 */
 	public String processRequest(ClientProductList list) {
 		StringBuilder response = new StringBuilder();
-		for(String item : inv.getItemNames()){
+		for (String item : inv.getItemNames()) {
 			response.append(item);
 			response.append(", ");
 			response.append(inv.getItemCount(item));
 			response.append(":");
 		}
+		logInfo("Processed list request");
 		return response.toString();
 	}
 
-	
 	/**
 	 * Run the main program
-	 * @param args command line input. Expects [tcpPort] [udpPort] [inventory file] 
+	 * 
+	 * @param args
+	 *            command line input. Expects [tcpPort] [udpPort] [inventory
+	 *            file]
 	 */
 	public static void main(String[] args) {
 		int tcpPort;
