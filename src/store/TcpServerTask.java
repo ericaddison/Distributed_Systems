@@ -22,8 +22,6 @@ public class TcpServerTask implements Runnable {
 		try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 				ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());) {
 
-			System.out.println("Accepted connection from " + clientSocket.getInetAddress());
-
 			Object receivedObject;
 			while ((receivedObject = in.readObject()) != null) {
 				String response = server.processObject(receivedObject);
