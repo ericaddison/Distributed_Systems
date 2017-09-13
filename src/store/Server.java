@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import java.util.stream.Collector;
 
 public class Server {
 
@@ -78,8 +76,14 @@ public class Server {
 
 	}
 
-	
-	public String processObject(Object receivedObject){
+	/**
+	 * Parse a received object and dispatch to correct method.
+	 * 
+	 * @param receivedObject
+	 *            object received from client
+	 * @return response string
+	 */
+	public String processObject(Object receivedObject) {
 		String response = "Unknown or bad command received";
 
 		if (receivedObject.getClass() == ClientOrder.class)
@@ -93,11 +97,10 @@ public class Server {
 
 		else if (receivedObject.getClass() == ClientProductList.class)
 			response = processRequest((ClientProductList) receivedObject);
-		
+
 		return response;
 	}
-	
-	
+
 	/**
 	 * Process an order request.
 	 * 
@@ -141,7 +144,7 @@ public class Server {
 
 		ClientOrder order = orders.cancelOrderByID(cancel.orderID);
 		logInfo("Processed cancel request: " + order);
-		
+
 		if (order != null) {
 			inv.addItem(order.productName, order.quantity);
 			return "Order " + cancel.orderID + " is cancelled";
@@ -160,7 +163,7 @@ public class Server {
 	public String processRequest(ClientSearch search) {
 		List<ClientOrder> orderList = orders.searchOrdersByUser(search.username);
 		StringBuilder response = new StringBuilder();
-		
+
 		if (orderList.size() == 0) {
 			response.append("No order found for ");
 			response.append(search.username);
@@ -171,7 +174,7 @@ public class Server {
 				response.append(order.productName);
 				response.append(", ");
 				response.append(order.quantity);
-				response.append( (order.isActive)?"":" (cancelled)");
+				response.append((order.isActive) ? "" : " (cancelled)");
 				response.append(":");
 			}
 		logInfo("Processed search request: user=" + search.username);
@@ -188,9 +191,9 @@ public class Server {
 	public String processRequest(ClientProductList list) {
 		StringBuilder response = new StringBuilder();
 
-		String[] names = inv.getItemNames().toArray(new String[] {}); 
+		String[] names = inv.getItemNames().toArray(new String[] {});
 		Arrays.sort(names);
-		
+
 		for (String item : names) {
 			response.append(item);
 			response.append(", ");

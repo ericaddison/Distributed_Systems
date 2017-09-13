@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -219,7 +218,6 @@ public class Client {
 		
 				else if (tokens[0].equals("cancel"))
 					response = cancel(tokens);
-					
 	
 				else if (tokens[0].equals("search"))
 					response = search(tokens);
