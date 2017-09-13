@@ -1,11 +1,11 @@
 package store;
 
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Server {
 
@@ -25,15 +25,15 @@ public class Server {
 	public void run() {
 		// SAMPLE TCP CODE
 
-		// set up server tcp socket
-		// remember need to multi-thread
-
 		// start async udp responder here
-
+		Thread udp_thread = new Thread(new UdpServerTask(udpPort));
+		udp_thread.start();
+		
+		// listen for incoming TCP requests
 		try (ServerSocket serverSocket = new ServerSocket(tcpPort);) {
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
-				Thread t = new Thread(new TcpServerTask(clientSocket));
+				Thread t = new Thread(new TcpServerTask(this, clientSocket));
 				t.start();
 			}
 
@@ -82,70 +82,22 @@ public class Server {
 
 	}
 
-	
-	
-	
-	private class TcpServerTask implements Runnable {
+	public static void main(String[] args) {
+		int tcpPort;
+		int udpPort;
+		if (args.length != 3) {
+			System.out.println("ERROR: Provide 3 arguments");
+			System.out.println("\t(1) <tcpPort>: the port number for TCP connection");
+			System.out.println("\t(2) <udpPort>: the port number for UDP connection");
+			System.out.println("\t(3) <file>: the file of inventory");
 
-		Socket clientSocket;
-
-		public TcpServerTask(Socket clientSocket) {
-			super();
-			this.clientSocket = clientSocket;
+			System.exit(-1);
 		}
+		tcpPort = Integer.parseInt(args[0]);
+		udpPort = Integer.parseInt(args[1]);
+		String fileName = args[2];
 
-		@Override
-		public void run() {
-			try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-			ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());){
-
-				System.out.println("Accepted connection from " + clientSocket.getInetAddress());
-		
-				Object receivedObject;
-				while ((receivedObject = in.readObject()) != null) {
-					System.out.println("Server received: " + receivedObject.getClass());
-					if (receivedObject.getClass() == ClientOrder.class)
-						processClientOrder((ClientOrder) receivedObject, out);
-					else if (receivedObject.getClass() == ClientCancel.class)
-						processClientCancel((ClientCancel) receivedObject, out);
-						
-				}
-			} catch (EOFException e){
-				System.out.println("Connection to " + clientSocket.getInetAddress() + " ended unexpectedly.");
-			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
-			} 
-		}
+		Server server = new Server(tcpPort, udpPort, fileName);
+		server.run();
 	}
-
-	
-	
-	
-		private class UdpServerTask implements Runnable {
-
-			@Override
-			public void run() {
-
-			}
-
-		}
-
-		public static void main(String[] args) {
-			int tcpPort;
-			int udpPort;
-			if (args.length != 3) {
-				System.out.println("ERROR: Provide 3 arguments");
-				System.out.println("\t(1) <tcpPort>: the port number for TCP connection");
-				System.out.println("\t(2) <udpPort>: the port number for UDP connection");
-				System.out.println("\t(3) <file>: the file of inventory");
-
-				System.exit(-1);
-			}
-			tcpPort = Integer.parseInt(args[0]);
-			udpPort = Integer.parseInt(args[1]);
-			String fileName = args[2];
-
-			Server server = new Server(tcpPort, udpPort, fileName);
-			server.run();
-		}
 }
