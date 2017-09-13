@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 public class Client {
@@ -27,28 +28,41 @@ public class Client {
 		this.hostAddress = hostAddress;
 		this.tcpPort = tcpPort;
 		this.udpPort = udpPort;
-	}
-
-
-
-	public static void main(String[] args) {
-
-		if (args.length != 3) {
-			System.out.println("ERROR: Provide 3 arguments");
-			System.out.println("\t(1) <hostAddress>: the address of the server");
-			System.out.println("\t(2) <tcpPort>: the port number for TCP connection");
-			System.out.println("\t(3) <udpPort>: the port number for UDP connection");
-			System.exit(-1);
+		
+		try {
+			udpSocket = new DatagramSocket();
+		} catch (SocketException e) {
+			e.printStackTrace();
 		}
-
-		String hostAddress = args[0];
-		int tcpPort = Integer.parseInt(args[1]);
-		int udpPort = Integer.parseInt(args[2]);
-		
-		Client client = new Client(hostAddress, tcpPort, udpPort);
-		
-		client.run();
 	}
+
+	
+	public void sendObject(Object o){
+		
+		try {
+			if(modeIsTCP)
+				out.writeObject(o);
+			else
+				UdpIO.sendObject(o, InetAddress.getByName(hostAddress), udpPort, udpSocket);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String receiveString() {
+		try {
+			if (modeIsTCP) {
+				return in.readLine();
+			} else {
+				return (String) UdpIO.receiveObject(udpSocket, 1024).object;
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "could not receive string";
+	}
+
 	
 	public void connectTCP(){
 		if(modeIsTCP)
@@ -73,6 +87,8 @@ public class Client {
 		connectTCP();
 
 		Scanner sc = new Scanner(System.in);
+		System.out.print(">>>");
+		
 		while (sc.hasNextLine()) {
 			String cmd = sc.nextLine();
 			String[] tokens = cmd.split(" ");
@@ -86,13 +102,15 @@ public class Client {
 				} else {
 
 					String mode = tokens[1].toUpperCase();
-					if (mode == "T") {
+					if (mode.equals("T")) {
+						udpSocket.close();
 						connectTCP();
 						System.out.println("mode: TCP");
-					} else if (mode == "U") {
+					} else if (mode.equals("U")) {
 						modeIsTCP = false;
 						try {
 							tcpSocket.close();
+							udpSocket.connect(InetAddress.getByName(hostAddress), udpPort);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -101,6 +119,7 @@ public class Client {
 						// unrecognized mode, setting to TCP (since that is the default mode)
 						System.out.println("ERROR: unrecognized mode: " + mode);
 						System.out.println("mode: TCP");
+						udpSocket.close();
 						connectTCP();
 					}
 				}
@@ -114,9 +133,6 @@ public class Client {
 					String userName = tokens[1];
 					String productName = tokens[2];
 					int quantity = Integer.parseInt(tokens[3]);
-					System.out.println("Purchase order received: " + userName + " to purchase " + quantity + " "
-							+ productName + " items");
-	
 					ClientOrder order = new ClientOrder(userName, productName, quantity);
 					sendObject(order);
 					System.out.println(receiveString());
@@ -161,33 +177,27 @@ public class Client {
 
 			}
 			
+			System.out.print(">>>");
 		}
 	}
 	
-	public void sendObject(Object o){
+	public static void main(String[] args) {
+
+		if (args.length != 3) {
+			System.out.println("ERROR: Provide 3 arguments");
+			System.out.println("\t(1) <hostAddress>: the address of the server");
+			System.out.println("\t(2) <tcpPort>: the port number for TCP connection");
+			System.out.println("\t(3) <udpPort>: the port number for UDP connection");
+			System.exit(-1);
+		}
+
+		String hostAddress = args[0];
+		int tcpPort = Integer.parseInt(args[1]);
+		int udpPort = Integer.parseInt(args[2]);
 		
-		try {
-			if(modeIsTCP)
-				out.writeObject(o);
-			else
-				UdpIO.sendObject(o, InetAddress.getByName(hostAddress), udpPort, udpSocket);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public String receiveString() {
-		try {
-			if (modeIsTCP) {
-				return in.readLine();
-			} else {
-				return (String) UdpIO.receiveObject(udpSocket, 1024).object;
-			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "could not receive string";
+		Client client = new Client(hostAddress, tcpPort, udpPort);
+		
+		client.run();
 	}
 	
 	
