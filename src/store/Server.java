@@ -1,11 +1,9 @@
 package store;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
+import java.util.List;
 
 public class Server {
 
@@ -22,13 +20,17 @@ public class Server {
 		orders = new OrderHistory();
 	}
 
+	
+	/**
+	 * Run the server. Creates an new thread running the UDP listener, 
+	 * and new threads for each incoming TCP connection.
+	 */
 	public void run() {
-		// SAMPLE TCP CODE
 
 		// start async udp responder here
 		Thread udp_thread = new Thread(new UdpServerTask(udpPort));
 		udp_thread.start();
-		
+
 		// listen for incoming TCP requests
 		try (ServerSocket serverSocket = new ServerSocket(tcpPort);) {
 			while (true) {
@@ -36,17 +38,19 @@ public class Server {
 				Thread t = new Thread(new TcpServerTask(this, clientSocket));
 				t.start();
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		// END SAMPLE CODE
-
-		// TODO: handle request from clients
 	}
 
-	public void processClientOrder(ClientOrder order, PrintWriter out) {
+	
+	/**
+	 * Process an order request.
+	 * @param order a ClientOrder object with purchase details
+	 * @return response string
+	 */
+	public String processRequest(ClientOrder order) {
 		StringBuilder response = new StringBuilder();
 		int stock = inv.getItemCount(order.productName);
 		int quantity = order.quantity;
@@ -67,21 +71,74 @@ public class Server {
 			response.append(" ");
 			response.append(order.quantity);
 		}
-		out.println(response);
+		return response.toString();
 	}
 
-	public void processClientCancel(ClientCancel cancel, PrintWriter out) {
+	
+	/**
+	 * Process a cancel request: cancel an active order.
+	 * @param cancel a ClientCancel object with orderID
+	 * @return response string
+	 */
+	public String processRequest(ClientCancel cancel) {
 
 		ClientOrder order = orders.cancelOrderByID(cancel.orderID);
 
 		if (order != null) {
 			inv.addItem(order.productName, order.quantity);
-			out.println("Order " + cancel.orderID + " is cancelled");
-		} else
-			out.println(cancel.orderID + " not found, no such order");
+			return "Order " + cancel.orderID + " is cancelled";
+		}
+		return (cancel.orderID + " not found, no such order");
 
 	}
+	
+	
+	/**
+	 * Process a search request: search for orders by username.
+	 * @param search a ClientSearch object with username
+	 * @return response string
+	 */
+	public String processRequest(ClientSearch search) {
+		List<ClientOrder> orderList = orders.searchOrdersByUser(search.username);
+		StringBuilder response = new StringBuilder();
+		
+		if(orderList.size()==0){
+			response.append("No order found for ");
+			response.append(search.username);
+		} else
+			for(ClientOrder order : orderList){
+				response.append(order.orderID);
+				response.append(", ");
+				response.append(order.productName);
+				response.append(", ");
+				response.append(order.quantity);
+				response.append(":");
+			}
+		return response.toString();
+	}
+	
+	
+	/**
+	 * Process an list request: list the inventory.
+	 * @param list a ClientList object
+	 * @return response string
+	 */
+	public String processRequest(ClientProductList list) {
+		StringBuilder response = new StringBuilder();
+		for(String item : inv.getItemNames()){
+			response.append(item);
+			response.append(", ");
+			response.append(inv.getItemCount(item));
+			response.append(":");
+		}
+		return response.toString();
+	}
 
+	
+	/**
+	 * Run the main program
+	 * @param args command line input. Expects [tcpPort] [udpPort] [inventory file] 
+	 */
 	public static void main(String[] args) {
 		int tcpPort;
 		int udpPort;

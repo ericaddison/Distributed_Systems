@@ -27,11 +27,22 @@ public class TcpServerTask implements Runnable {
 			Object receivedObject;
 			while ((receivedObject = in.readObject()) != null) {
 				System.out.println("Server received: " + receivedObject.getClass());
+				
+				String response = "Unkown or bad command received";
+				
 				if (receivedObject.getClass() == ClientOrder.class)
-					server.processClientOrder((ClientOrder) receivedObject, out);
+					response = server.processRequest((ClientOrder) receivedObject);
+				
 				else if (receivedObject.getClass() == ClientCancel.class)
-					server.processClientCancel((ClientCancel) receivedObject, out);
-					
+					response = server.processRequest((ClientCancel) receivedObject);
+				
+				else if (receivedObject.getClass() == ClientSearch.class)
+					response = server.processRequest((ClientSearch) receivedObject);
+				
+				else if (receivedObject.getClass() == ClientProductList.class)
+					response = server.processRequest((ClientProductList) receivedObject);
+				
+				out.write(response);
 			}
 		} catch (EOFException e){
 			System.out.println("Connection to " + clientSocket.getInetAddress() + " ended unexpectedly.");
