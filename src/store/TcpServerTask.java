@@ -26,25 +26,7 @@ public class TcpServerTask implements Runnable {
 
 			Object receivedObject;
 			while ((receivedObject = in.readObject()) != null) {
-				System.out.println("Server received: " + receivedObject.getClass());
-
-				String response = "Unkown or bad command received";
-
-				server.logInfo("Received " + receivedObject.getClass().getCanonicalName() + " request from "
-						+ clientSocket.getInetAddress());
-
-				if (receivedObject.getClass() == ClientOrder.class)
-					response = server.processRequest((ClientOrder) receivedObject);
-
-				else if (receivedObject.getClass() == ClientCancel.class)
-					response = server.processRequest((ClientCancel) receivedObject);
-
-				else if (receivedObject.getClass() == ClientSearch.class)
-					response = server.processRequest((ClientSearch) receivedObject);
-
-				else if (receivedObject.getClass() == ClientProductList.class)
-					response = server.processRequest((ClientProductList) receivedObject);
-
+				String response = server.processObject(receivedObject);
 				out.println(response);
 			}
 		} catch (EOFException e) {

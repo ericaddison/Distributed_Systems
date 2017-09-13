@@ -55,7 +55,7 @@ public class Server {
 
 		// start async udp responder here
 		logInfo("Starting UDP thread");
-		Thread udp_thread = new Thread(new UdpServerTask(udpPort));
+		Thread udp_thread = new Thread(new UdpServerTask(this, udpPort));
 		udp_thread.start();
 
 		// listen for incoming TCP requests
@@ -75,6 +75,26 @@ public class Server {
 
 	}
 
+	
+	public String processObject(Object receivedObject){
+		String response = "Unknown or bad command received";
+
+		if (receivedObject.getClass() == ClientOrder.class)
+			response = processRequest((ClientOrder) receivedObject);
+
+		else if (receivedObject.getClass() == ClientCancel.class)
+			response = processRequest((ClientCancel) receivedObject);
+
+		else if (receivedObject.getClass() == ClientSearch.class)
+			response = processRequest((ClientSearch) receivedObject);
+
+		else if (receivedObject.getClass() == ClientProductList.class)
+			response = processRequest((ClientProductList) receivedObject);
+		
+		return response;
+	}
+	
+	
 	/**
 	 * Process an order request.
 	 * 
