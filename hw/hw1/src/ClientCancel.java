@@ -1,5 +1,3 @@
-package store.clientRequests;
-
 import java.io.Serializable;
 
 public class ClientCancel implements Serializable {
