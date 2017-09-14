@@ -1,4 +1,4 @@
-package store;
+package store.clientRequests;
 
 import java.io.Serializable;
 

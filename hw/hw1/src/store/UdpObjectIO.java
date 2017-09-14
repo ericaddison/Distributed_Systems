@@ -9,7 +9,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class UdpIO {
+public class UdpObjectIO {
 
 	public static ObjectAndPacket receiveObject(DatagramSocket sock, int bufLen) throws IOException {
 		DatagramPacket datapacket = new DatagramPacket(new byte[bufLen], bufLen);
@@ -34,6 +34,18 @@ public class UdpIO {
 
 		DatagramPacket returnpacket = new DatagramPacket(barray, barray.length, addr, port);
 		sock.send(returnpacket);
+
+	}
+	
+	public static class ObjectAndPacket {
+		public Object object;
+		public DatagramPacket datagramPacket;
+
+		public ObjectAndPacket(Object object, DatagramPacket datagramPacket) {
+			super();
+			this.object = object;
+			this.datagramPacket = datagramPacket;
+		}
 
 	}
 }

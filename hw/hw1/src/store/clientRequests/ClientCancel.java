@@ -1,11 +1,11 @@
-package store;
+package store.clientRequests;
 
 import java.io.Serializable;
 
 public class ClientCancel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	int orderID;
+	public int orderID;
 
 	public ClientCancel(int id) {
 		orderID = id;

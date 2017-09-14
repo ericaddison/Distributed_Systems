@@ -10,6 +10,11 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Scanner;
 
+import store.clientRequests.ClientCancel;
+import store.clientRequests.ClientOrder;
+import store.clientRequests.ClientProductList;
+import store.clientRequests.ClientSearch;
+
 public class Client {
 	private String hostAddress;
 	private int tcpPort;
@@ -46,7 +51,7 @@ public class Client {
 			if (modeIsTCP)
 				out.writeObject(o);
 			else
-				UdpIO.sendObject(o, InetAddress.getByName(hostAddress), udpPort, udpSocket);
+				UdpObjectIO.sendObject(o, InetAddress.getByName(hostAddress), udpPort, udpSocket);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -64,7 +69,7 @@ public class Client {
 			if (modeIsTCP) {
 				return in.readLine();
 			} else {
-				return (String) UdpIO.receiveObject(udpSocket, 1024).object;
+				return (String) UdpObjectIO.receiveObject(udpSocket, 1024).object;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

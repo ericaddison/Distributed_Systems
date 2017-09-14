@@ -1,11 +1,11 @@
-package store;
+package store.clientRequests;
 
 import java.io.Serializable;
 
 public class ClientSearch implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	String username;
+	public String username;
 
 	public ClientSearch(String username) {
 		super();

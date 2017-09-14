@@ -1,9 +1,13 @@
-package store;
+package store.serverTasks;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+
+import store.Server;
+import store.UdpObjectIO;
+import store.UdpObjectIO.ObjectAndPacket;
 
 public class UdpServerTask implements Runnable {
 
@@ -26,7 +30,7 @@ public class UdpServerTask implements Runnable {
 		try {
 			while (true) {
 				// read UDP packet
-				ObjectAndPacket oap = UdpIO.receiveObject(datasocket, 1024);
+				ObjectAndPacket oap = UdpObjectIO.receiveObject(datasocket, 1024);
 				datapacket = oap.datagramPacket;
 				server.logInfo("Received " + oap.object.getClass().getCanonicalName() + " request via UDP from "
 						+ datapacket.getAddress());
@@ -35,7 +39,7 @@ public class UdpServerTask implements Runnable {
 				String response = server.processObject(oap.object);
 
 				// write UDP packet
-				UdpIO.sendObject(response, oap.datagramPacket.getAddress(), oap.datagramPacket.getPort(), datasocket);
+				UdpObjectIO.sendObject(response, oap.datagramPacket.getAddress(), oap.datagramPacket.getPort(), datasocket);
 			}
 		} catch (IOException e) {
 			System.err.println(e);

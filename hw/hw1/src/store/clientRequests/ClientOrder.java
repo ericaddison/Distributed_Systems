@@ -1,15 +1,15 @@
-package store;
+package store.clientRequests;
 
 import java.io.Serializable;
 
 public class ClientOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	String userName;
-	String productName;
-	int quantity;
-	boolean isActive;
-	int orderID;
+	public String userName;
+	public String productName;
+	public int quantity;
+	public boolean isActive;
+	public int orderID;
 
 	public ClientOrder(String un, String pn, int q) {
 		userName = un;
