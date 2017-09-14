@@ -2,7 +2,7 @@ package store;
 
 import java.io.Serializable;
 
-public class ClientSearch implements Serializable{
+public class ClientSearch implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	String username;
@@ -11,6 +11,5 @@ public class ClientSearch implements Serializable{
 		super();
 		this.username = username;
 	}
-	
-	
+
 }

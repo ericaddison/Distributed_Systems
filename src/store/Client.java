@@ -19,14 +19,13 @@ public class Client {
 	private ObjectOutputStream out = null;
 	private BufferedReader in = null;
 	private DatagramSocket udpSocket;
-	
-	
+
 	public Client(String hostAddress, int tcpPort, int udpPort) {
 		super();
 		this.hostAddress = hostAddress;
 		this.tcpPort = tcpPort;
 		this.udpPort = udpPort;
-		
+
 		try {
 			udpSocket = new DatagramSocket();
 		} catch (SocketException e) {
@@ -34,15 +33,17 @@ public class Client {
 		}
 	}
 
-	
 	/**
-	 * Send an object to the server, method depending on whether mode is TCP or UDP
-	 * @param o the object to send
+	 * Send an object to the server, method depending on whether mode is TCP or
+	 * UDP
+	 * 
+	 * @param o
+	 *            the object to send
 	 */
-	public void sendObject(Object o){
-		
+	public void sendObject(Object o) {
+
 		try {
-			if(modeIsTCP)
+			if (modeIsTCP)
 				out.writeObject(o);
 			else
 				UdpIO.sendObject(o, InetAddress.getByName(hostAddress), udpPort, udpSocket);
@@ -51,10 +52,12 @@ public class Client {
 		}
 	}
 
-	
 	/**
-	 * receive a String from the server, method depending on whether mode is TCP or UDP
-	 * @param o the object to send
+	 * receive a String from the server, method depending on whether mode is TCP
+	 * or UDP
+	 * 
+	 * @param o
+	 *            the object to send
 	 */
 	public String receiveString() {
 		try {
@@ -63,21 +66,19 @@ public class Client {
 			} else {
 				return (String) UdpIO.receiveObject(udpSocket, 1024).object;
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return "could not receive string";
 	}
 
-	
 	/**
 	 * Connect to the server via TCP
 	 */
-	public void connectTCP(){
-		if(modeIsTCP)
+	public void connectTCP() {
+		if (modeIsTCP)
 			return;
-		
+
 		modeIsTCP = true;
 		try {
 			tcpSocket = new Socket(hostAddress, tcpPort);
@@ -87,18 +88,18 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * Set the network protocol to TCP or UDP
-	 * @param tokens string input from command line
+	 * 
+	 * @param tokens
+	 *            string input from command line
 	 * @return server response
 	 */
-	public String setMode(String[] tokens){
+	public String setMode(String[] tokens) {
 		// expecting setmode T | U
 		if (tokens.length < 2) {
-			return "ERROR: Not enough tokens in setmode string" 
-				+ "\nERROR: Expected format: setmode T | U";
+			return "ERROR: Not enough tokens in setmode string" + "\nERROR: Expected format: setmode T | U";
 		} else {
 
 			String mode = tokens[1].toUpperCase();
@@ -116,24 +117,26 @@ public class Client {
 				}
 				return "mode: UDP";
 			} else {
-				// unrecognized mode, setting to TCP (since that is the default mode)
+				// unrecognized mode, setting to TCP (since that is the default
+				// mode)
 				udpSocket.close();
 				connectTCP();
 				return ("ERROR: unrecognized mode: " + mode + "\nmode:TCP");
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Create and send a purchase order to the server
-	 * @param tokens string input from command line
+	 * 
+	 * @param tokens
+	 *            string input from command line
 	 * @return server response
 	 */
-	public String purchase(String[] tokens){
+	public String purchase(String[] tokens) {
 		if (tokens.length < 4) {
-			return ("ERROR: Not enough tokens in purchase string" 
-				+ "\nERROR: Expected format: purchase <user-name> <product-name> <quantity>");
+			return ("ERROR: Not enough tokens in purchase string"
+					+ "\nERROR: Expected format: purchase <user-name> <product-name> <quantity>");
 		} else {
 			String userName = tokens[1];
 			String productName = tokens[2];
@@ -143,36 +146,36 @@ public class Client {
 			return receiveString();
 		}
 	}
-	
-	
+
 	/**
 	 * Create and send an order cancel request to the server
-	 * @param tokens string input from command line
+	 * 
+	 * @param tokens
+	 *            string input from command line
 	 * @return server response
 	 */
-	public String cancel(String[] tokens){
+	public String cancel(String[] tokens) {
 		if (tokens.length < 2) {
-			return ("ERROR: Not enough tokens in cancel string"
-					+ "\nERROR: Expected format: cancel <order-id>");
+			return ("ERROR: Not enough tokens in cancel string" + "\nERROR: Expected format: cancel <order-id>");
 		} else {
 			String orderID = tokens[1];
-			
+
 			sendObject(new ClientCancel(orderID));
 			String cancelConf = receiveString().replace(":", "\n");
 			return cancelConf;
 		}
 	}
-	
-	
+
 	/**
 	 * Create and send a user search request to the server
-	 * @param tokens string input from command line
+	 * 
+	 * @param tokens
+	 *            string input from command line
 	 * @return server response
 	 */
-	public String search(String[] tokens){
+	public String search(String[] tokens) {
 		if (tokens.length < 2) {
-			return("ERROR: Not enough tokens in search string"
-					+ "\nERROR: Expected format: search <user-name>");
+			return ("ERROR: Not enough tokens in search string" + "\nERROR: Expected format: search <user-name>");
 		} else {
 			String userName = tokens[1];
 
@@ -181,61 +184,59 @@ public class Client {
 			return orders;
 		}
 	}
-	
-	
+
 	/**
 	 * Create and send an inventory list request to the server
+	 * 
 	 * @return server response
 	 */
-	public String list(){
+	public String list() {
 		sendObject(new ClientProductList());
 		String list = receiveString().replace(":", "\n");
-		return list;	
+		return list;
 	}
-	
-	
+
 	/**
 	 * Run the client command-line interface
 	 */
-	public void run(){
+	public void run() {
 
-		try(Scanner sc = new Scanner(System.in);){
+		try (Scanner sc = new Scanner(System.in);) {
 			System.out.print(">>>");
-			
+
 			// connect TCP by default
 			connectTCP();
-	
+
 			// main command loop
 			while (sc.hasNextLine()) {
 				String[] tokens = sc.nextLine().split(" ");
 				String response = "";
-	
-				if (tokens[0].equals("setmode")) 
+
+				if (tokens[0].equals("setmode"))
 					response = setMode(tokens);
-	
+
 				else if (tokens[0].equals("purchase"))
 					response = purchase(tokens);
-		
+
 				else if (tokens[0].equals("cancel"))
 					response = cancel(tokens);
-	
+
 				else if (tokens[0].equals("search"))
 					response = search(tokens);
-	
+
 				else if (tokens[0].equals("list"))
 					response = list();
-	
+
 				else
 					response = "ERROR: No such command\n";
-	
+
 				System.out.print(response + "\n>>>");
 			}
-			
+
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * Main function.
 	 */
@@ -252,11 +253,10 @@ public class Client {
 		String hostAddress = args[0];
 		int tcpPort = Integer.parseInt(args[1]);
 		int udpPort = Integer.parseInt(args[2]);
-		
+
 		Client client = new Client(hostAddress, tcpPort, udpPort);
-		
+
 		client.run();
 	}
-	
-	
+
 }

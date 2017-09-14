@@ -30,10 +30,10 @@ public class UdpServerTask implements Runnable {
 				datapacket = oap.datagramPacket;
 				server.logInfo("Received " + oap.object.getClass().getCanonicalName() + " request via UDP from "
 						+ datapacket.getAddress());
-				
+
 				// process request
 				String response = server.processObject(oap.object);
-				
+
 				// write UDP packet
 				UdpIO.sendObject(response, oap.datagramPacket.getAddress(), oap.datagramPacket.getPort(), datasocket);
 			}
