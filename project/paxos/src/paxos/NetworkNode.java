@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -30,6 +29,7 @@ public class NetworkNode {
 	
 	private static final int TIMEOUT = 500;
 	private static final long WAIT_TIME = 500;
+	private static final long MAX_WAIT_TIME = 60000;
 	private int id;
 	private List<NodeInfo> nodes;
 	private Thread connectThread;
@@ -42,13 +42,15 @@ public class NetworkNode {
 	private Level logLevel = Level.ALL;
 	
 	
-	
 	public NetworkNode(int id, String nodeListFileName, boolean restart) {
 		this.id = id;
 		this.restart = restart;
 		parseNodeFile(nodeListFileName);
 		setupLogger();
-		networkInit();
+	}
+	
+	public void run(){
+		networkInit();		
 	}
 	
 	private void parseNodeFile(String filename) {
@@ -150,6 +152,7 @@ public class NetworkNode {
 		Socket sock;
 		PrintWriter writer;
 		BufferedReader reader;
+		int connectionAttempts;
 		
 		public NodeInfo() {}
 		
@@ -167,6 +170,11 @@ public class NetworkNode {
 		
 		public int isConnected() {
 			return connected ? 1 : 0;
+		}
+		
+		@Override
+		public String toString(){
+			return address.toString() + ":" + port;
 		}
 	}
 	
@@ -224,9 +232,8 @@ public class NetworkNode {
 	 * Initialize a new outgoing connection. 
 	 */
 	private void initIncomingConnection(Socket sock) throws IOException{
-		log.finer("Initializing connection with new server at " + sock.getInetAddress() + ":" + sock.getLocalPort());
-
 		NodeInfo node = new NodeInfo(sock);
+		log.finer("Initializing incoming connection with node at " + node);
 		
 		// find out what id they are
 		receiveMessage(node);
@@ -252,21 +259,26 @@ public class NetworkNode {
 		
 		while(getConnectedCount() < nConnections) {
 			iServer = (iServer+1) % (restart?nConnections:id);
-			if (nodes.get(iServer).connected)
+			NodeInfo node = nodes.get(iServer);
+			if (node.connected)
 				continue; // this socket and thread will be null
 
 			try {
 				log.fine("Entering connect loop for iServer = " + iServer);
 				Socket sock = new Socket();
 				try{
-					sock.connect(new InetSocketAddress(nodes.get(iServer).address, nodes.get(iServer).port + 1), TIMEOUT);
-					nodes.get(iServer).connected = true;
+					sock.connect(new InetSocketAddress(node.address, node.port + 1), TIMEOUT);
+					node.connected = true;
 				} catch (ConnectException e) {
-					// could not connect. Wait 1/2 second and move on
+					// could not connect. 
+					// Wait for an increasing amount of time, depending on number of attempts made
+					// max wait time = 1 minute
 					try {
-						Thread.sleep(WAIT_TIME);
+						long waitTime = Math.min(node.connectionAttempts * WAIT_TIME, MAX_WAIT_TIME);  
+						Thread.sleep(waitTime);
+						node.connectionAttempts++;
 					} catch (InterruptedException e1) {}
-					log.finer("NetworkNode connection NOT made to server "+iServer);
+						log.finer("NetworkNode connection NOT made to server "+iServer);
 					continue;
 				}
 				
@@ -284,9 +296,8 @@ public class NetworkNode {
 	 * Initialize a new incoming connection. 
 	 */
 	private void initOutgoingConnection(Socket sock, int iServer) throws IOException{
-		log.finer("Initializing connection with server " + iServer);
-
 		NodeInfo node = new NodeInfo(sock);
+		log.finer("Initializing outgoing connection with node at " + node);
 		
 		// send init message identifying myself
 		sendMessage(node, "Hi, I am node " + id);
@@ -342,7 +353,7 @@ public class NetworkNode {
 
 
 		NetworkNode node = new NetworkNode(id, fileName, restart);
-//		node.run();
+		node.run();
 		
 	}
 
