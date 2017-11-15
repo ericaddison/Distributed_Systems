@@ -1,31 +1,41 @@
 package paxos;
 
 import java.io.File;
+import java.util.logging.Logger;
 
+import paxos.messages.Message;
+import paxos.messages.MessageType;
 import paxos.roles.Acceptor;
 import paxos.roles.Learner;
 import paxos.roles.Proposer;
 
-public class PaxosNode extends NetworkNode{
+public class PaxosNode{
 
+	private NetworkNode netnode;
+	private int id;
+	private int Nprocs;
+	
 	public PaxosNode(int id, String nodeListFileName, boolean restart) {
-		super(id, nodeListFileName, restart);
+		netnode = new NetworkNode(id, nodeListFileName, restart);
+		Nprocs = netnode.getNodesInfo().size();
+		this.id = netnode.getId();
 		getLogger().info("Created new " + this.getClass().getSimpleName() + " with:");
 		getLogger().info("\tid = " + id);
 		getLogger().info("\tnodeListFileName = " + nodeListFileName);
 		getLogger().info("\tresart = " + restart);
 		getLogger().info("Node List:");
-		for(String node : getNodesInfo()){
+		for(String node : netnode.getNodesInfo()){
 			getLogger().info("\t" + node);
 		}
 	}
 
-	private int id;
-	private int Nprocs;
+	private Logger getLogger(){
+		return netnode.getLogger();
+	}
 	
 	public void run(){
 		getLogger().info("Starting run phase");
-		super.run();
+		netnode.run();
 	}
 	
 	// determine paxos roles by setting these values to non-null
@@ -62,7 +72,7 @@ public class PaxosNode extends NetworkNode{
 		String fileName = args[1];
 		
 		boolean restart = false;
-		if(args.length==2 && args[1].equals("restart"))
+		if(args.length==3 && args[2].equals("restart"))
 			restart = true;
 
 		File file = new File(fileName);
@@ -72,8 +82,8 @@ public class PaxosNode extends NetworkNode{
 		}
 
 
-		NetworkNode node = new PaxosNode(id, fileName, restart);
-		node.run();
+		PaxosNode pnode = new PaxosNode(id, fileName, restart);
+		pnode.run();
 	}
 	
 }

@@ -57,6 +57,10 @@ public class NetworkNode {
 		networkInit();		
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	private void parseNodeFile(String filename) {
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename)))) {
 
@@ -122,6 +126,47 @@ public class NetworkNode {
 	}
 	
 	
+	/**
+	 * Send a message to another node by id
+	 */
+	public boolean sendMessage(int theirId, Message msg) {
+		NodeInfo node = nodes.get(theirId);
+		if(!node.connected){
+			log.warning("Error sending message to node " + theirId + ": node not connected");
+			return false;
+		}
+		
+		log.finest("Sending message \"" + msg + "\" to node " + theirId );
+		node.writer.println(msg.toString());
+		node.writer.flush();
+		return true;
+	}
+	
+	
+	/**
+	 * Receive a message from another node   
+	 */
+	public Message receiveMessage(int theirId){
+		String msg = null;
+		NodeInfo node = nodes.get(theirId);
+		try {
+			msg = node.reader.readLine();
+			log.finest("Received message \"" + msg + "\" from node " + theirId );
+			return Message.fromString(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e){
+			log.finest("Failed to decode message \"" + msg + "\" from node " + theirId);
+		}
+		
+		return null;
+
+	}	
+	
+	
+//****************************************************************
+//	Private Methods -- mostly network related
+//****************************************************************	
 	
 	/**
 	 * Send a message to another node
@@ -150,10 +195,7 @@ public class NetworkNode {
 		return null;
 
 	}
-
-//****************************************************************
-//	Private Methods -- mostly network related
-//****************************************************************	
+	
 	
 	/**
 	 * Private class to track node info. Just a struct. 
@@ -267,8 +309,12 @@ public class NetworkNode {
 			}
 			
 			if(nodes.get(theirId).connected){
-				log.warning("Received in-use id from " + node);
-				node.connected = false;
+				if(node.address.equals(nodes.get(theirId).address)){
+					log.info("Node " + theirId + " coming back online...");
+				} else {
+					log.warning("Received in-use id from " + node);
+					node.connected = false;
+				}
 			}
 			
 		} catch(IllegalArgumentException e){
@@ -352,6 +398,8 @@ public class NetworkNode {
 		
 		// listen for ack message
 		Message ack_msg = receiveMessage(node);
+		
+		nodes.set(ack_msg.getId(), node);
 	}
 	
 	
