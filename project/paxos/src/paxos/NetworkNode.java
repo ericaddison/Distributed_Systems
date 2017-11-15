@@ -27,18 +27,6 @@ import java.util.logging.SimpleFormatter;
  *
  */
 public class NetworkNode {
-
-	/**
-	 * Private class to track node info. Just a struct. 
-	 */
-	static class NodeInfo{
-		InetAddress address;
-		int port;
-		boolean connected;
-		public int isConnected() {
-			return connected ? 1 : 0;
-		}
-	}
 	
 	private static final int TIMEOUT = 500;
 	private static final long WAIT_TIME = 500;
@@ -101,8 +89,10 @@ public class NetworkNode {
 
 
 	private void setupLogger(){
+		// set logging format
 		System.setProperty("java.util.logging.SimpleFormatter.format",
-                "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS.%1$tL %4$s ::: %5$s %6$s%n\n");
+                "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS.%1$tL %4$s ::: %2$s ::: %5$s %6$s%n");
+		
 		// NO initial logging handlers
 				log.getParent().removeHandler(log.getParent().getHandlers()[0]);
 		
@@ -121,10 +111,64 @@ public class NetworkNode {
 		log.setLevel(logLevel);
 	}
 	
+	
+	
+	/**
+	 * Send a message to another node
+	 */
+	private void sendMessage(NodeInfo node, String message) {
+		log.finest("Sending message \"" + message + "\" to " + node.address + ":" + node.port );
+		node.writer.println(message);
+		node.writer.flush();
+	}
+	
+	/**
+	 * Receive a message from another node   
+	 */
+	private String receiveMessage(NodeInfo node){
+		String msg = null;
+		try {
+			msg = node.reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		log.finest("Received message \"" + msg + "\" from " + node.address + ":" + node.port );
+		return msg;
+	}
 
 //****************************************************************
 //	Private Methods -- mostly network related
 //****************************************************************	
+	
+	/**
+	 * Private class to track node info. Just a struct. 
+	 */
+	static class NodeInfo{
+		InetAddress address;
+		int port;
+		boolean connected;
+		Socket sock;
+		PrintWriter writer;
+		BufferedReader reader;
+		
+		public NodeInfo() {}
+		
+		public NodeInfo(Socket sock) {
+			try{
+				address = sock.getInetAddress();
+				port = sock.getLocalPort();
+				writer = new PrintWriter(sock.getOutputStream());
+				reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+				connected = true;
+			} catch(IOException e){
+				connected = false;
+			}
+		}
+		
+		public int isConnected() {
+			return connected ? 1 : 0;
+		}
+	}
 	
 	
 	/**
@@ -180,14 +224,16 @@ public class NetworkNode {
 	 * Initialize a new outgoing connection. 
 	 */
 	private void initIncomingConnection(Socket sock) throws IOException{
-		log.finer("Initializing connection with new server at " + sock.getInetAddress() + ":" + sock.getPort());
-		
-		PrintWriter pw = new PrintWriter(sock.getOutputStream());
-		BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-		
+		log.finer("Initializing connection with new server at " + sock.getInetAddress() + ":" + sock.getLocalPort());
 
+		NodeInfo node = new NodeInfo(sock);
+		
+		// find out what id they are
+		receiveMessage(node);
+		
+		// if ok, add to list of nodes
+		
 	}
-	
 	
 	
 	/**
@@ -224,7 +270,7 @@ public class NetworkNode {
 					continue;
 				}
 				
-				nConnections = initOutgoingConnection(sock, iServer, nConnections);
+				initOutgoingConnection(sock, iServer);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -237,13 +283,15 @@ public class NetworkNode {
 	/**
 	 * Initialize a new incoming connection. 
 	 */
-	private int initOutgoingConnection(Socket sock, int iServer, int nConnections) throws IOException{
+	private void initOutgoingConnection(Socket sock, int iServer) throws IOException{
 		log.finer("Initializing connection with server " + iServer);
 
-		PrintWriter pw = new PrintWriter(sock.getOutputStream());
-		BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+		NodeInfo node = new NodeInfo(sock);
 		
-		return nConnections;
+		// send init message identifying myself
+		sendMessage(node, "Hi, I am node " + id);
+		
+		//
 	}
 	
 	
