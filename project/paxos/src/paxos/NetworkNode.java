@@ -1,6 +1,8 @@
 package paxos;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -25,13 +28,22 @@ import java.util.logging.SimpleFormatter;
  */
 public class NetworkNode {
 
+	/**
+	 * Private class to track node info. Just a struct. 
+	 */
+	static class NodeInfo{
+		InetAddress address;
+		int port;
+		boolean connected;
+		public int isConnected() {
+			return connected ? 1 : 0;
+		}
+	}
+	
 	private static final int TIMEOUT = 500;
 	private static final long WAIT_TIME = 500;
-	private int port;
 	private int id;
-	private List<Integer> connectedNodes;
-	private List<InetAddress> otherNodes;
-	private List<Integer> ports;
+	private List<NodeInfo> nodes;
 	private Thread connectThread;
 	private ServerSocket serverSocket;
 	private boolean restart;
@@ -43,23 +55,54 @@ public class NetworkNode {
 	
 	
 	
-	public NetworkNode(int port, int id, List<InetAddress> otherNodes) {
-		this.otherNodes = otherNodes;
-		this.port = port;
+	public NetworkNode(int id, String nodeListFileName, boolean restart) {
+		this.id = id;
+		this.restart = restart;
+		parseNodeFile(nodeListFileName);
 		setupLogger();
 		networkInit();
 	}
 	
+	private void parseNodeFile(String filename) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename)))) {
+
+			// remaining lines = server locations
+			String nextServer = "";
+			nodes = new ArrayList<>();
+			while ((nextServer = br.readLine()) != null) {
+				String[] serverToks = nextServer.split(":");
+				NodeInfo newNode = new NodeInfo();
+				newNode.address = InetAddress.getByName(serverToks[0]);
+				newNode.port = Integer.parseInt(serverToks[1]);
+				nodes.add(newNode);
+			}
+			if(id<0 || id>=nodes.size())
+				throw new ArrayIndexOutOfBoundsException();
+			nodes.get(id).connected = true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public int getPort(){
-		return port;
+		return nodes.get(id).port;
 	}
 	
 	public Logger getLogger(){
 		return log;
 	}
-
 	
+	public int getConnectedCount(){
+		return nodes
+				.stream()
+				.mapToInt(NodeInfo::isConnected)
+				.reduce(0, (a, b) -> a + b);
+	}
+
+
 	private void setupLogger(){
+		System.setProperty("java.util.logging.SimpleFormatter.format",
+                "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS.%1$tL %4$s ::: %5$s %6$s%n\n");
 		// NO initial logging handlers
 				log.getParent().removeHandler(log.getParent().getHandlers()[0]);
 		
@@ -85,19 +128,17 @@ public class NetworkNode {
 	
 	
 	/**
-	 * Initialize Lamport connections, including listening for incoming connections
+	 * Initialize Node connections, including listening for incoming connections
 	 * And attempting to connect to other servers
 	 */
 	private void networkInit(){
 		try {
-			serverSocket = new ServerSocket(port+1);
+			serverSocket = new ServerSocket(getPort()+1);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		connectedNodes = new ArrayList<>();
-		connectedNodes.add(id);
 		startConnectionThread();
-		connectToOtherServers(restart, otherNodes.size());
+		connectToOtherServers(restart);
 	}
 	
 	
@@ -123,7 +164,7 @@ public class NetworkNode {
 	 */
 	private void connectionLoop(){
 		while(true){
-			log.finer("Listenining for connection on port "+ (port+1));
+			log.finer("Listenining for connection on port "+ (getPort()+1));
 			try {
 				// set up connection from unknown server
 				Socket sock = serverSocket.accept();
@@ -150,36 +191,36 @@ public class NetworkNode {
 	
 	
 	/**
-	 * Connect to the other Lamport servers. If "restart==false", this will attempt to
+	 * Connect to the other nodes. If "restart==false", this will attempt to
 	 * connect only to servers with id < this.serverID. If "restart==true", this will
 	 * attempt to connect to all other servers.  
 	 */
-	private void connectToOtherServers(boolean restart, int nOthers){
+	private void connectToOtherServers(boolean restart){
 		// create other initial connections
 		int iServer = -1;
 		
 		// if restarting, start by assuming that you must connect to all other servers
 		// this will be updated after connecting to one live server
 		// otherwise, on a fresh startup, connect to all servers with serverID less than yours 
-		int nConnections = restart ? (nOthers) : id+1;
+		int nConnections = restart ? (nodes.size()) : id+1;
 		
-		while(connectedNodes.size() < nConnections) {
+		while(getConnectedCount() < nConnections) {
 			iServer = (iServer+1) % (restart?nConnections:id);
-			if (connectedNodes.contains(iServer))
+			if (nodes.get(iServer).connected)
 				continue; // this socket and thread will be null
 
 			try {
 				log.fine("Entering connect loop for iServer = " + iServer);
 				Socket sock = new Socket();
 				try{
-					sock.connect(new InetSocketAddress(otherNodes.get(iServer), ports.get(iServer) + 1), TIMEOUT);
-					connectedNodes.add(iServer);
+					sock.connect(new InetSocketAddress(nodes.get(iServer).address, nodes.get(iServer).port + 1), TIMEOUT);
+					nodes.get(iServer).connected = true;
 				} catch (ConnectException e) {
 					// could not connect. Wait 1/2 second and move on
 					try {
 						Thread.sleep(WAIT_TIME);
 					} catch (InterruptedException e1) {}
-					log.finer("Lamport connection NOT made to server "+iServer);
+					log.finer("NetworkNode connection NOT made to server "+iServer);
 					continue;
 				}
 				
@@ -206,5 +247,57 @@ public class NetworkNode {
 	}
 	
 	
+//****************************************************************
+//	main()
+//****************************************************************
 	
+	/**
+	 * Run the main program
+	 * 
+	 * @param args
+	 *            command line input. Expects [id] [nodeList file] [optional "restart"]
+	 *            
+	 * Format of nodeList file:
+	 * 127.0.0.1:8000
+	 * 127.0.0.1:8005
+	 * [ip]:[port]
+	 * ...
+	 */
+	public static void main(String[] args) {
+		if (args.length < 2 || args.length > 3) {
+			System.out.println("ERROR: Provide 2 or 3 arguments");
+			System.out.println("\t(1) <int>: process id, between 0 and number of nodes in node list file");
+			System.out.println("\t(2) <file>: node list file");
+			System.out.println("\t(3) <restart>: optional flag to restart failed server");
+			System.exit(-1);
+		}
+
+		int id=0;
+		try{
+			id = Integer.parseInt(args[0]);
+		} catch (NumberFormatException e){
+			System.err.println("Error parsing process id from input string " + args[0]);
+			System.exit(1);
+		}
+		
+		String fileName = args[1];
+		
+		boolean restart = false;
+		if(args.length==2 && args[1].equals("restart"))
+			restart = true;
+
+		File file = new File(fileName);
+		if (!file.exists() || file.isDirectory()){
+			System.err.println("IO error for nodeList file: " + fileName);
+			System.exit(2);
+		}
+
+
+		NetworkNode node = new NetworkNode(id, fileName, restart);
+//		node.run();
+		
+	}
+
 }
+	
+	
