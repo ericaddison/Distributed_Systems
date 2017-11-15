@@ -19,6 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import paxos.messages.Message;
+import paxos.messages.MessageType;
+
 /**
  * Base class to build on. This class will only worry about creating and managing TCP
  * connections to other nodes. Algorithmic pieces will act as decorators on this base class. 
@@ -118,24 +121,29 @@ public class NetworkNode {
 	/**
 	 * Send a message to another node
 	 */
-	private void sendMessage(NodeInfo node, String message) {
-		log.finest("Sending message \"" + message + "\" to " + node.address + ":" + node.port );
-		node.writer.println(message);
+	private void sendMessage(NodeInfo node, Message msg) {
+		log.finest("Sending message \"" + msg + "\" to " + node );
+		node.writer.println(msg.toString());
 		node.writer.flush();
 	}
 	
 	/**
 	 * Receive a message from another node   
 	 */
-	private String receiveMessage(NodeInfo node){
+	private Message receiveMessage(NodeInfo node){
 		String msg = null;
 		try {
 			msg = node.reader.readLine();
+			log.finest("Received message \"" + msg + "\" from " + node );
+			return Message.fromString(msg);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (IllegalArgumentException e){
+			log.finest("Failed to decode message \"" + msg + "\" from " + node);
 		}
-		log.finest("Received message \"" + msg + "\" from " + node.address + ":" + node.port );
-		return msg;
+		
+		return null;
+
 	}
 
 //****************************************************************
@@ -159,7 +167,7 @@ public class NetworkNode {
 		public NodeInfo(Socket sock) {
 			try{
 				address = sock.getInetAddress();
-				port = sock.getLocalPort();
+				port = sock.getPort();
 				writer = new PrintWriter(sock.getOutputStream());
 				reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 				connected = true;
@@ -236,10 +244,44 @@ public class NetworkNode {
 		log.finer("Initializing incoming connection with node at " + node);
 		
 		// find out what id they are
-		receiveMessage(node);
 		
-		// if ok, add to list of nodes
+		int theirId = 0;
+		try{
+			Message msg = receiveMessage(node);
+			node.connected = true;
+			
+			if(msg.getType() != MessageType.INIT){
+				log.warning("Received non INIT message from " + node);
+				node.connected = false;
+			}
+			theirId = msg.getId();
+			
+			if(theirId < 0 || theirId >= nodes.size()){
+				log.warning("Received out-of-bounds id from " + node);
+				node.connected = false;
+			}
+			
+			if(nodes.get(theirId).connected){
+				log.warning("Received in-use id from " + node);
+				node.connected = false;
+			}
+			
+		} catch(IllegalArgumentException e){
+			log.warning("Could not decode message from " + node);
+			node.connected = false;
+		}
 		
+		if(!node.connected){
+			Message nogood = new Message(MessageType.NACK, "reject", 0, id);
+			sendMessage(node, nogood);
+			sock.close();
+			return;
+		}
+		
+		// if ok, add to list of nodes and send ack
+		nodes.set(theirId, node);
+		Message ack_msg = new Message(MessageType.INIT, "ACK", 0, id); 
+		sendMessage(node, ack_msg);
 	}
 	
 	
@@ -300,9 +342,11 @@ public class NetworkNode {
 		log.finer("Initializing outgoing connection with node at " + node);
 		
 		// send init message identifying myself
-		sendMessage(node, "Hi, I am node " + id);
+		Message msg = new Message(MessageType.INIT, "id", id, id);
+		sendMessage(node, msg);
 		
-		//
+		// listen for ack message
+		Message ack_msg = receiveMessage(node);
 	}
 	
 	

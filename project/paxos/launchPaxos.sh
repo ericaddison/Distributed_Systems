@@ -3,5 +3,6 @@ id=$1
 file=$2
 restart=$3
 
-classpath=./dist/lib
-java -classpath $classpath/Paxos.jar:. paxos.NetworkNode $id $file $restart
+dist_classpath=./dist/lib
+lib_classpath=./libs
+java -classpath $dist_classpath/Paxos.jar:$lib_classpath/gson-2.6.2.jar:. paxos.NetworkNode $id $file $restart
