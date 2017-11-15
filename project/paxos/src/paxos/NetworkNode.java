@@ -213,6 +213,7 @@ public class NetworkNode {
 		
 		public NodeInfo(Socket sock) {
 			try{
+				this.sock = sock;
 				address = sock.getInetAddress();
 				port = sock.getPort();
 				writer = new PrintWriter(sock.getOutputStream());
@@ -452,6 +453,17 @@ public class NetworkNode {
 		NetworkNode node = new NetworkNode(id, fileName, restart);
 		node.run();
 		
+	}
+
+	public void clearnode(int otherID) {
+		nodes.get(otherID).connected = false;
+		nodes.get(otherID).writer = null;
+		nodes.get(otherID).reader = null;
+		nodes.get(otherID).sock = null;
+	}
+
+	public boolean isConnected(int inode) {
+		return nodes.get(inode).connected;
 	}
 
 }

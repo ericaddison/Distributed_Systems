@@ -1,10 +1,10 @@
 package paxos;
 
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import paxos.messages.Message;
-import paxos.messages.MessageType;
 import paxos.roles.Acceptor;
 import paxos.roles.Learner;
 import paxos.roles.Proposer;
@@ -36,6 +36,8 @@ public class PaxosNode{
 	public void run(){
 		getLogger().info("Starting run phase");
 		netnode.run();
+		getLogger().info("Run init phase complete");
+		startListenerLoops();
 	}
 	
 	// determine paxos roles by setting these values to non-null
@@ -51,7 +53,61 @@ public class PaxosNode{
 			proposer = null;
 	}
 	
+
+	private void startListenerLoops(){
+		// start a listener loop for all connected nodes
+		for(int inode=0; inode<Nprocs; inode++){
+			if(id!=inode){
+				// spin off new thread
+				final int ii = inode;
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						listenerLoop(ii);
+					}
+				});
+				getLogger().log(Level.FINEST, "Starting Paxos thread "+ inode);
+				t.start();
+			}
+		}
+	}
 	
+	
+	/**
+	 * Listen infinite listen loop for messages on the Paxos channel 
+	 */
+	private void listenerLoop(int otherID){
+		Message msg = null;
+		getLogger().finer("Entering listener loop for node " + otherID);
+		while(true){
+			if(!netnode.isConnected(otherID)){
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {}
+				continue;
+			}
+			
+			try{
+				getLogger().finer("Listener loop connected for node " + otherID);
+				while( (msg = netnode.receiveMessage(otherID)) != null){
+					getLogger().finest("Received string " + msg + " from server " + otherID);
+					// process message based on type
+					processMessage(msg);
+				}
+			} catch (Exception e){}
+			finally{
+				getLogger().log(Level.WARNING, "Uh oh! Lost connection with server " + otherID + ": clearing comms");
+				netnode.clearnode(otherID);
+			}
+		}
+	}
+	
+	
+	private void processMessage(Message msg) {
+		getLogger().info("Processing message " + msg);
+	}
+
 	public static void main(String[] args) {
 		if (args.length < 2 || args.length > 3) {
 			System.out.println("ERROR: Provide 2 or 3 arguments");
