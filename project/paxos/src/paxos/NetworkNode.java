@@ -18,6 +18,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.stream.Collectors;
 
 import paxos.messages.Message;
 import paxos.messages.MessageType;
@@ -90,6 +91,10 @@ public class NetworkNode {
 				.stream()
 				.mapToInt(NodeInfo::isConnected)
 				.reduce(0, (a, b) -> a + b);
+	}
+	
+	public List<String> getNodesInfo(){
+		return nodes.stream().map(NodeInfo::toString).collect(Collectors.toList());
 	}
 
 
