@@ -14,29 +14,23 @@ public class PaxosNode{
 	private NetworkNode netnode;
 	private int id;
 	private int Nprocs;
+	private Logger log;
 	
-	public PaxosNode(int id, String nodeListFileName, boolean restart) {
-		netnode = new NetworkNode(id, nodeListFileName, restart);
+	public PaxosNode(NetworkNode node, Logger log) {
+		this.log = log;
+		netnode = node;
 		Nprocs = netnode.getNodesInfo().size();
 		this.id = netnode.getId();
-		getLogger().info("Created new " + this.getClass().getSimpleName() + " with:");
-		getLogger().info("\tid = " + id);
-		getLogger().info("\tnodeListFileName = " + nodeListFileName);
-		getLogger().info("\tresart = " + restart);
-		getLogger().info("Node List:");
-		for(String node : netnode.getNodesInfo()){
-			getLogger().info("\t" + node);
-		}
+		log.info("Created new " + this.getClass().getSimpleName() + " with:");
+		log.info("\tid = " + id);
 	}
 
-	private Logger getLogger(){
-		return netnode.getLogger();
-	}
-	
 	public void run(){
-		getLogger().info("Starting run phase");
-		netnode.run();
-		getLogger().info("Run init phase complete");
+		log.info("Starting run phase");
+		if(!netnode.isRunning()){
+			netnode.run();
+		}
+			
 		startListenerLoops();
 	}
 	
@@ -67,7 +61,7 @@ public class PaxosNode{
 						listenerLoop(ii);
 					}
 				});
-				getLogger().log(Level.FINEST, "Starting Paxos thread "+ inode);
+				log.log(Level.FINEST, "Starting Paxos thread "+ inode);
 				t.start();
 			}
 		}
@@ -79,7 +73,7 @@ public class PaxosNode{
 	 */
 	private void listenerLoop(int otherID){
 		Message msg = null;
-		getLogger().finer("Entering listener loop for node " + otherID);
+		log.finer("Entering listener loop for node " + otherID);
 		while(true){
 			if(!netnode.isConnected(otherID)){
 				try {
@@ -89,15 +83,15 @@ public class PaxosNode{
 			}
 			
 			try{
-				getLogger().finer("Listener loop connected for node " + otherID);
+				log.finer("Listener loop connected for node " + otherID);
 				while( (msg = netnode.receiveMessage(otherID)) != null){
-					getLogger().finest("Received string " + msg + " from server " + otherID);
+					log.finest("Received string " + msg + " from server " + otherID);
 					// process message based on type
 					processMessage(msg);
 				}
 			} catch (Exception e){}
 			finally{
-				getLogger().log(Level.WARNING, "Uh oh! Lost connection with server " + otherID + ": clearing comms");
+				log.log(Level.WARNING, "Uh oh! Lost connection with server " + otherID + ": clearing comms");
 				netnode.clearnode(otherID);
 			}
 		}
@@ -105,41 +99,7 @@ public class PaxosNode{
 	
 	
 	private void processMessage(Message msg) {
-		getLogger().info("Processing message " + msg);
-	}
-
-	public static void main(String[] args) {
-		if (args.length < 2 || args.length > 3) {
-			System.out.println("ERROR: Provide 2 or 3 arguments");
-			System.out.println("\t(1) <int>: process id, between 0 and number of nodes in node list file");
-			System.out.println("\t(2) <file>: node list file");
-			System.out.println("\t(3) <restart>: optional flag to restart failed server");
-			System.exit(-1);
-		}
-
-		int id=0;
-		try{
-			id = Integer.parseInt(args[0]);
-		} catch (NumberFormatException e){
-			System.err.println("Error parsing process id from input string " + args[0]);
-			System.exit(1);
-		}
-		
-		String fileName = args[1];
-		
-		boolean restart = false;
-		if(args.length==3 && args[2].equals("restart"))
-			restart = true;
-
-		File file = new File(fileName);
-		if (!file.exists() || file.isDirectory()){
-			System.err.println("IO error for nodeList file: " + fileName);
-			System.exit(2);
-		}
-
-
-		PaxosNode pnode = new PaxosNode(id, fileName, restart);
-		pnode.run();
+		log.info("Processing message " + msg);
 	}
 	
 }
