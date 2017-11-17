@@ -31,6 +31,7 @@ public class NetworkNode {
 	private static final long MAX_WAIT_TIME = 60000;
 	private int id;
 	private List<NodeInfo> nodes;
+	private List<Integer> ports; 
 	private Thread connectThread;
 	private ServerSocket serverSocket;
 	private boolean restart;
@@ -76,11 +77,13 @@ public class NetworkNode {
 			// remaining lines = server locations
 			String nextServer = "";
 			nodes = new ArrayList<>();
+			ports = new ArrayList<>();
 			while ((nextServer = br.readLine()) != null) {
 				String[] serverToks = nextServer.split(":");
 				NodeInfo newNode = new NodeInfo();
 				newNode.address = InetAddress.getByName(serverToks[0]);
 				newNode.port = Integer.parseInt(serverToks[1]);
+				ports.add(newNode.port);
 				nodes.add(newNode);
 			}
 			if(id<0 || id>=nodes.size())
@@ -185,7 +188,7 @@ public class NetworkNode {
 	/**
 	 * Private class to track node info. Just a struct. 
 	 */
-	static class NodeInfo{
+	class NodeInfo{
 		InetAddress address;
 		int port;
 		boolean connected;
@@ -205,6 +208,7 @@ public class NetworkNode {
 				reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 				connected = true;
 			} catch(IOException e){
+				log.warning("IOException from node " + this);
 				connected = false;
 			}
 		}
@@ -239,7 +243,7 @@ public class NetworkNode {
 	 * Start the infinite TCP listening thread
 	 */
 	private void startConnectionThread(){
-		log.info("Initating connections");
+		log.info("Initiating connections");
 		
 		// start eternal socket acceptance loop
 		connectThread = new Thread(new Runnable(){
@@ -308,6 +312,8 @@ public class NetworkNode {
 			node.connected = false;
 		}
 		
+		nodes.set(theirId, node);
+		
 		if(!node.connected){
 			Message nogood = new Message(MessageType.NACK, "reject", 0, id);
 			sendMessage(node, nogood);
@@ -316,7 +322,6 @@ public class NetworkNode {
 		}
 		
 		// if ok, add to list of nodes and send ack
-		nodes.set(theirId, node);
 		Message ack_msg = new Message(MessageType.INIT, "ACK", 0, id); 
 		sendMessage(node, ack_msg);
 	}
@@ -346,22 +351,16 @@ public class NetworkNode {
 				log.fine("Entering connect loop for iServer = " + iServer);
 				Socket sock = new Socket();
 				try{
-					sock.connect(new InetSocketAddress(node.address, node.port + 1), TIMEOUT);
-					node.connected = true;
-				} catch (ConnectException e) {
-					// could not connect. 
-					// Wait for an increasing amount of time, depending on number of attempts made
-					// max wait time = 1 minute
-					try {
-						long waitTime = Math.min(node.connectionAttempts * WAIT_TIME, MAX_WAIT_TIME);  
-						Thread.sleep(waitTime);
-						node.connectionAttempts++;
-					} catch (InterruptedException e1) {}
-						log.finer("NetworkNode connection NOT made to server "+iServer);
+					if(node.connectionAttempts>0)
+						Thread.sleep(WAIT_TIME);
+					sock.connect(new InetSocketAddress(node.address, ports.get(iServer) + 1), TIMEOUT);
+					initOutgoingConnection(sock, iServer);
+				} catch (ConnectException | InterruptedException e) {
+					log.finer("NetworkNode connection failed to node "+iServer + ". So far " 
+							+ node.connectionAttempts + " attempts.");
+					node.connectionAttempts++;
 					continue;
 				}
-				
-				initOutgoingConnection(sock, iServer);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -390,6 +389,7 @@ public class NetworkNode {
 
 
 	public void clearnode(int otherID) {
+		log.fine("Cleaing node " + otherID);
 		nodes.get(otherID).connected = false;
 		nodes.get(otherID).writer = null;
 		nodes.get(otherID).reader = null;

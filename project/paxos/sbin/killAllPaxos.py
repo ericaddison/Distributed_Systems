@@ -15,6 +15,12 @@ for pid in sys.argv[1:]:
 	p = subprocess.Popen(['ps', '-o', 'pid', '--ppid', str(pid)], stdout=subprocess.PIPE)
 	child_pids = p.stdout.read().split('\n')[1:-1]
 	for child_pid in child_pids:
-		os.kill(int(child_pid), signal.SIGTERM)
-	os.kill(int(pid), signal.SIGTERM)
+		try:
+			os.kill(int(child_pid), signal.SIGTERM)
+		except OSError:
+			pass
+	try:
+		os.kill(int(pid), signal.SIGTERM)
+	except OSError:
+		pass
 	

@@ -36,7 +36,7 @@ public class PretendApp {
 	public void run(){
 		netnode.run();
 		paxnode.run();
-		
+		/*
 		if(id==0){
 			try {
 				Thread.sleep(5000);
@@ -45,6 +45,7 @@ public class PretendApp {
 				e.printStackTrace();
 			}
 		}
+		*/
 	}
 	
 	
@@ -61,10 +62,10 @@ public class PretendApp {
 			fh.setFormatter(new SimpleFormatter());
 			fh.setLevel(logLevel);
 			log.addHandler(fh);
+			log.setLevel(logLevel);
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	

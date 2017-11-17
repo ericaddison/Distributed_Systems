@@ -253,6 +253,7 @@ public class PaxosNode{
 		log.finer("Entering listener loop for node " + otherID);
 		while(true){
 			if(!netnode.isConnected(otherID)){
+				log.finer("Found node " + otherID + " NOT connected!!!");
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {}
@@ -268,7 +269,9 @@ public class PaxosNode{
 					// process message based on type
 					processMessage(msg);
 				}
-			} catch (Exception e){}
+			} catch (Exception e){
+				log.warning(e.getMessage());
+			}
 			finally{
 				log.log(Level.WARNING, "Uh oh! Lost connection with server " + otherID + ": clearing comms");
 				netnode.clearnode(otherID);
