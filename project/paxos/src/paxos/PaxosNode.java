@@ -1,9 +1,7 @@
 package paxos;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import paxos.messages.Message;
@@ -17,6 +15,7 @@ public class PaxosNode{
 	private Logger log;
 	private int lastProposalNumber = -1;
 	private int proposeResponseCount = 0;
+	private float[] acceptorWeights;
 	
 	private int proposeResponseN;
 	private String proposeResponseV;
@@ -27,10 +26,18 @@ public class PaxosNode{
 	private boolean distinguishedProposer = false;
 	private boolean distinguishedLearner = false;
 	
-	public PaxosNode(NetworkNode node, Logger log) {
+	
+	public PaxosNode(NetworkNode node, Logger log, boolean restart) {
 		this.log = log;
 		netnode = node;
-		Nprocs = netnode.getNodesInfo().size();
+		Nprocs = netnode.getTotalNodeCount();
+		
+		// Set weight here
+		// TODO: generalize for any input weight, specified in node list file
+		acceptorWeights = new float[Nprocs];
+		for(int i=0; i<Nprocs; i++)
+			acceptorWeights[i] = 1/Nprocs;
+		
 		this.id = netnode.getId();
 		log.info("Created new " + this.getClass().getSimpleName() + " with:");
 		log.info("\tid = " + id);
@@ -47,58 +54,33 @@ public class PaxosNode{
 		if(!netnode.isRunning()){
 			netnode.run();
 		}
-			
-		startListenerLoops();
 	}
 
-	public int getId() {
-		return id;
-	}
 	
-	public int getNprocs() {
-		return Nprocs;
+	public void processMessage(Message msg) {
+		log.info("Processing message " + msg);
+		
+		switch(msg.getType()){
+		case ACCEPT_REQUEST:
+			break;
+		case ACCEPT_RESPONSE:
+			break;
+		case INIT:
+			break;
+		case NACK:
+			break;
+		case PROPOSE_REQUEST:
+			receiveProposeRequest(msg);
+			break;
+		case PROPOSE_RESPONSE:
+			receiveProposeResponse(msg);
+			break;
+		default:
+			break;
+		}
+		
+		
 	}
-	
-	public boolean isProposer() {
-		return proposer;
-	}
-
-	public void setProposer(boolean proposer) {
-		this.proposer = proposer;
-	}
-
-	public boolean isAcceptor() {
-		return acceptor;
-	}
-
-	public void setAcceptor(boolean acceptor) {
-		this.acceptor = acceptor;
-	}
-
-	public boolean isLearner() {
-		return learner;
-	}
-
-	public void setLearner(boolean learner) {
-		this.learner = learner;
-	}
-
-	public boolean isDistinguishedProposer() {
-		return distinguishedProposer;
-	}
-
-	public void setDistinguishedProposer(boolean distinguishedProposer) {
-		this.distinguishedProposer = distinguishedProposer;
-	}
-
-	public boolean isDistinguishedLearner() {
-		return distinguishedLearner;
-	}
-
-	public void setDistinguishedLearner(boolean distinguishedLearner) {
-		this.distinguishedLearner = distinguishedLearner;
-	}
-
 	
 	
 //*************************************************8
@@ -220,92 +202,58 @@ public class PaxosNode{
 	
 	
 	
-	
+
 //*************************************************8
-//	Listen loop methods	
+//	Getters and Setters
 	
+	
+	public int getId() {
+		return id;
+	}
+	
+	public int getNprocs() {
+		return Nprocs;
+	}
+	
+	public boolean isProposer() {
+		return proposer;
+	}
 
-	private void startListenerLoops(){
-		// start a listener loop for all connected nodes
-		for(int inode=0; inode<Nprocs; inode++){
-			if(id!=inode){
-				// spin off new thread
-				final int ii = inode;
-				Thread t = new Thread(new Runnable() {
+	public void setProposer(boolean proposer) {
+		this.proposer = proposer;
+	}
 
-					@Override
-					public void run() {
-						listenerLoop(ii);
-					}
-				});
-				log.log(Level.FINEST, "Starting Paxos thread "+ inode);
-				t.start();
-			}
-		}
+	public boolean isAcceptor() {
+		return acceptor;
+	}
+
+	public void setAcceptor(boolean acceptor) {
+		this.acceptor = acceptor;
+	}
+
+	public boolean isLearner() {
+		return learner;
+	}
+
+	public void setLearner(boolean learner) {
+		this.learner = learner;
+	}
+
+	public boolean isDistinguishedProposer() {
+		return distinguishedProposer;
+	}
+
+	public void setDistinguishedProposer(boolean distinguishedProposer) {
+		this.distinguishedProposer = distinguishedProposer;
+	}
+
+	public boolean isDistinguishedLearner() {
+		return distinguishedLearner;
+	}
+
+	public void setDistinguishedLearner(boolean distinguishedLearner) {
+		this.distinguishedLearner = distinguishedLearner;
 	}
 	
-	
-	/**
-	 * Listen infinite listen loop for messages on the Paxos channel 
-	 */
-	private void listenerLoop(int otherID){
-		Message msg = null;
-		log.finer("Entering listener loop for node " + otherID);
-		while(true){
-			if(!netnode.isConnected(otherID)){
-				log.finer("Found node " + otherID + " NOT connected!!!");
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {}
-				continue;
-			}
-			
-			
-			
-			try{
-				log.finer("Listener loop connected for node " + otherID);
-				while( (msg = netnode.receiveMessage(otherID)) != null){
-					log.finest("Received string " + msg + " from server " + otherID);
-					// process message based on type
-					processMessage(msg);
-				}
-			} catch (Exception e){
-				log.warning(e.getMessage());
-			}
-			finally{
-				log.log(Level.WARNING, "Uh oh! Lost connection with server " + otherID + ": clearing comms");
-				netnode.clearnode(otherID);
-			}
-			
-			
-			
-		}
-	}
-	
-	
-	private void processMessage(Message msg) {
-		log.info("Processing message " + msg);
-		
-		switch(msg.getType()){
-		case ACCEPT_REQUEST:
-			break;
-		case ACCEPT_RESPONSE:
-			break;
-		case INIT:
-			break;
-		case NACK:
-			break;
-		case PROPOSE_REQUEST:
-			receiveProposeRequest(msg);
-			break;
-		case PROPOSE_RESPONSE:
-			receiveProposeResponse(msg);
-			break;
-		default:
-			break;
-		}
-		
-		
-	}
 	
 }

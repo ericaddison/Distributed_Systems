@@ -6,5 +6,6 @@ public enum MessageType {
 	ACCEPT_REQUEST,
 	ACCEPT_RESPONSE,
 	NACK,
-	INIT
+	INIT,
+	APP
 }

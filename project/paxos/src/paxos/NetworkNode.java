@@ -28,7 +28,6 @@ public class NetworkNode {
 	
 	private static final int TIMEOUT = 500;
 	private static final long WAIT_TIME = 500;
-	private static final long MAX_WAIT_TIME = 60000;
 	private int id;
 	private List<NodeInfo> nodes;
 	private List<Integer> ports; 
@@ -102,7 +101,12 @@ public class NetworkNode {
 		return log;
 	}
 	
-	public int getConnectedCount(){
+	public int getTotalNodeCount(){
+		return nodes.size();
+	}
+	
+	
+	public int getConnectedNodeCount(){
 		return nodes
 				.stream()
 				.mapToInt(NodeInfo::isConnected)
@@ -341,7 +345,7 @@ public class NetworkNode {
 		// otherwise, on a fresh startup, connect to all servers with serverID less than yours 
 		int nConnections = restart ? (nodes.size()) : id+1;
 		
-		while(getConnectedCount() < nConnections) {
+		while(getConnectedNodeCount() < nConnections) {
 			iServer = (iServer+1) % (restart?nConnections:id);
 			NodeInfo node = nodes.get(iServer);
 			if (node.connected)

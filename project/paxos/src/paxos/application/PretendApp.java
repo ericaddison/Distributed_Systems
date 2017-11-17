@@ -1,75 +1,18 @@
 package paxos.application;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
-import paxos.NetworkNode;
-import paxos.PaxosNode;
+public class PretendApp extends AbstractApp{
 
-public class PretendApp {
-
-	private final Logger log = Logger.getLogger(this.getClass().getCanonicalName());
-	private Level logLevel = Level.ALL;
-	
-	private NetworkNode netnode;
-	private PaxosNode paxnode;
-	private int id;
-	
-	
 	public PretendApp(int id, String nodeListFileName, boolean restart) {
-		this.id = id;
-		setupLogger();
-		
-		log.info("Created new " + this.getClass().getSimpleName() + " with:");
-		log.info("\tid = " + id);
-		
-		netnode = new NetworkNode(id, nodeListFileName, restart, log);
-		paxnode = new PaxosNode(netnode, log);
+		super(id, nodeListFileName, restart);
+	}
 
+	@Override
+	public void run_app() {
+		getLog().info("PretendApp run phase");
 	}
-	
-	public void run(){
-		netnode.run();
-		paxnode.run();
-		/*
-		if(id==0){
-			try {
-				Thread.sleep(5000);
-				paxnode.sendProposeRequest();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		*/
-	}
-	
-	
-	private void setupLogger(){
-		// set logging format
-		System.setProperty("java.util.logging.SimpleFormatter.format",
-                "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS.%1$tL %4$s ::: %2$s ::: %5$s %6$s%n");
-		
-		// NO initial logging handlers
-				log.getParent().removeHandler(log.getParent().getHandlers()[0]);
-		
-		try {
-			FileHandler fh = new FileHandler("logs/log_" + id + ".log");
-			fh.setFormatter(new SimpleFormatter());
-			fh.setLevel(logLevel);
-			log.addHandler(fh);
-			log.setLevel(logLevel);
-		} catch (SecurityException | IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
+
 	
 //****************************************************************
 //	main()
@@ -117,9 +60,10 @@ public class PretendApp {
 		}
 
 
-		PretendApp app = new PretendApp(id, fileName, restart);
+		AbstractApp app = new PretendApp(id, fileName, restart);
 		app.run();
 	}
+	
 	
 	
 }
