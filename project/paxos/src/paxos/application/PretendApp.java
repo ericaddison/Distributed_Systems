@@ -65,12 +65,6 @@ public class PretendApp {
 			e.printStackTrace();
 		}
 
-		if(id==0){
-			ConsoleHandler ch = new ConsoleHandler();
-			ch.setLevel(logLevel);
-			log.addHandler(ch);
-			log.setLevel(logLevel);
-		}
 	}
 	
 	
