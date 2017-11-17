@@ -7,8 +7,11 @@ package paxos;
 public class ProposalGenerator {
 
 	
-	public static ProposalValue getNextProposalValue(int id, Proposal lastProposal, int round){
-		return null;
+	public static Proposal getNextProposal(int id, int nprocs, Proposal lastProposal, int round){
+		
+		int num = (lastProposal == null) ? id : lastProposal.getNumber() + nprocs;
+		
+		return new Proposal(num, new ProposalValue());
 	}
 	
 	

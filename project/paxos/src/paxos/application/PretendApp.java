@@ -36,6 +36,15 @@ public class PretendApp {
 	public void run(){
 		netnode.run();
 		paxnode.run();
+		
+		if(id==0){
+			try {
+				Thread.sleep(5000);
+				paxnode.sendProposeRequest();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
