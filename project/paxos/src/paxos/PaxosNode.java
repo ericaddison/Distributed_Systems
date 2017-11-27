@@ -71,7 +71,7 @@ public class PaxosNode{
 
 	
 	public void processMessage(Message msg) {
-		log.info("Processing message " + msg);
+		log.finest("Processing message " + msg);
 		
 		switch(msg.getType()){
 		case ACCEPT_REQUEST:
@@ -85,6 +85,12 @@ public class PaxosNode{
 			break;
 		case PREPARE_RESPONSE:
 			receivePrepareResponse(msg);
+			break;
+		case ACCEPT_NOTIFICATION:
+			receiveAcceptNotification(msg);
+			break;
+		case CHOSEN_VALUE:
+			receiveChosenValueMessage(msg);
 			break;
 		default:
 			break;
@@ -279,7 +285,10 @@ public class PaxosNode{
 	// send to distinguished learner(s)
 	public void sendAcceptNotification(){
 		// TODO: Need to store accepted proposal (serialize)
-		
+		Message msg = new Message(MessageType.ACCEPT_NOTIFICATION, acceptedProposal.toString(), acceptedProposal.number, id);
+		for(Integer learnerID : distinguishedLearners){
+			netnode.sendMessage(learnerID, msg);
+		}
 	}
 	
 	
@@ -291,6 +300,7 @@ public class PaxosNode{
 	Proposal[] acceptedProposals;
 	Map<String, Float> chosenChecker;
 	private String myValue;
+	private String chosenValue;
 	
 	public void learnerInit(){
 		acceptedProposals = new Proposal[Nprocs];
@@ -301,14 +311,23 @@ public class PaxosNode{
 	public void receiveAcceptNotification(Message msg){
 		
 		// parse message for accepted proposal
-		
+		int accId = msg.getId();
+		Proposal prop = Proposal.fromString(msg.getValue());
 		
 		// store proposal in acceptedProposals
+		acceptedProposals[accId] = prop;
+		log.fine("Received new accepted proposal from node " + accId);
 		
 		// check if a value has been chosen
+		String chosenVal = checkForChosenValue();
 		
 		// inform other learners if value has been chosen
-		
+		if(chosenVal != null){
+			log.info("Chosen value (" + accId + ") = " + chosenVal);
+			sendChosenValue();
+		} else {
+			log.fine("No chosen value yet (" + accId + ")");
+		}
 	}	
 	
 	private String checkForChosenValue(){
@@ -320,13 +339,40 @@ public class PaxosNode{
 			Proposal p = acceptedProposals[i];
 			if(p != null){
 				float sum = (chosenChecker.containsKey(p.value)) ? chosenChecker.get(p.value) : 0;
-				if(sum>0.5)
-					return p.value;
-				chosenChecker.put(p.value, sum+acceptorWeights[i]);
+				sum += acceptorWeights[i];
+				if(sum>0.5){
+					chosenValue = p.value;
+					return chosenValue;
+				}
+				chosenChecker.put(p.value, sum);
 			}
 		}
 		
+		log.finer("ChosenChecker: " + chosenChecker.toString());
+		
 		return null;
+	}
+	
+	private void sendChosenValue(){
+		log.info("Sending chosen value " + chosenValue + " to all");
+		Message msg = new Message(MessageType.CHOSEN_VALUE, chosenValue, 0, id);
+		for(int i=0; i<Nprocs; i++){
+			if(i!=id)
+				netnode.sendMessage(i, msg);
+		}
+	}
+	
+	
+	private void receiveChosenValueMessage(Message msg){
+		if(chosenValue == null){
+			log.info("Received new chosen value from " + msg.getId() + " : " + msg.getValue());
+			chosenValue = msg.getValue();
+		} else {
+			if(chosenValue.equals(msg.getValue()))
+				log.fine("Chosen value confirmed from " + msg.getId() + " : " + msg.getValue());
+			else
+				log.warning("PROBLEM! CONFLICTING CHOSEN VALUE FROM " + msg.getId() + " : " + msg.getValue() + ". Current chosen value = " + chosenValue);
+		}
 	}
 	
 	

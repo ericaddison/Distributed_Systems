@@ -25,7 +25,7 @@ public class PretendApp extends AbstractApp{
 		}
 		
 		// start a Paxos round every 5 seconds, N times
-		if(getId()==0){
+		if(getPaxnode().isDistinguishedProposer()){
 			int N = 1;
 			for(int cnt=0; cnt<N; cnt++){
 				getLog().info("Initiating Paxos round " + (cnt+1) + "/" + N);

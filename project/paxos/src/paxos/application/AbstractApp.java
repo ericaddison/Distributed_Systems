@@ -83,6 +83,10 @@ abstract public class AbstractApp {
 		paxnode.sendPrepareRequest();
 	}
 	
+	public PaxosNode getPaxnode() {
+		return paxnode;
+	}
+	
 	
 //*************************************************8
 //		Listen loop methods	
