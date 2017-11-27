@@ -16,12 +16,12 @@ public class PaxosNode{
 	private int Nprocs;
 	private Logger log;
 	private float[] acceptorWeights;
+	private List<Integer> distinguishedLearners;
 	
 	private boolean proposer = true;
 	private boolean acceptor = true;
 	private boolean learner = true;
 	private boolean distinguishedProposer = false;
-	private boolean distinguishedLearner = false;
 	
 	
 	public PaxosNode(NetworkNode node, Logger log, boolean restart) {
@@ -33,19 +33,32 @@ public class PaxosNode{
 		// TODO: generalize for any input weight, specified in node list file
 		acceptorWeights = new float[Nprocs];
 		for(int i=0; i<Nprocs; i++)
-			acceptorWeights[i] = 1/Nprocs;
+			acceptorWeights[i] = 1.0f/Nprocs;
 		
 		this.id = netnode.getId();
-		log.info("Created new " + this.getClass().getSimpleName() + " with:");
-		log.info("\tid = " + id);
 		
-		if(id==0){
-			distinguishedLearner = true;
+		// parse nodeListFileTokens
+		distinguishedLearners = new ArrayList<>();
+		for(int i=0; i<Nprocs; i++){
+			String[] toks = node.getNodeFileTokens(i);
+			if (toks[NetworkNode.DL_COL].equals("1"))
+				distinguishedLearners.add(i);
+			acceptorWeights[i] = Float.parseFloat(toks[NetworkNode.WEIGHT_COL]);
+		}
+		
+		if(node.getNodeFileTokens(id)[NetworkNode.DP_COL].equals("1")){
 			distinguishedProposer = true;
 		}
 		
 		if(learner)
 			learnerInit();
+		
+		
+		log.info("Created new " + this.getClass().getSimpleName() + " with:");
+		log.info("\tid = " + id);
+		log.info("\tweight = " + acceptorWeights[id]);
+		log.info("\tDistinguished Proposer = " + distinguishedProposer);
+		log.info("\tDistinguished Learner = " + distinguishedLearners.contains(id));
 			
 	}
 
@@ -62,12 +75,10 @@ public class PaxosNode{
 		
 		switch(msg.getType()){
 		case ACCEPT_REQUEST:
-			break;
-		case ACCEPT_RESPONSE:
-			break;
-		case INIT:
+			receiveAcceptRequest(msg);
 			break;
 		case NACK:
+			receiveNack(msg);
 			break;
 		case PREPARE_REQUEST:
 			receivePrepareRequest(msg);
@@ -87,8 +98,8 @@ public class PaxosNode{
 //	Proposer methods	
 	
 	private int lastProposalNumber = -1;
-	private int prepareResponseSum = 0;
-	private int nackSum = 0;
+	private float prepareResponseSum = 0;
+	private float nackSum = 0;
 	private Proposal receivedProposal;
 	
 	public void sendPrepareRequest(){
@@ -128,6 +139,22 @@ public class PaxosNode{
 		nackSum = 0;
 		
 		//TODO: send the accept request
+		
+		// check if received proposal is null
+		Proposal prop = new Proposal(lastProposalNumber, myValue);
+		if(receivedProposal != null){
+			prop.value = receivedProposal.value;
+		}
+		
+		// send proposal with value to acceptors
+		List<Integer> acceptorSet = getAcceptorSet();
+		
+		// send proposal request to all acceptors in set
+		for(int acceptorId : acceptorSet){
+			Message msg = new Message(MessageType.ACCEPT_REQUEST, prop.toString(), lastProposalNumber, id);
+			netnode.sendMessage(acceptorId, msg);
+		}
+		
 	}
 	
 	
@@ -216,15 +243,25 @@ public class PaxosNode{
 		
 	}
 	
-	public void receiveAcceptRequest(){
+	public void receiveAcceptRequest(Message msg){
 		
 		// parse message
-		
-		// get proposal number
+		Proposal prop = Proposal.fromString(msg.getValue());
 		
 		// if propNumber == promiseNumber, then accept
+		if(prop.number >= promiseNumber){
+			log.info("Accepted new proposal: " + prop);
+			acceptedProposal = prop;
+			sendAcceptNotification();
+		} else {
+			log.info("Ignoring new proposal: " + prop);
+			// otherwise send NACK
+			String propString = (acceptedProposal == null) ? "" : acceptedProposal.toString();
+			Message nackMsg = new Message(MessageType.NACK, propString, promiseNumber, id);
+			sendNack(nackMsg, msg.getId());
+		}
 		
-		// otherwise send NACK?
+
 		
 	}
 	
@@ -242,6 +279,7 @@ public class PaxosNode{
 	// send to distinguished learner(s)
 	public void sendAcceptNotification(){
 		// TODO: Need to store accepted proposal (serialize)
+		
 	}
 	
 	
@@ -252,6 +290,7 @@ public class PaxosNode{
 	
 	Proposal[] acceptedProposals;
 	Map<String, Float> chosenChecker;
+	private String myValue;
 	
 	public void learnerInit(){
 		acceptedProposals = new Proposal[Nprocs];
@@ -262,6 +301,7 @@ public class PaxosNode{
 	public void receiveAcceptNotification(Message msg){
 		
 		// parse message for accepted proposal
+		
 		
 		// store proposal in acceptedProposals
 		
@@ -337,11 +377,11 @@ public class PaxosNode{
 	}
 
 	public boolean isDistinguishedLearner() {
-		return distinguishedLearner;
+		return distinguishedLearners.contains(id);
 	}
 
-	public void setDistinguishedLearner(boolean distinguishedLearner) {
-		this.distinguishedLearner = distinguishedLearner;
+	public void setMyValue(String value) {
+		myValue = value;
 	}
 	
 	

@@ -79,6 +79,7 @@ abstract public class AbstractApp {
 	}
 	
 	public void initiate_paxos(String value){
+		paxnode.setMyValue(value);
 		paxnode.sendPrepareRequest();
 	}
 	

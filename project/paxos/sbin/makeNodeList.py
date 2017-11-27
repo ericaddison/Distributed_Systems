@@ -20,5 +20,8 @@ port0 = int(sys.argv[2])
 # create a node list file
 with open('./inputs/nodeList.txt', 'w') as f:
 	for i in range(nprocs):
-		next_line = '127.0.0.1:{0}\n'.format( (port0+i*5) )
+		weight = 1.0/nprocs
+		dl = "1" if i < 3 else "0"
+		dp = "1" if i == 0 else "0"
+		next_line = '127.0.0.1 {0} {1} {2} {3}\n'.format( (port0+i*5), weight, dl, dp )
 		f.write(next_line)

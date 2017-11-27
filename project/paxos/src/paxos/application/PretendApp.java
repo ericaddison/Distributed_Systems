@@ -17,18 +17,24 @@ public class PretendApp extends AbstractApp{
 	
 	public void commandLoop(){
 		
+		// initial 5s sleep
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		// start a Paxos round every 5 seconds, N times
 		if(getId()==0){
 			int N = 1;
 			for(int cnt=0; cnt<N; cnt++){
+				getLog().info("Initiating Paxos round " + (cnt+1) + "/" + N);
+				initiate_paxos("MyVal" + getId());
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				getLog().info("Initiating Paxos round " + (cnt+1) + "/" + N);
-				initiate_paxos("MyVal");
-				
 			}
 		}
 		

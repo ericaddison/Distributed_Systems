@@ -28,6 +28,13 @@ import paxos.messages.MessageType;
  */
 public class NetworkNode {
 	
+	// Columns for nodeListFile
+	public static final int IP_COL = 0;
+	public static final int PORT_COL = 1;
+	public static final int WEIGHT_COL = 2;
+	public static final int DL_COL = 3;
+	public static final int DP_COL = 4;
+	
 	private static final int TIMEOUT = 500;
 	private static final long WAIT_TIME = 500;
 	private int id;
@@ -38,6 +45,8 @@ public class NetworkNode {
 	private boolean restart;
 	private boolean running;
 	private Deque<Message> selfMessages;
+	private List<String[]> nodeListFileTokens;
+	
 	
 	
 	// Logging
@@ -46,6 +55,7 @@ public class NetworkNode {
 	public NetworkNode(int id, String nodeListFileName, boolean restart, Logger log) {
 		this.id = id;
 		this.restart = restart;
+		this.nodeListFileTokens = new ArrayList<>();
 		parseNodeFile(nodeListFileName);
 		this.log = log;
 		this.selfMessages = new ArrayDeque<>();
@@ -74,6 +84,10 @@ public class NetworkNode {
 		return id;
 	}
 	
+	public String[] getNodeFileTokens(int nodeId){
+		return nodeListFileTokens.get(nodeId);
+	}
+	
 	private void parseNodeFile(String filename) {
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename)))) {
 
@@ -82,12 +96,13 @@ public class NetworkNode {
 			nodes = new ArrayList<>();
 			ports = new ArrayList<>();
 			while ((nextServer = br.readLine()) != null) {
-				String[] serverToks = nextServer.split(":");
+				String[] serverToks = nextServer.split(" ");
 				NodeInfo newNode = new NodeInfo();
-				newNode.address = InetAddress.getByName(serverToks[0]);
-				newNode.port = Integer.parseInt(serverToks[1]);
+				newNode.address = InetAddress.getByName(serverToks[IP_COL]);
+				newNode.port = Integer.parseInt(serverToks[PORT_COL]);
 				ports.add(newNode.port);
 				nodes.add(newNode);
+				nodeListFileTokens.add(serverToks);
 			}
 			if(id<0 || id>=nodes.size())
 				throw new ArrayIndexOutOfBoundsException();
