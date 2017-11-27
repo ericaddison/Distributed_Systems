@@ -1,7 +1,9 @@
 package paxos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import paxos.messages.Message;
@@ -13,12 +15,7 @@ public class PaxosNode{
 	private int id;
 	private int Nprocs;
 	private Logger log;
-	private int lastProposalNumber = -1;
-	private int prepareResponseCount = 0;
 	private float[] acceptorWeights;
-	
-	private int prepareResponseN;
-	private String prepareResponseV;
 	
 	private boolean proposer = true;
 	private boolean acceptor = true;
@@ -46,6 +43,9 @@ public class PaxosNode{
 			distinguishedLearner = true;
 			distinguishedProposer = true;
 		}
+		
+		if(learner)
+			learnerInit();
 			
 	}
 
@@ -86,43 +86,51 @@ public class PaxosNode{
 //*************************************************8
 //	Proposer methods	
 	
+	private int lastProposalNumber = -1;
+	private int prepareResponseSum = 0;
+	private int nackSum = 0;
+	private int prepareResponseN;
+	private String prepareResponseV;
 	
 	public void sendPrepareRequest(){
 		
 		// reset propose response count
-		prepareResponseCount = 0;
+		prepareResponseSum = 0;
+		nackSum = 0;
 		
 		// get new proposal number
 		lastProposalNumber = (lastProposalNumber == -1) ? id : lastProposalNumber+Nprocs;
-		prepareResponseN = lastProposalNumber;
 		
 		// get acceptor set
 		List<Integer> acceptorSet = getAcceptorSet();
 		
 		// send proposal request to all acceptors in set
 		for(int acceptorId : acceptorSet){
-			Message msg = new Message(MessageType.PREPARE_REQUEST, "v", lastProposalNumber, id);
+			Message msg = new Message(MessageType.PREPARE_REQUEST, "", lastProposalNumber, id);
 			netnode.sendMessage(acceptorId, msg);
 		}
 		
 		
-		// TODO: Need to store last prop num???
+		// TODO: Need to store last prop num??? (serialize)
 		
 	}
 	
 	// start by assuming everyone is an acceptor, generate set
 	private List<Integer> getAcceptorSet() {
 		List<Integer> list = new ArrayList<Integer>();
-		for(int i=id+1; i<id+(Nprocs/2)+1; i++){
-			if(i!=id)
-				list.add(i%Nprocs);
+		for(int i=id+1; i<id+(Nprocs/2)+2; i++){
+			list.add(i%Nprocs);
 		}
 		return list;
 	}
 
+	
 	public void sendAcceptRequest(){
+		nackSum = 0;
 		
+		//TODO: send the accept request
 	}
+	
 	
 	public void receivePrepareResponse(Message msg){
 		log.fine("Received PREPARE_RESPONSE from " + msg.getId());
@@ -137,22 +145,45 @@ public class PaxosNode{
 			return;
 		}
 
-		Proposal responseProposal = Proposal.fromString(msg.toString());
-		
-		prepareResponseCount++;
-		
-		if(responseProposal.number > prepareResponseN){
-			log.fine("Received newer proposal number, updating...");
-			prepareResponseN = responseProposal.number;
-			prepareResponseV = responseProposal.value;
+		Proposal responseProposal = Proposal.fromString(msg.getValue());
+
+		if(responseProposal==null){
+			log.fine("Received promise from " + msg.getId());
 		} else {
-			log.fine("Received older or equal proposal number, not updating...");
+			if( prepareResponseN < responseProposal.number ){
+				log.fine("Received promise with more recent proposal, updating values...");
+				prepareResponseN = responseProposal.number;
+				prepareResponseV = responseProposal.value;
+			} else {
+				log.fine("Received promise with outdated proposal, not updating values...");
+			}
 		}
+		
+		// update response sum. If a majority (>0.5) is obtained, send accept request
+		prepareResponseSum += acceptorWeights[msg.getId()];
+		if(prepareResponseSum > 0.5){
+			log.fine("Prepare response sum = " + nackSum + ", sending accept request");
+			sendAcceptRequest();
+		}
+		
 	}	
 	
 	// response when you are told "computer says no", proposal number is too low
-	public void receiveNack(){
-		// TODO: How to process nack?
+	// NACKs contain the newer proposal information that must be recorded
+	public void receiveNack(Message msg){
+		log.fine("Received NACK");
+		Proposal responseProposal = Proposal.fromString(msg.getValue());
+		if(responseProposal!=null){
+			prepareResponseN = responseProposal.number;
+			prepareResponseV = responseProposal.value;
+		}
+
+		// tally NACKs. If >0.5, start a new prepare request
+		nackSum += acceptorWeights[msg.getId()];
+		if(nackSum > 0.5){
+			log.fine("NACK sum = " + nackSum + ", starting new prepare request");
+			sendPrepareRequest();
+		}
 	}
 	
 	
@@ -167,16 +198,15 @@ public class PaxosNode{
 	public void receivePrepareRequest(Message msg){
 		
 		int n = msg.getNumber();
+		String propString = (acceptedProposal == null) ? "" : acceptedProposal.toString();
 		
 		// if promising
 		if(n>promiseNumber){
 			promiseNumber = n;
-			String propString = (acceptedProposal == null) ? "" : acceptedProposal.toString();
 			Message promiseMsg = new Message(MessageType.PREPARE_RESPONSE, propString, n, id);
 			sendPrepareResponse(promiseMsg, msg.getId());
-
 		} else {
-			Message nackMsg = new Message(MessageType.NACK, "", n, id);
+			Message nackMsg = new Message(MessageType.NACK, propString, n, id);
 			sendNack(nackMsg, msg.getId());
 		}
 		
@@ -184,26 +214,76 @@ public class PaxosNode{
 	
 	public void receiveAcceptRequest(){
 		
+		// parse message
+		
+		// get proposal number
+		
+		// if propNumber == promiseNumber, then accept
+		
+		// otherwise send NACK?
+		
 	}
+	
 	
 	public void sendPrepareResponse(Message msg, int otherId){
 		netnode.sendMessage(otherId, msg);
 	}
 	
+	
 	public void sendNack(Message msg, int otherId){
 		netnode.sendMessage(otherId, msg);
 	}
 	
-	public void sendAcceptResponse(){
-		
-	}
 	
-	
-	// send to distinguished learner
+	// send to distinguished learner(s)
 	public void sendAcceptNotification(){
-		
+		// TODO: Need to store accepted proposal (serialize)
 	}
 	
+	
+	
+	
+//*************************************************8
+//	Learner methods	
+	
+	Proposal[] acceptedProposals;
+	Map<String, Float> chosenChecker;
+	
+	public void learnerInit(){
+		acceptedProposals = new Proposal[Nprocs];
+		chosenChecker = new HashMap<>();
+	}
+	
+	// receive from acceptor
+	public void receiveAcceptNotification(Message msg){
+		
+		// parse message for accepted proposal
+		
+		// store proposal in acceptedProposals
+		
+		// check if a value has been chosen
+		
+		// inform other learners if value has been chosen
+		
+	}	
+	
+	private String checkForChosenValue(){
+		
+		// reset chosenChecker to check for value
+		chosenChecker.clear();
+		
+		for(int i=0; i<Nprocs; i++){
+			Proposal p = acceptedProposals[i];
+			if(p != null){
+				float sum = (chosenChecker.containsKey(p.value)) ? chosenChecker.get(p.value) : 0;
+				if(sum>0.5)
+					return p.value;
+				chosenChecker.put(p.value, sum+acceptorWeights[i]);
+			}
+		}
+		
+		return null;
+	}
 	
 	
 	

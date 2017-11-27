@@ -90,19 +90,17 @@ abstract public class AbstractApp {
 	private void startListenerLoops(){
 		// start a listener loop for all connected nodes
 		for(int inode=0; inode<netnode.getTotalNodeCount(); inode++){
-			if(id!=inode){
-				// spin off new thread
-				final int ii = inode;
-				Thread t = new Thread(new Runnable() {
+			// spin off new thread
+			final int ii = inode;
+			Thread t = new Thread(new Runnable() {
 
-					@Override
-					public void run() {
-						listenerLoop(ii);
-					}
-				});
-				log.log(Level.FINEST, "Starting App listener thread "+ inode);
-				t.start();
-			}
+				@Override
+				public void run() {
+					listenerLoop(ii);
+				}
+			});
+			log.log(Level.FINEST, "Starting App listener thread "+ inode);
+			t.start();
 		}
 	}
 	

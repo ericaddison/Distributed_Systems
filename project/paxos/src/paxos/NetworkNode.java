@@ -10,7 +10,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -35,6 +37,7 @@ public class NetworkNode {
 	private ServerSocket serverSocket;
 	private boolean restart;
 	private boolean running;
+	private Deque<Message> selfMessages;
 	
 	
 	// Logging
@@ -45,6 +48,7 @@ public class NetworkNode {
 		this.restart = restart;
 		parseNodeFile(nodeListFileName);
 		this.log = log;
+		this.selfMessages = new ArrayDeque<>();
 		
 		log.info("Created new " + this.getClass().getSimpleName() + " with:");
 		log.info("\tid = " + id);
@@ -122,13 +126,20 @@ public class NetworkNode {
 	 * Send a message to another node by id
 	 */
 	public boolean sendMessage(int theirId, Message msg) {
-		NodeInfo node = nodes.get(theirId);
-		if(!node.connected){
+		
+		
+		if(!isConnected(theirId)){
 			log.warning("Error sending message to node " + theirId + ": node not connected");
 			return false;
 		}
-		
 		log.finest("Sending message \"" + msg + "\" to node " + theirId );
+		
+		if(theirId == id){
+			selfMessages.add(msg);
+			return true;
+		}
+		
+		NodeInfo node = nodes.get(theirId);
 		node.writer.println(msg.toString());
 		node.writer.flush();
 		return true;
@@ -139,6 +150,15 @@ public class NetworkNode {
 	 * Receive a message from another node   
 	 */
 	public Message receiveMessage(int theirId){
+		// receive from self
+		if(theirId == id){
+			Message myMsg = null;
+			while(myMsg == null)
+				myMsg = selfMessages.poll();
+			log.finest("Received message \"" + myMsg + "\" from node " + theirId );
+			return myMsg;
+		}
+		
 		String msg = null;
 		NodeInfo node = nodes.get(theirId);
 		try {
@@ -401,6 +421,8 @@ public class NetworkNode {
 	}
 
 	public boolean isConnected(int inode) {
+		if(inode == id)
+			return true;
 		return nodes.get(inode).connected;
 	}
 

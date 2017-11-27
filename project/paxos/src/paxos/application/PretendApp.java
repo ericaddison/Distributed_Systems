@@ -19,7 +19,7 @@ public class PretendApp extends AbstractApp{
 		
 		// start a Paxos round every 5 seconds, N times
 		if(getId()==0){
-			int N = 5;
+			int N = 1;
 			for(int cnt=0; cnt<N; cnt++){
 				try {
 					Thread.sleep(2000);
