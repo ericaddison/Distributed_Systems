@@ -14,11 +14,11 @@ public class PaxosNode{
 	private int Nprocs;
 	private Logger log;
 	private int lastProposalNumber = -1;
-	private int proposeResponseCount = 0;
+	private int prepareResponseCount = 0;
 	private float[] acceptorWeights;
 	
-	private int proposeResponseN;
-	private String proposeResponseV;
+	private int prepareResponseN;
+	private String prepareResponseV;
 	
 	private boolean proposer = true;
 	private boolean acceptor = true;
@@ -69,11 +69,11 @@ public class PaxosNode{
 			break;
 		case NACK:
 			break;
-		case PROPOSE_REQUEST:
-			receiveProposeRequest(msg);
+		case PREPARE_REQUEST:
+			receivePrepareRequest(msg);
 			break;
-		case PROPOSE_RESPONSE:
-			receiveProposeResponse(msg);
+		case PREPARE_RESPONSE:
+			receivePrepareResponse(msg);
 			break;
 		default:
 			break;
@@ -87,20 +87,21 @@ public class PaxosNode{
 //	Proposer methods	
 	
 	
-	public void sendProposeRequest(){
+	public void sendPrepareRequest(){
 		
 		// reset propose response count
-		proposeResponseCount = 0;
+		prepareResponseCount = 0;
 		
 		// get new proposal number
 		lastProposalNumber = (lastProposalNumber == -1) ? id : lastProposalNumber+Nprocs;
+		prepareResponseN = lastProposalNumber;
 		
 		// get acceptor set
 		List<Integer> acceptorSet = getAcceptorSet();
 		
 		// send proposal request to all acceptors in set
 		for(int acceptorId : acceptorSet){
-			Message msg = new Message(MessageType.PROPOSE_REQUEST, "v", lastProposalNumber, id);
+			Message msg = new Message(MessageType.PREPARE_REQUEST, "v", lastProposalNumber, id);
 			netnode.sendMessage(acceptorId, msg);
 		}
 		
@@ -123,25 +124,29 @@ public class PaxosNode{
 		
 	}
 	
-	public void receiveProposeResponse(Message msg){
-		log.fine("Received PROPOSE_RESPONSE from " + msg.getId());
+	public void receivePrepareResponse(Message msg){
+		log.fine("Received PREPARE_RESPONSE from " + msg.getId());
 		
-		// contents of PROPOSE_RESPONSE (the promise)
+		// contents of PREPARE_RESPONSE (the promise)
 		// msg.number == YOUR request number
 		// msg.value == JSON-ified Proposal
 		
 		// if outdated response, ignore
 		if(msg.getNumber() != lastProposalNumber){
+			log.fine("Outdated response, ignoring");
 			return;
 		}
 
-		Proposal responseProposal = Proposal.fromString(msg.getValue());
+		Proposal responseProposal = Proposal.fromString(msg.toString());
 		
-		proposeResponseCount++;
+		prepareResponseCount++;
 		
-		if(responseProposal.number > proposeResponseN){
-			proposeResponseN = responseProposal.number;
-			proposeResponseV = responseProposal.value;
+		if(responseProposal.number > prepareResponseN){
+			log.fine("Received newer proposal number, updating...");
+			prepareResponseN = responseProposal.number;
+			prepareResponseV = responseProposal.value;
+		} else {
+			log.fine("Received older or equal proposal number, not updating...");
 		}
 	}	
 	
@@ -159,7 +164,7 @@ public class PaxosNode{
 	private Proposal acceptedProposal = null;
 	private int promiseNumber = -1;
 	
-	public void receiveProposeRequest(Message msg){
+	public void receivePrepareRequest(Message msg){
 		
 		int n = msg.getNumber();
 		
@@ -167,8 +172,8 @@ public class PaxosNode{
 		if(n>promiseNumber){
 			promiseNumber = n;
 			String propString = (acceptedProposal == null) ? "" : acceptedProposal.toString();
-			Message promiseMsg = new Message(MessageType.PROPOSE_RESPONSE, propString, n, id);
-			sendProposeResponse(promiseMsg, msg.getId());
+			Message promiseMsg = new Message(MessageType.PREPARE_RESPONSE, propString, n, id);
+			sendPrepareResponse(promiseMsg, msg.getId());
 
 		} else {
 			Message nackMsg = new Message(MessageType.NACK, "", n, id);
@@ -181,7 +186,7 @@ public class PaxosNode{
 		
 	}
 	
-	public void sendProposeResponse(Message msg, int otherId){
+	public void sendPrepareResponse(Message msg, int otherId){
 		netnode.sendMessage(otherId, msg);
 	}
 	

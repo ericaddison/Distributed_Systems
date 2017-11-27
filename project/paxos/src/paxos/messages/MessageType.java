@@ -1,8 +1,8 @@
 package paxos.messages;
 
 public enum MessageType {
-	PROPOSE_REQUEST,
-	PROPOSE_RESPONSE,
+	PREPARE_REQUEST,
+	PREPARE_RESPONSE,
 	ACCEPT_REQUEST,
 	ACCEPT_RESPONSE,
 	NACK,

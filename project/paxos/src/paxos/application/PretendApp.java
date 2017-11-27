@@ -1,6 +1,7 @@
 package paxos.application;
 
 import java.io.File;
+import java.util.Scanner;
 
 public class PretendApp extends AbstractApp{
 
@@ -11,6 +12,26 @@ public class PretendApp extends AbstractApp{
 	@Override
 	public void run_app() {
 		getLog().info("PretendApp run phase");
+		commandLoop();
+	}
+	
+	public void commandLoop(){
+		
+		// start a Paxos round every 5 seconds, N times
+		if(getId()==0){
+			int N = 5;
+			for(int cnt=0; cnt<N; cnt++){
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				getLog().info("Initiating Paxos round " + (cnt+1) + "/" + N);
+				initiate_paxos("MyVal");
+				
+			}
+		}
+		
 	}
 
 	

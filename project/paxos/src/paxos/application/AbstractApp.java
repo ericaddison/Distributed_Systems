@@ -74,6 +74,14 @@ abstract public class AbstractApp {
 		return log;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public void initiate_paxos(String value){
+		paxnode.sendPrepareRequest();
+	}
+	
 	
 //*************************************************8
 //		Listen loop methods	
@@ -128,7 +136,8 @@ abstract public class AbstractApp {
 					paxnode.processMessage(msg);
 				}
 			} catch (Exception e){
-				log.warning(e.getMessage());
+				log.warning(e.getClass().getSimpleName() + ": " + e.getMessage());
+				e.printStackTrace();
 			}
 			finally{
 				log.log(Level.WARNING, "Uh oh! Lost connection with server " + otherID + ": clearing comms");
