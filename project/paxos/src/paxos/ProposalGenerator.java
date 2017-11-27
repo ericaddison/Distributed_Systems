@@ -9,9 +9,9 @@ public class ProposalGenerator {
 	
 	public static Proposal getNextProposal(int id, int nprocs, Proposal lastProposal, int round){
 		
-		int num = (lastProposal == null) ? id : lastProposal.getNumber() + nprocs;
+		int num = (lastProposal == null) ? id : lastProposal.number + nprocs;
 		
-		return new Proposal(num, new ProposalValue());
+		return new Proposal(num, "");
 	}
 	
 	

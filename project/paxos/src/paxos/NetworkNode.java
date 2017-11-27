@@ -234,7 +234,7 @@ public class NetworkNode {
 	 */
 	private void networkInit(){
 		try {
-			serverSocket = new ServerSocket(getPort()+1);
+			serverSocket = new ServerSocket(getPort());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -265,7 +265,7 @@ public class NetworkNode {
 	 */
 	private void connectionLoop(){
 		while(true){
-			log.finer("Listenining for connection on port "+ (getPort()+1));
+			log.finer("Listenining for connection on port "+ (getPort()));
 			try {
 				// set up connection from unknown server
 				Socket sock = serverSocket.accept();
@@ -357,7 +357,7 @@ public class NetworkNode {
 				try{
 					if(node.connectionAttempts>0)
 						Thread.sleep(WAIT_TIME);
-					sock.connect(new InetSocketAddress(node.address, ports.get(iServer) + 1), TIMEOUT);
+					sock.connect(new InetSocketAddress(node.address, ports.get(iServer)), TIMEOUT);
 					initOutgoingConnection(sock, iServer);
 				} catch (ConnectException | InterruptedException e) {
 					log.finer("NetworkNode connection failed to node "+iServer + ". So far " 
