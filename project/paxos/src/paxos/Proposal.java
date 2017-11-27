@@ -20,7 +20,7 @@ public class Proposal {
 		try{
 			return gson.toJson(this);
 		} catch(JsonSyntaxException e){
-			throw new IllegalArgumentException("Could not encode Message from string");
+			throw new IllegalArgumentException("Could not encode Proposal from string");
 		}
 	}
 	
@@ -28,7 +28,7 @@ public class Proposal {
 		try{
 			return gson.fromJson(string, Proposal.class);
 		} catch(JsonSyntaxException e){
-			throw new IllegalArgumentException("Could not decode Message from string");
+			throw new IllegalArgumentException("Could not decode Proposal from string");
 		}
 	}
 	

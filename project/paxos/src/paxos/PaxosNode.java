@@ -17,11 +17,8 @@ public class PaxosNode{
 	private Logger log;
 	private float[] acceptorWeights;
 	private List<Integer> distinguishedLearners;
-	
-	private boolean proposer = true;
-	private boolean acceptor = true;
-	private boolean learner = true;
 	private boolean distinguishedProposer = false;
+	private PaxosState state;
 	
 	
 	public PaxosNode(NetworkNode node, Logger log, boolean restart) {
@@ -50,16 +47,23 @@ public class PaxosNode{
 			distinguishedProposer = true;
 		}
 		
-		if(learner)
+		if(isDistinguishedLearner())
 			learnerInit();
-		
 		
 		log.info("Created new " + this.getClass().getSimpleName() + " with:");
 		log.info("\tid = " + id);
 		log.info("\tweight = " + acceptorWeights[id]);
 		log.info("\tDistinguished Proposer = " + distinguishedProposer);
 		log.info("\tDistinguished Learner = " + distinguishedLearners.contains(id));
-			
+		
+		// create and write out state
+		state = new PaxosState();
+		state.id = id;
+		state.Nprocs = Nprocs;
+		state.acceptorWeights = acceptorWeights;
+		state.distinguishedLearners = distinguishedLearners;
+		state.distinguishedProposer = distinguishedProposer;
+		state.writeToFile();
 	}
 
 	public void run(){
@@ -95,8 +99,6 @@ public class PaxosNode{
 		default:
 			break;
 		}
-		
-		
 	}
 	
 	
@@ -128,7 +130,7 @@ public class PaxosNode{
 		
 		
 		// TODO: Need to store last prop num??? (serialize)
-		
+		state.lastProposalNumber = lastProposalNumber;
 	}
 	
 	// start by assuming everyone is an acceptor, generate set
@@ -298,14 +300,14 @@ public class PaxosNode{
 //	Learner methods	
 	
 	Proposal[] acceptedProposals;
-	Map<String, Float> chosenChecker;
 	private String myValue;
 	private String chosenValue;
 	
+	
 	public void learnerInit(){
 		acceptedProposals = new Proposal[Nprocs];
-		chosenChecker = new HashMap<>();
 	}
+	
 	
 	// receive from acceptor
 	public void receiveAcceptNotification(Message msg){
@@ -330,10 +332,11 @@ public class PaxosNode{
 		}
 	}	
 	
+	
 	private String checkForChosenValue(){
 		
 		// reset chosenChecker to check for value
-		chosenChecker.clear();
+		Map<String, Float> chosenChecker = new HashMap<>();
 		
 		for(int i=0; i<Nprocs; i++){
 			Proposal p = acceptedProposals[i];
@@ -352,6 +355,7 @@ public class PaxosNode{
 		
 		return null;
 	}
+	
 	
 	private void sendChosenValue(){
 		log.info("Sending chosen value " + chosenValue + " to all");
@@ -390,36 +394,8 @@ public class PaxosNode{
 		return Nprocs;
 	}
 	
-	public boolean isProposer() {
-		return proposer;
-	}
-
-	public void setProposer(boolean proposer) {
-		this.proposer = proposer;
-	}
-
-	public boolean isAcceptor() {
-		return acceptor;
-	}
-
-	public void setAcceptor(boolean acceptor) {
-		this.acceptor = acceptor;
-	}
-
-	public boolean isLearner() {
-		return learner;
-	}
-
-	public void setLearner(boolean learner) {
-		this.learner = learner;
-	}
-
 	public boolean isDistinguishedProposer() {
 		return distinguishedProposer;
-	}
-
-	public void setDistinguishedProposer(boolean distinguishedProposer) {
-		this.distinguishedProposer = distinguishedProposer;
 	}
 
 	public boolean isDistinguishedLearner() {
