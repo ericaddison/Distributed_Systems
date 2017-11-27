@@ -89,8 +89,7 @@ public class PaxosNode{
 	private int lastProposalNumber = -1;
 	private int prepareResponseSum = 0;
 	private int nackSum = 0;
-	private int prepareResponseN;
-	private String prepareResponseV;
+	private Proposal receivedProposal;
 	
 	public void sendPrepareRequest(){
 		
@@ -150,10 +149,9 @@ public class PaxosNode{
 		if(responseProposal==null){
 			log.fine("Received promise from " + msg.getId());
 		} else {
-			if( prepareResponseN < responseProposal.number ){
+			if( receivedProposal==null || receivedProposal.number < responseProposal.number ){
 				log.fine("Received promise with more recent proposal, updating values...");
-				prepareResponseN = responseProposal.number;
-				prepareResponseV = responseProposal.value;
+				receivedProposal = responseProposal;
 			} else {
 				log.fine("Received promise with outdated proposal, not updating values...");
 			}
@@ -162,8 +160,10 @@ public class PaxosNode{
 		// update response sum. If a majority (>0.5) is obtained, send accept request
 		prepareResponseSum += acceptorWeights[msg.getId()];
 		if(prepareResponseSum > 0.5){
-			log.fine("Prepare response sum = " + nackSum + ", sending accept request");
+			log.fine("Prepare response sum = " + prepareResponseSum + ", sending accept request");
 			sendAcceptRequest();
+		} else {
+			log.fine("Prepare response sum = " + prepareResponseSum);
 		}
 		
 	}	
@@ -173,9 +173,13 @@ public class PaxosNode{
 	public void receiveNack(Message msg){
 		log.fine("Received NACK");
 		Proposal responseProposal = Proposal.fromString(msg.getValue());
-		if(responseProposal!=null){
-			prepareResponseN = responseProposal.number;
-			prepareResponseV = responseProposal.value;
+		if(responseProposal != null){
+			if( receivedProposal==null || receivedProposal.number < responseProposal.number ){
+				log.fine("Received NACK with more recent proposal, updating values...");
+				receivedProposal = responseProposal;
+			} else {
+				log.fine("Received NACK with outdated proposal, not updating values...");
+			}
 		}
 
 		// tally NACKs. If >0.5, start a new prepare request

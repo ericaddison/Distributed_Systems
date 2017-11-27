@@ -153,8 +153,14 @@ public class NetworkNode {
 		// receive from self
 		if(theirId == id){
 			Message myMsg = null;
-			while(myMsg == null)
+			while(myMsg == null){
 				myMsg = selfMessages.poll();
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			log.finest("Received message \"" + myMsg + "\" from node " + theirId );
 			return myMsg;
 		}
