@@ -20,15 +20,18 @@ abstract public class AbstractApp {
 	private int id;
 	
 	
-	public AbstractApp(int id, String nodeListFileName, boolean restart) {
+	public AbstractApp(int id, String nodeListFileName, String statefile) {
 		this.id = id;
 		setupLogger();
 		
 		log.info("Created new " + this.getClass().getSimpleName() + " with:");
 		log.info("\tid = " + id);
 		
-		netnode = new NetworkNode(id, nodeListFileName, restart, log);
-		paxnode = new PaxosNode(netnode, log, restart);
+		netnode = new NetworkNode(id, nodeListFileName, (statefile!=null), log);
+		if(statefile==null)
+			paxnode = new PaxosNode(netnode, log);
+		else
+			paxnode = new PaxosNode(netnode, log, statefile);
 
 	}
 	
@@ -79,7 +82,7 @@ abstract public class AbstractApp {
 	}
 	
 	public void initiate_paxos(String value){
-		paxnode.setMyValue(value);
+		paxnode.reset(value);
 		paxnode.sendPrepareRequest();
 	}
 	

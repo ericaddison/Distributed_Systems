@@ -1,6 +1,6 @@
 #!/bin/python
 
-# kill all the paxos nodes from the given processes
+# kill the paxos nodes from the given processes
 import subprocess
 import sys
 import os
@@ -12,6 +12,7 @@ if len(sys.argv) < 2:
 	exit(1)
 
 for pid in sys.argv[1:]:
+	print("Killing pid {0} and all child pids".format(pid))
 	p = subprocess.Popen(['ps', '-o', 'pid', '--ppid', str(pid)], stdout=subprocess.PIPE)
 	child_pids = p.stdout.read().split('\n')[1:-1]
 	for child_pid in child_pids:

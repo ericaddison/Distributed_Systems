@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -15,12 +13,11 @@ import com.google.gson.JsonSyntaxException;
 public class PaxosState {
 	private static final Gson gson = new Gson();
 	
-	// General fields
+	public PaxosState(int id) {
+		this.id = id;
+	}
+	
 	int id;
-	int Nprocs;
-	float[] acceptorWeights;
-	List<Integer> distinguishedLearners;
-	boolean distinguishedProposer = false;
 	
 	// Proposer fields
 	int lastProposalNumber = -1;
@@ -57,7 +54,7 @@ public class PaxosState {
 	
 	
 	public void writeToFile(){
-		File stateFile = new File("./states/node " + id + ".state");
+		File stateFile = new File("./states/node_" + id + ".state");
 		try (PrintWriter pw = new PrintWriter(stateFile);){
 			pw.println(this.toString());
 		} catch (FileNotFoundException e) {

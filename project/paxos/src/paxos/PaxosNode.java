@@ -20,8 +20,8 @@ public class PaxosNode{
 	private boolean distinguishedProposer = false;
 	private PaxosState state;
 	
-	
-	public PaxosNode(NetworkNode node, Logger log, boolean restart) {
+	// Standard Ctor for initial startup
+	public PaxosNode(NetworkNode node, Logger log) {
 		this.log = log;
 		netnode = node;
 		Nprocs = netnode.getTotalNodeCount();
@@ -33,6 +33,7 @@ public class PaxosNode{
 			acceptorWeights[i] = 1.0f/Nprocs;
 		
 		this.id = netnode.getId();
+		state = new PaxosState(id);
 		
 		// parse nodeListFileTokens
 		distinguishedLearners = new ArrayList<>();
@@ -54,18 +55,23 @@ public class PaxosNode{
 		log.info("\tid = " + id);
 		log.info("\tweight = " + acceptorWeights[id]);
 		log.info("\tDistinguished Proposer = " + distinguishedProposer);
-		log.info("\tDistinguished Learner = " + distinguishedLearners.contains(id));
+		log.info("\tDistinguished Learner = " + isDistinguishedLearner());
 		
 		// create and write out state
-		state = new PaxosState();
-		state.id = id;
-		state.Nprocs = Nprocs;
-		state.acceptorWeights = acceptorWeights;
-		state.distinguishedLearners = distinguishedLearners;
-		state.distinguishedProposer = distinguishedProposer;
 		state.writeToFile();
 	}
 
+	
+	// restart ctor, for restarting with a state file
+	public PaxosNode(NetworkNode node, Logger log, String stateFilename){
+		this(node, log);
+		
+		// repopulate state from statefile
+		log.info("\tStatefile = " + stateFilename);
+		state = PaxosState.readFromFile(stateFilename);
+	}
+	
+	
 	public void run(){
 		log.info("Starting run phase");
 		if(!netnode.isRunning()){
@@ -105,33 +111,29 @@ public class PaxosNode{
 //*************************************************8
 //	Proposer methods	
 	
-	private int lastProposalNumber = -1;
-	private float prepareResponseSum = 0;
-	private float nackSum = 0;
-	private Proposal receivedProposal;
-	
 	public void sendPrepareRequest(){
 		
 		// reset propose response count
-		prepareResponseSum = 0;
-		nackSum = 0;
+		state.prepareResponseSum = 0;
+		state.nackSum = 0;
 		
 		// get new proposal number
-		lastProposalNumber = (lastProposalNumber == -1) ? id : lastProposalNumber+Nprocs;
+		state.lastProposalNumber = (state.lastProposalNumber == -1) ? id : state.lastProposalNumber+Nprocs;
+		
+		// update state and write to file
+		log.finest("Updated lastProposalNumber: writing state to file");
+		state.writeToFile();
 		
 		// get acceptor set
 		List<Integer> acceptorSet = getAcceptorSet();
 		
 		// send proposal request to all acceptors in set
 		for(int acceptorId : acceptorSet){
-			Message msg = new Message(MessageType.PREPARE_REQUEST, "", lastProposalNumber, id);
+			Message msg = new Message(MessageType.PREPARE_REQUEST, "", state.lastProposalNumber, id);
 			netnode.sendMessage(acceptorId, msg);
 		}
-		
-		
-		// TODO: Need to store last prop num??? (serialize)
-		state.lastProposalNumber = lastProposalNumber;
 	}
+	
 	
 	// start by assuming everyone is an acceptor, generate set
 	private List<Integer> getAcceptorSet() {
@@ -144,14 +146,14 @@ public class PaxosNode{
 
 	
 	public void sendAcceptRequest(){
-		nackSum = 0;
+		state.nackSum = 0;
 		
 		//TODO: send the accept request
 		
 		// check if received proposal is null
-		Proposal prop = new Proposal(lastProposalNumber, myValue);
-		if(receivedProposal != null){
-			prop.value = receivedProposal.value;
+		Proposal prop = new Proposal(state.lastProposalNumber, state.myValue);
+		if(state.receivedProposal != null){
+			prop.value = state.receivedProposal.value;
 		}
 		
 		// send proposal with value to acceptors
@@ -159,7 +161,7 @@ public class PaxosNode{
 		
 		// send proposal request to all acceptors in set
 		for(int acceptorId : acceptorSet){
-			Message msg = new Message(MessageType.ACCEPT_REQUEST, prop.toString(), lastProposalNumber, id);
+			Message msg = new Message(MessageType.ACCEPT_REQUEST, prop.toString(), state.lastProposalNumber, id);
 			netnode.sendMessage(acceptorId, msg);
 		}
 		
@@ -174,7 +176,7 @@ public class PaxosNode{
 		// msg.value == JSON-ified Proposal
 		
 		// if outdated response, ignore
-		if(msg.getNumber() != lastProposalNumber){
+		if(msg.getNumber() != state.lastProposalNumber){
 			log.fine("Outdated response, ignoring");
 			return;
 		}
@@ -184,21 +186,27 @@ public class PaxosNode{
 		if(responseProposal==null){
 			log.fine("Received promise from " + msg.getId());
 		} else {
-			if( receivedProposal==null || receivedProposal.number < responseProposal.number ){
+			if( state.receivedProposal==null || state.receivedProposal.number < responseProposal.number ){
 				log.fine("Received promise with more recent proposal, updating values...");
-				receivedProposal = responseProposal;
+				state.receivedProposal = responseProposal;
 			} else {
 				log.fine("Received promise with outdated proposal, not updating values...");
 			}
 		}
 		
-		// update response sum. If a majority (>0.5) is obtained, send accept request
-		prepareResponseSum += acceptorWeights[msg.getId()];
-		if(prepareResponseSum > 0.5){
-			log.fine("Prepare response sum = " + prepareResponseSum + ", sending accept request");
+		// update response sum. 
+		state.prepareResponseSum += acceptorWeights[msg.getId()];
+		
+		// update state and write to file
+		log.finest("Updated prepareResponseSum and receivedProposal: writing state to file");
+		state.writeToFile();
+		
+		// If a majority (>0.5) is obtained, send accept request
+		if(state.prepareResponseSum > 0.5){
+			log.fine("Prepare response sum = " + state.prepareResponseSum + ", sending accept request");
 			sendAcceptRequest();
 		} else {
-			log.fine("Prepare response sum = " + prepareResponseSum);
+			log.fine("Prepare response sum = " + state.prepareResponseSum);
 		}
 		
 	}	
@@ -209,18 +217,23 @@ public class PaxosNode{
 		log.fine("Received NACK");
 		Proposal responseProposal = Proposal.fromString(msg.getValue());
 		if(responseProposal != null){
-			if( receivedProposal==null || receivedProposal.number < responseProposal.number ){
+			if( state.receivedProposal==null || state.receivedProposal.number < responseProposal.number ){
 				log.fine("Received NACK with more recent proposal, updating values...");
-				receivedProposal = responseProposal;
+				state.receivedProposal = responseProposal;
 			} else {
 				log.fine("Received NACK with outdated proposal, not updating values...");
 			}
 		}
 
 		// tally NACKs. If >0.5, start a new prepare request
-		nackSum += acceptorWeights[msg.getId()];
-		if(nackSum > 0.5){
-			log.fine("NACK sum = " + nackSum + ", starting new prepare request");
+		state.nackSum += acceptorWeights[msg.getId()];
+		
+		// update state and write to file
+		log.finest("Updated nackSum: writing state to file");
+		state.writeToFile();
+		
+		if(state.nackSum > 0.5){
+			log.fine("NACK sum = " + state.nackSum + ", starting new prepare request");
 			sendPrepareRequest();
 		}
 	}
@@ -231,17 +244,19 @@ public class PaxosNode{
 //*************************************************8
 //	Acceptor methods	
 	
-	private Proposal acceptedProposal = null;
-	private int promiseNumber = -1;
-	
 	public void receivePrepareRequest(Message msg){
 		
 		int n = msg.getNumber();
-		String propString = (acceptedProposal == null) ? "" : acceptedProposal.toString();
+		String propString = (state.acceptedProposal == null) ? "" : state.acceptedProposal.toString();
 		
 		// if promising
-		if(n>promiseNumber){
-			promiseNumber = n;
+		if(n>state.promiseNumber){
+			state.promiseNumber = n;
+			
+			// update state and write to file
+			log.finest("Updared promiseNumber: writing state to file");
+			state.writeToFile();
+			
 			Message promiseMsg = new Message(MessageType.PREPARE_RESPONSE, propString, n, id);
 			sendPrepareResponse(promiseMsg, msg.getId());
 		} else {
@@ -257,15 +272,20 @@ public class PaxosNode{
 		Proposal prop = Proposal.fromString(msg.getValue());
 		
 		// if propNumber == promiseNumber, then accept
-		if(prop.number >= promiseNumber){
-			log.info("Accepted new proposal: " + prop);
-			acceptedProposal = prop;
+		if(prop.number >= state.promiseNumber){
+			log.fine("Accepted new proposal from node " + msg.getId() + ": " + prop);
+			state.acceptedProposal = prop;
+			
+			// update state and write to file
+			log.finest("Updated acceptedProposal: writing state to file");
+			state.writeToFile();
+			
 			sendAcceptNotification();
 		} else {
-			log.info("Ignoring new proposal: " + prop);
+			log.fine("Ignoring new proposal: " + prop);
 			// otherwise send NACK
-			String propString = (acceptedProposal == null) ? "" : acceptedProposal.toString();
-			Message nackMsg = new Message(MessageType.NACK, propString, promiseNumber, id);
+			String propString = (state.acceptedProposal == null) ? "" : state.acceptedProposal.toString();
+			Message nackMsg = new Message(MessageType.NACK, propString, state.promiseNumber, id);
 			sendNack(nackMsg, msg.getId());
 		}
 		
@@ -287,7 +307,7 @@ public class PaxosNode{
 	// send to distinguished learner(s)
 	public void sendAcceptNotification(){
 		// TODO: Need to store accepted proposal (serialize)
-		Message msg = new Message(MessageType.ACCEPT_NOTIFICATION, acceptedProposal.toString(), acceptedProposal.number, id);
+		Message msg = new Message(MessageType.ACCEPT_NOTIFICATION, state.acceptedProposal.toString(), state.acceptedProposal.number, id);
 		for(Integer learnerID : distinguishedLearners){
 			netnode.sendMessage(learnerID, msg);
 		}
@@ -299,13 +319,8 @@ public class PaxosNode{
 //*************************************************8
 //	Learner methods	
 	
-	Proposal[] acceptedProposals;
-	private String myValue;
-	private String chosenValue;
-	
-	
 	public void learnerInit(){
-		acceptedProposals = new Proposal[Nprocs];
+		state.acceptedProposals = new Proposal[Nprocs];
 	}
 	
 	
@@ -317,15 +332,19 @@ public class PaxosNode{
 		Proposal prop = Proposal.fromString(msg.getValue());
 		
 		// store proposal in acceptedProposals
-		acceptedProposals[accId] = prop;
+		state.acceptedProposals[accId] = prop;
 		log.fine("Received new accepted proposal from node " + accId);
+		
+		// update state and write to file
+		log.finest("Updated acceptedProposals: writing state to file");
+		state.writeToFile();
 		
 		// check if a value has been chosen
 		String chosenVal = checkForChosenValue();
 		
 		// inform other learners if value has been chosen
 		if(chosenVal != null){
-			log.info("Chosen value (" + accId + ") = " + chosenVal);
+			log.fine("Chosen value (" + accId + ") = " + chosenVal);
 			sendChosenValue();
 		} else {
 			log.fine("No chosen value yet (" + accId + ")");
@@ -333,19 +352,28 @@ public class PaxosNode{
 	}	
 	
 	
-	private String checkForChosenValue(){
+	private synchronized String checkForChosenValue(){
 		
 		// reset chosenChecker to check for value
 		Map<String, Float> chosenChecker = new HashMap<>();
 		
 		for(int i=0; i<Nprocs; i++){
-			Proposal p = acceptedProposals[i];
+			Proposal p = state.acceptedProposals[i];
 			if(p != null){
 				float sum = (chosenChecker.containsKey(p.value)) ? chosenChecker.get(p.value) : 0;
 				sum += acceptorWeights[i];
 				if(sum>0.5){
-					chosenValue = p.value;
-					return chosenValue;
+					
+					if(state.chosenValue == null)
+						log.info("Determined new chosen value " + p.value);
+					
+					state.chosenValue = p.value;
+					
+					// update state and write to file
+					log.finest("Updated chosenValue: writing state to file");
+					state.writeToFile();
+					
+					return state.chosenValue;
 				}
 				chosenChecker.put(p.value, sum);
 			}
@@ -358,24 +386,23 @@ public class PaxosNode{
 	
 	
 	private void sendChosenValue(){
-		log.info("Sending chosen value " + chosenValue + " to all");
-		Message msg = new Message(MessageType.CHOSEN_VALUE, chosenValue, 0, id);
+		log.fine("Sending chosen value " + state.chosenValue + " to all");
+		Message msg = new Message(MessageType.CHOSEN_VALUE, state.chosenValue, 0, id);
 		for(int i=0; i<Nprocs; i++){
-			if(i!=id)
-				netnode.sendMessage(i, msg);
+			netnode.sendMessage(i, msg);
 		}
 	}
 	
 	
 	private void receiveChosenValueMessage(Message msg){
-		if(chosenValue == null){
+		if(state.chosenValue == null){
 			log.info("Received new chosen value from " + msg.getId() + " : " + msg.getValue());
-			chosenValue = msg.getValue();
+			state.chosenValue = msg.getValue();
 		} else {
-			if(chosenValue.equals(msg.getValue()))
+			if(state.chosenValue.equals(msg.getValue()))
 				log.fine("Chosen value confirmed from " + msg.getId() + " : " + msg.getValue());
 			else
-				log.warning("PROBLEM! CONFLICTING CHOSEN VALUE FROM " + msg.getId() + " : " + msg.getValue() + ". Current chosen value = " + chosenValue);
+				log.warning("PROBLEM! CONFLICTING CHOSEN VALUE FROM " + msg.getId() + " : " + msg.getValue() + ". Current chosen value = " + state.chosenValue);
 		}
 	}
 	
@@ -402,9 +429,18 @@ public class PaxosNode{
 		return distinguishedLearners.contains(id);
 	}
 
-	public void setMyValue(String value) {
-		myValue = value;
+	public void reset(String value) {
+		log.info("Resetting Paxos state with preferred value: " + value);
+		state = new PaxosState(id);
+		state.myValue = value;
+		if(isDistinguishedLearner())
+			learnerInit();
+		
+		// update state and write to file
+		log.finest("Reset state: writing state to file");
+		state.writeToFile();
 	}
+
 	
 	
 }

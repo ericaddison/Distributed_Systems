@@ -1,12 +1,11 @@
 package paxos.application;
 
 import java.io.File;
-import java.util.Scanner;
 
 public class PretendApp extends AbstractApp{
 
-	public PretendApp(int id, String nodeListFileName, boolean restart) {
-		super(id, nodeListFileName, restart);
+	public PretendApp(int id, String nodeListFileName, String statefile) {
+		super(id, nodeListFileName, statefile);
 	}
 
 	@Override
@@ -24,17 +23,18 @@ public class PretendApp extends AbstractApp{
 			e.printStackTrace();
 		}
 		
-		// start a Paxos round every 5 seconds, N times
-		if(getPaxnode().isDistinguishedProposer()){
-			int N = 1;
-			for(int cnt=0; cnt<N; cnt++){
+		// start a Paxos round every 2 seconds, N times
+		
+		int N = 50;
+		for(int cnt=0; cnt<N; cnt++){
+			if(getPaxnode().isDistinguishedProposer()){
 				getLog().info("Initiating Paxos round " + (cnt+1) + "/" + N);
 				initiate_paxos("MyVal" + getId());
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			}
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 		
@@ -62,7 +62,7 @@ public class PretendApp extends AbstractApp{
 			System.out.println("ERROR: Provide 2 or 3 arguments");
 			System.out.println("\t(1) <int>: process id, between 0 and number of nodes in node list file");
 			System.out.println("\t(2) <file>: node list file");
-			System.out.println("\t(3) <restart>: optional flag to restart failed server");
+			System.out.println("\t(3) <statefile>: optional path to statefile to restart failed server");
 			System.exit(-1);
 		}
 
@@ -76,9 +76,9 @@ public class PretendApp extends AbstractApp{
 		
 		String fileName = args[1];
 		
-		boolean restart = false;
-		if(args.length==3 && args[2].equals("restart"))
-			restart = true;
+		String statefile = null;
+		if(args.length==3)
+			statefile = args[2];
 
 		File file = new File(fileName);
 		if (!file.exists() || file.isDirectory()){
@@ -87,7 +87,7 @@ public class PretendApp extends AbstractApp{
 		}
 
 
-		AbstractApp app = new PretendApp(id, fileName, restart);
+		AbstractApp app = new PretendApp(id, fileName, statefile);
 		app.run();
 	}
 	
