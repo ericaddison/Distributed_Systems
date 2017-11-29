@@ -7,11 +7,13 @@ public class Proposal {
 	private static final Gson gson = new Gson();
 	
 	int number;
+	int round;
 	String value;
 	
-	public Proposal(int number, String value) {
+	public Proposal(int number, String value, int round) {
 		this.number = number;
 		this.value = value;
+		this.round = round;
 	}
 	
 	

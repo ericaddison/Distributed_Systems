@@ -90,6 +90,9 @@ public class PaxosNode{
 		case NACK:
 			receiveNack(msg);
 			break;
+		case NACK_OLDROUND:
+			receiveNackOldRound(msg);
+			break;
 		case PREPARE_REQUEST:
 			receivePrepareRequest(msg);
 			break;
@@ -100,7 +103,7 @@ public class PaxosNode{
 			receiveAcceptNotification(msg);
 			break;
 		case CHOSEN_VALUE:
-			receiveChosenValueMessage(msg);
+			receiveChosenValue(msg);
 			break;
 		default:
 			break;
@@ -128,8 +131,9 @@ public class PaxosNode{
 		List<Integer> acceptorSet = getAcceptorSet();
 		
 		// send proposal request to all acceptors in set
+		// include round number here
 		for(int acceptorId : acceptorSet){
-			Message msg = new Message(MessageType.PREPARE_REQUEST, "", state.lastProposalNumber, id);
+			Message msg = new Message(MessageType.PREPARE_REQUEST, ""+state.currentRound, state.lastProposalNumber, id);
 			netnode.sendMessage(acceptorId, msg);
 		}
 	}
@@ -151,7 +155,8 @@ public class PaxosNode{
 		//TODO: send the accept request
 		
 		// check if received proposal is null
-		Proposal prop = new Proposal(state.lastProposalNumber, state.myValue);
+		// include round number here
+		Proposal prop = new Proposal(state.lastProposalNumber, state.myValue, state.currentRound);
 		if(state.receivedProposal != null){
 			prop.value = state.receivedProposal.value;
 		}
@@ -239,6 +244,22 @@ public class PaxosNode{
 	}
 	
 	
+	// if found that our round is out of date, 
+	public void receiveNackOldRound(Message msg){
+		log.fine("Received NACK_OLDROUND");
+		int theirRound = Integer.parseInt(msg.getValue());
+		
+		if( state.currentRound < theirRound ){
+			log.finest("Updating currentRound");
+			state.currentRound = theirRound;
+			state.writeToFile();
+			sendPrepareRequest();
+		} else {
+			log.fine("Received old round " + theirRound);
+		}
+	}
+	
+	
 	
 	
 //*************************************************8
@@ -247,7 +268,16 @@ public class PaxosNode{
 	public void receivePrepareRequest(Message msg){
 		
 		int n = msg.getNumber();
+		
+		// check round number of incoming request
+		int round = Integer.parseInt(msg.getValue());
 		String propString = (state.acceptedProposal == null) ? "" : state.acceptedProposal.toString();
+		
+		if( round < state.currentRound ){
+			log.fine("Received PREPARE for round " + round + " but I am expecting at least round " + state.currentRound);
+			Message nackMsg = new Message(MessageType.NACK_OLDROUND, ""+(state.currentRound), n, id);
+			sendNack(nackMsg, msg.getId());
+		}
 		
 		// if promising
 		if(n>state.promiseNumber){
@@ -306,8 +336,8 @@ public class PaxosNode{
 	
 	// send to distinguished learner(s)
 	public void sendAcceptNotification(){
-		// TODO: Need to store accepted proposal (serialize)
 		Message msg = new Message(MessageType.ACCEPT_NOTIFICATION, state.acceptedProposal.toString(), state.acceptedProposal.number, id);
+		log.fine("Preparing to send out " + msg + " to DLs");
 		for(Integer learnerID : distinguishedLearners){
 			netnode.sendMessage(learnerID, msg);
 		}
@@ -325,7 +355,7 @@ public class PaxosNode{
 	
 	
 	// receive from acceptor
-	public void receiveAcceptNotification(Message msg){
+	public synchronized void receiveAcceptNotification(Message msg){
 		
 		// parse message for accepted proposal
 		int accId = msg.getId();
@@ -339,15 +369,20 @@ public class PaxosNode{
 		log.finest("Updated acceptedProposals: writing state to file");
 		state.writeToFile();
 		
-		// check if a value has been chosen
-		String chosenVal = checkForChosenValue();
 		
-		// inform other learners if value has been chosen
-		if(chosenVal != null){
-			log.fine("Chosen value (" + accId + ") = " + chosenVal);
-			sendChosenValue();
-		} else {
-			log.fine("No chosen value yet (" + accId + ")");
+		// inform other learners if value has been chosen if round has incremented
+		if(state.currentRound == prop.round){
+			// check if a value has been chosen
+			String chosenVal = checkForChosenValue();
+			
+			if(chosenVal != null){
+				log.fine("Chosen value (" + accId + ") = " + chosenVal);
+				sendChosenValue();
+				// increment round number
+				state.currentRound++;
+				log.finest("Updated round to " + state.currentRound + " : writing state to file");
+				state.writeToFile();
+			}
 		}
 	}	
 	
@@ -359,50 +394,49 @@ public class PaxosNode{
 		
 		for(int i=0; i<Nprocs; i++){
 			Proposal p = state.acceptedProposals[i];
-			if(p != null){
+			if(p != null && p.round==state.currentRound){
 				float sum = (chosenChecker.containsKey(p.value)) ? chosenChecker.get(p.value) : 0;
 				sum += acceptorWeights[i];
 				if(sum>0.5){
 					
-					if(state.chosenValue == null)
-						log.info("Determined new chosen value " + p.value);
-					
-					state.chosenValue = p.value;
+					log.info("Determined new chosen value " + p.value + " for round " + p.round);
+					state.chosenValues.put(p.round, p.value);
 					
 					// update state and write to file
-					log.finest("Updated chosenValue: writing state to file");
+					log.finest("Updated chosenValue for round " + state.currentRound + " : writing state to file");
 					state.writeToFile();
 					
-					return state.chosenValue;
+					return p.value;
 				}
 				chosenChecker.put(p.value, sum);
 			}
 		}
-		
-		log.finer("ChosenChecker: " + chosenChecker.toString());
 		
 		return null;
 	}
 	
 	
 	private void sendChosenValue(){
-		log.fine("Sending chosen value " + state.chosenValue + " to all");
-		Message msg = new Message(MessageType.CHOSEN_VALUE, state.chosenValue, 0, id);
+		log.fine("Sending chosen value for round " + state.currentRound + " " + state.chosenValues + " to all");
+		Message msg = new Message(MessageType.CHOSEN_VALUE, state.chosenValues.get(state.currentRound), state.currentRound, id);
 		for(int i=0; i<Nprocs; i++){
 			netnode.sendMessage(i, msg);
 		}
 	}
 	
 	
-	private void receiveChosenValueMessage(Message msg){
-		if(state.chosenValue == null){
-			log.info("Received new chosen value from " + msg.getId() + " : " + msg.getValue());
-			state.chosenValue = msg.getValue();
+	private synchronized void receiveChosenValue(Message msg){
+		int theirRound = msg.getNumber();
+		if(!state.chosenValues.containsKey(theirRound)){
+			log.info("Received new chosen value from node " + msg.getId() + " for round " + theirRound + " : " + msg.getValue());
+			state.chosenValues.put(theirRound, msg.getValue());
+			state.currentRound = theirRound;
+			state.writeToFile();
 		} else {
-			if(state.chosenValue.equals(msg.getValue()))
-				log.fine("Chosen value confirmed from " + msg.getId() + " : " + msg.getValue());
+			if(state.chosenValues.get(theirRound).equals(msg.getValue()))
+				log.fine("Chosen value confirmed from node " + msg.getId() + " for round " + theirRound + " : " + msg.getValue());
 			else
-				log.warning("PROBLEM! CONFLICTING CHOSEN VALUE FROM " + msg.getId() + " : " + msg.getValue() + ". Current chosen value = " + state.chosenValue);
+				log.warning("PROBLEM! CONFLICTING CHOSEN VALUE FROM " + msg.getId() + " for round " + theirRound + " : " + msg.getValue() + ". Current chosen value = " + state.chosenValues.get(theirRound));
 		}
 	}
 	
@@ -431,7 +465,6 @@ public class PaxosNode{
 
 	public void reset(String value) {
 		log.info("Resetting Paxos state with preferred value: " + value);
-		state = new PaxosState(id);
 		state.myValue = value;
 		if(isDistinguishedLearner())
 			learnerInit();

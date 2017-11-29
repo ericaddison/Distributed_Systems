@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -15,6 +17,7 @@ public class PaxosState {
 	
 	public PaxosState(int id) {
 		this.id = id;
+		chosenValues = new HashMap<>();
 	}
 	
 	int id;
@@ -24,6 +27,7 @@ public class PaxosState {
 	float prepareResponseSum = 0;
 	float nackSum = 0;
 	Proposal receivedProposal;
+	int currentRound = 0;
 	
 	// Acceptor fields
 	Proposal acceptedProposal = null;
@@ -32,7 +36,7 @@ public class PaxosState {
 	// Learner fields
 	Proposal[] acceptedProposals;
 	String myValue;
-	String chosenValue;
+	Map<Integer,String> chosenValues;
 	
 	
 	@Override

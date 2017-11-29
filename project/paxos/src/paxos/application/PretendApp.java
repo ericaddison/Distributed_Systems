@@ -29,7 +29,7 @@ public class PretendApp extends AbstractApp{
 		for(int cnt=0; cnt<N; cnt++){
 			if(getPaxnode().isDistinguishedProposer()){
 				getLog().info("Initiating Paxos round " + (cnt+1) + "/" + N);
-				initiate_paxos("MyVal" + getId());
+				initiate_paxos("MyVal" + getId() + "-" + cnt);
 			}
 			try {
 				Thread.sleep(5000);

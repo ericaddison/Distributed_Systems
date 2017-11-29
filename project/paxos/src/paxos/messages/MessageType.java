@@ -7,6 +7,7 @@ public enum MessageType {
 	ACCEPT_NOTIFICATION,
 	CHOSEN_VALUE,
 	NACK,
+	NACK_OLDROUND,
 	INIT,
 	APP
 }
