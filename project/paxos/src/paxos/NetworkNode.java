@@ -14,6 +14,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,10 @@ public class NetworkNode {
 	public static final int IP_COL = 0;
 	public static final int PORT_COL = 1;
 	public static final int WEIGHT_COL = 2;
-	public static final int DL_COL = 3;
-	public static final int DP_COL = 4;
+	public static final int MSG_DELAY_COL = 3;
+	public static final int UNRELIABILITY_COL = 4;
+	public static final int DL_COL = 5;
+	public static final int DP_COL = 6;
 	
 	private static final int TIMEOUT = 500;
 	private static final long WAIT_TIME = 500;
@@ -47,7 +50,11 @@ public class NetworkNode {
 	private Deque<Message> selfMessages;
 	private List<String[]> nodeListFileTokens;
 	
-	
+	// reliability stuff
+	private int avgMsgDelay = 0;	// multiplier to DELAY_TIME by which to delay messages
+	private float unreliability = 0; // probability of a "crash" (don't respond to a message) 
+	private static final int DELAY_TIME = 100;
+	private static final long CRASH_TIME = 10000;
 	
 	// Logging
 	private Logger log;
@@ -100,6 +107,8 @@ public class NetworkNode {
 				NodeInfo newNode = new NodeInfo();
 				newNode.address = InetAddress.getByName(serverToks[IP_COL]);
 				newNode.port = Integer.parseInt(serverToks[PORT_COL]);
+				avgMsgDelay = Integer.parseInt(serverToks[MSG_DELAY_COL]);
+				unreliability = Float.parseFloat(serverToks[UNRELIABILITY_COL]);
 				ports.add(newNode.port);
 				nodes.add(newNode);
 				nodeListFileTokens.add(serverToks);
@@ -142,6 +151,8 @@ public class NetworkNode {
 	 */
 	public boolean sendMessage(int theirId, Message msg) {
 		
+		if(!unreliabilitySimulator())
+			return false;
 		
 		if(!isConnected(theirId)){
 			log.warning("Error sending message to node " + theirId + ": node not connected");
@@ -165,6 +176,10 @@ public class NetworkNode {
 	 * Receive a message from another node   
 	 */
 	public Message receiveMessage(int theirId){
+		
+		if(!unreliabilitySimulator())
+			return null;
+		
 		// receive from self
 		if(theirId == id){
 			Message myMsg = null;
@@ -195,6 +210,30 @@ public class NetworkNode {
 		return null;
 
 	}	
+	
+	
+	private boolean unreliabilitySimulator(){
+		try {
+			Random rand = new Random(System.currentTimeMillis());
+			float randVal = rand.nextFloat();
+
+			// generate random "crashes"
+			if(randVal < unreliability){
+				log.fine("Node " + id + " CRASH with " + randVal + " < " + unreliability);
+				Thread.sleep(CRASH_TIME);
+				return false;
+			}
+			
+			// insert random wait time based on msgDelay
+			int waitTime = DELAY_TIME * avgMsgDelay;
+			Thread.sleep((long)(randVal*waitTime));
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
 	
 	
 //****************************************************************

@@ -151,6 +151,8 @@ public class PaxosNode{
 	
 	public void sendAcceptRequest(){
 		state.nackSum = 0;
+		state.prepareResponseSum = 0;
+		state.writeToFile();
 		
 		//TODO: send the accept request
 		
@@ -210,10 +212,6 @@ public class PaxosNode{
 		if(state.prepareResponseSum > 0.5){
 			log.fine("Prepare response sum = " + state.prepareResponseSum + ", sending accept request");
 			sendAcceptRequest();
-			
-			log.finest("Prepare response sum reset to 0");
-			state.prepareResponseSum = 0;
-			state.writeToFile();
 		} else {
 			log.fine("Prepare response sum = " + state.prepareResponseSum);
 		}
