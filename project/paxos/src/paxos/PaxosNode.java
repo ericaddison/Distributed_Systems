@@ -173,7 +173,7 @@ public class PaxosNode{
 	}
 	
 	
-	public void receivePrepareResponse(Message msg){
+	public synchronized void receivePrepareResponse(Message msg){
 		log.fine("Received PREPARE_RESPONSE from " + msg.getId());
 		
 		// contents of PREPARE_RESPONSE (the promise)
@@ -210,6 +210,10 @@ public class PaxosNode{
 		if(state.prepareResponseSum > 0.5){
 			log.fine("Prepare response sum = " + state.prepareResponseSum + ", sending accept request");
 			sendAcceptRequest();
+			
+			log.finest("Prepare response sum reset to 0");
+			state.prepareResponseSum = 0;
+			state.writeToFile();
 		} else {
 			log.fine("Prepare response sum = " + state.prepareResponseSum);
 		}
@@ -218,7 +222,7 @@ public class PaxosNode{
 	
 	// response when you are told "computer says no", proposal number is too low
 	// NACKs contain the newer proposal information that must be recorded
-	public void receiveNack(Message msg){
+	public synchronized void receiveNack(Message msg){
 		log.fine("Received NACK");
 		Proposal responseProposal = Proposal.fromString(msg.getValue());
 		if(responseProposal != null){
@@ -245,7 +249,7 @@ public class PaxosNode{
 	
 	
 	// if found that our round is out of date, 
-	public void receiveNackOldRound(Message msg){
+	public synchronized void receiveNackOldRound(Message msg){
 		log.fine("Received NACK_OLDROUND");
 		int theirRound = Integer.parseInt(msg.getValue());
 		
@@ -265,7 +269,7 @@ public class PaxosNode{
 //*************************************************8
 //	Acceptor methods	
 	
-	public void receivePrepareRequest(Message msg){
+	public synchronized void receivePrepareRequest(Message msg){
 		
 		int n = msg.getNumber();
 		
@@ -296,10 +300,16 @@ public class PaxosNode{
 		
 	}
 	
-	public void receiveAcceptRequest(Message msg){
+	public synchronized void receiveAcceptRequest(Message msg){
 		
 		// parse message
 		Proposal prop = Proposal.fromString(msg.getValue());
+		
+		if( prop.round < state.currentRound ){
+			log.fine("Received ACCEPT_REQUEST for round " + prop.round + " but I am expecting at least round " + state.currentRound);
+			Message nackMsg = new Message(MessageType.NACK_OLDROUND, ""+(state.currentRound), msg.getNumber(), id);
+			sendNack(nackMsg, msg.getId());
+		}
 		
 		// if propNumber == promiseNumber, then accept
 		if(prop.number >= state.promiseNumber){
@@ -400,11 +410,7 @@ public class PaxosNode{
 				if(sum>0.5){
 					
 					log.info("Determined new chosen value " + p.value + " for round " + p.round);
-					state.chosenValues.put(p.round, p.value);
-					
-					// update state and write to file
-					log.finest("Updated chosenValue for round " + state.currentRound + " : writing state to file");
-					state.writeToFile();
+					updateChosenValue(p.round, p.value);
 					
 					return p.value;
 				}
@@ -429,9 +435,7 @@ public class PaxosNode{
 		int theirRound = msg.getNumber();
 		if(!state.chosenValues.containsKey(theirRound)){
 			log.info("Received new chosen value from node " + msg.getId() + " for round " + theirRound + " : " + msg.getValue());
-			state.chosenValues.put(theirRound, msg.getValue());
-			state.currentRound = theirRound;
-			state.writeToFile();
+			updateChosenValue(theirRound, msg.getValue());
 		} else {
 			if(state.chosenValues.get(theirRound).equals(msg.getValue()))
 				log.fine("Chosen value confirmed from node " + msg.getId() + " for round " + theirRound + " : " + msg.getValue());
@@ -440,6 +444,15 @@ public class PaxosNode{
 		}
 	}
 	
+	
+	private void updateChosenValue(int round, String value){
+		state.chosenValues.put(round, value);
+		state.currentRound = round;
+		state.writeToFile();
+		
+		// prepare for next round
+		state.acceptedProposal = null;
+	}
 	
 	
 
