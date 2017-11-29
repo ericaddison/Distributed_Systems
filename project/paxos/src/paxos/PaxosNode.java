@@ -487,6 +487,11 @@ public class PaxosNode{
 		state.writeToFile();
 	}
 
+	public String getChosenValueForRound(int round){
+		if(state.chosenValues.containsKey(round))
+			return state.chosenValues.get(round);
+		return null;
+	}
 	
 	
 }

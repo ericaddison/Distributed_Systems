@@ -26,12 +26,19 @@ public class PretendApp extends AbstractApp{
 		// start a Paxos round every 2 seconds, N times
 		
 		int N = 50;
-		for(int cnt=0; cnt<N; cnt++){
-			if(getPaxnode().isDistinguishedProposer()){
-				getLog().info("Initiating Paxos round " + (cnt+1) + "/" + N);
-				initiate_paxos("MyVal" + getId() + "-" + cnt);
-			}
+		for(int round=0; round<N; round++){
 			try {
+				if(getPaxnode().isDistinguishedProposer()){
+					getLog().info("Initiating Paxos round " + (round+1) + "/" + N);
+					initiate_paxos("MyVal" + getId() + "-" + round);
+					
+					String chosenValue = null;
+					while( (chosenValue = getPaxnode().getChosenValueForRound(round)) == null){
+						Thread.sleep(100);
+					}
+					getLog().info("Chosen value for round " + round + " : " + chosenValue);
+				}
+			
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
