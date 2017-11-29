@@ -15,7 +15,7 @@ python sbin/launchNPaxos.py inputs/tenNodes.txt
 
 Kill all, remove pids files, build, run ten nodes
 ```
-python sbin/killPaxosNodes.py `cat pids_*` ; rm -rf pids_* ; ant ; python sbin/launchNPaxos.py inputs/tenNodes.txt
+python sbin/killPaxosNodes.py `cat pids_*` ; rm -rf pids_* ; ant ; python sbin/launchNPaxos.py inputs/tenNodes_unreliable_diffweights.txt
 ```
 
 
@@ -41,3 +41,16 @@ manual kill ALL PretendApp procs using
 ```
 jps | grep PretendApp | cut -f1 -d' ' | xargs kill
 ```
+
+
+look for pretendapp messages on log0
+```
+cat logs/log_0.log | grep -i pretendapp
+```
+
+
+look for crash messages on all logs
+```
+cat logs/log_*.log | grep -i crash
+```
+

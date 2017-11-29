@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -54,7 +55,7 @@ public class NetworkNode {
 	private int avgMsgDelay = 0;	// multiplier to DELAY_TIME by which to delay messages
 	private float unreliability = 0; // probability of a "crash" (don't respond to a message) 
 	private static final int DELAY_TIME = 100;
-	private static final long CRASH_TIME = 10000;
+	private static final long CRASH_TIME = 100;
 	
 	// Logging
 	private Logger log;
@@ -71,6 +72,8 @@ public class NetworkNode {
 		log.info("\tid = " + id);
 		log.info("\tnodeListFileName = " + nodeListFileName);
 		log.info("\tresart = " + restart);
+		log.info("\tavgMsgDelay = " + avgMsgDelay);
+		log.info("\tunreliability = " + unreliability);
 		log.info("Node List:");
 		for(String node : getNodesInfo()){
 			log.info("\t" + node);
@@ -107,8 +110,6 @@ public class NetworkNode {
 				NodeInfo newNode = new NodeInfo();
 				newNode.address = InetAddress.getByName(serverToks[IP_COL]);
 				newNode.port = Integer.parseInt(serverToks[PORT_COL]);
-				avgMsgDelay = Integer.parseInt(serverToks[MSG_DELAY_COL]);
-				unreliability = Float.parseFloat(serverToks[UNRELIABILITY_COL]);
 				ports.add(newNode.port);
 				nodes.add(newNode);
 				nodeListFileTokens.add(serverToks);
@@ -116,6 +117,10 @@ public class NetworkNode {
 			if(id<0 || id>=nodes.size())
 				throw new ArrayIndexOutOfBoundsException();
 			nodes.get(id).connected = true;
+			
+			avgMsgDelay = Integer.parseInt(nodeListFileTokens.get(id)[MSG_DELAY_COL]);
+			unreliability = Float.parseFloat(nodeListFileTokens.get(id)[UNRELIABILITY_COL]);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -149,10 +154,11 @@ public class NetworkNode {
 	/**
 	 * Send a message to another node by id
 	 */
-	public boolean sendMessage(int theirId, Message msg) {
-		
+	public boolean sendMessage(int theirId, Message msg){
+		/*
 		if(!unreliabilitySimulator())
-			return false;
+			return true;
+		*/
 		
 		if(!isConnected(theirId)){
 			log.warning("Error sending message to node " + theirId + ": node not connected");
@@ -175,10 +181,11 @@ public class NetworkNode {
 	/**
 	 * Receive a message from another node   
 	 */
-	public Message receiveMessage(int theirId){
+	public Message receiveMessage(int theirId) throws SimulatedCrashException{
 		
 		if(!unreliabilitySimulator())
-			return null;
+			throw new SimulatedCrashException();
+		
 		
 		// receive from self
 		if(theirId == id){
@@ -201,11 +208,13 @@ public class NetworkNode {
 			msg = node.reader.readLine();
 			log.finest("Received message \"" + msg + "\" from node " + theirId );
 			return Message.fromString(msg);
+		} catch (SocketException e){
+				log.finest("Lost connection to node " + theirId);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e){
 			log.finest("Failed to decode message \"" + msg + "\" from node " + theirId);
-		}
+		} 
 		
 		return null;
 
@@ -217,12 +226,14 @@ public class NetworkNode {
 			Random rand = new Random(System.currentTimeMillis());
 			float randVal = rand.nextFloat();
 
+			/*
 			// generate random "crashes"
 			if(randVal < unreliability){
 				log.fine("Node " + id + " CRASH with " + randVal + " < " + unreliability);
 				Thread.sleep(CRASH_TIME);
 				return false;
 			}
+			*/
 			
 			// insert random wait time based on msgDelay
 			int waitTime = DELAY_TIME * avgMsgDelay;
@@ -240,6 +251,8 @@ public class NetworkNode {
 //	Private Methods -- mostly network related
 //****************************************************************	
 	
+
+
 	/**
 	 * Send a message to another node
 	 */
@@ -473,7 +486,7 @@ public class NetworkNode {
 
 
 	public void clearnode(int otherID) {
-		log.fine("Cleaing node " + otherID);
+		log.fine("Clearing node " + otherID);
 		nodes.get(otherID).connected = false;
 		nodes.get(otherID).writer = null;
 		nodes.get(otherID).reader = null;

@@ -115,7 +115,7 @@ public class PaxosNode{
 //	Proposer methods	
 	
 	public void sendPrepareRequest(){
-		
+		long t1 = System.currentTimeMillis();
 		// reset propose response count
 		state.prepareResponseSum = 0;
 		state.nackSum = 0;
@@ -136,6 +136,9 @@ public class PaxosNode{
 			Message msg = new Message(MessageType.PREPARE_REQUEST, ""+state.currentRound, state.lastProposalNumber, id);
 			netnode.sendMessage(acceptorId, msg);
 		}
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
@@ -150,6 +153,7 @@ public class PaxosNode{
 
 	
 	public void sendAcceptRequest(){
+		long t1 = System.currentTimeMillis();
 		state.nackSum = 0;
 		state.prepareResponseSum = 0;
 		state.writeToFile();
@@ -172,10 +176,13 @@ public class PaxosNode{
 			netnode.sendMessage(acceptorId, msg);
 		}
 		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
 	public synchronized void receivePrepareResponse(Message msg){
+		long t1 = System.currentTimeMillis();
 		log.fine("Received PREPARE_RESPONSE from " + msg.getId());
 		
 		// contents of PREPARE_RESPONSE (the promise)
@@ -216,11 +223,15 @@ public class PaxosNode{
 			log.fine("Prepare response sum = " + state.prepareResponseSum);
 		}
 		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
+		
 	}	
 	
 	// response when you are told "computer says no", proposal number is too low
 	// NACKs contain the newer proposal information that must be recorded
 	public synchronized void receiveNack(Message msg){
+		long t1 = System.currentTimeMillis();
 		log.fine("Received NACK");
 		Proposal responseProposal = Proposal.fromString(msg.getValue());
 		if(responseProposal != null){
@@ -243,11 +254,15 @@ public class PaxosNode{
 			log.fine("NACK sum = " + state.nackSum + ", starting new prepare request");
 			sendPrepareRequest();
 		}
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
 	// if found that our round is out of date, 
 	public synchronized void receiveNackOldRound(Message msg){
+		long t1 = System.currentTimeMillis();
 		log.fine("Received NACK_OLDROUND");
 		int theirRound = Integer.parseInt(msg.getValue());
 		
@@ -259,6 +274,9 @@ public class PaxosNode{
 		} else {
 			log.fine("Received old round " + theirRound);
 		}
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
@@ -268,7 +286,7 @@ public class PaxosNode{
 //	Acceptor methods	
 	
 	public synchronized void receivePrepareRequest(Message msg){
-		
+		long t1 = System.currentTimeMillis();
 		int n = msg.getNumber();
 		
 		// check round number of incoming request
@@ -296,9 +314,13 @@ public class PaxosNode{
 			sendNack(nackMsg, msg.getId());
 		}
 		
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	public synchronized void receiveAcceptRequest(Message msg){
+		long t1 = System.currentTimeMillis();
 		
 		// parse message
 		Proposal prop = Proposal.fromString(msg.getValue());
@@ -328,27 +350,43 @@ public class PaxosNode{
 		}
 		
 
-		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
 	public void sendPrepareResponse(Message msg, int otherId){
+		long t1 = System.currentTimeMillis();
+		
 		netnode.sendMessage(otherId, msg);
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
 	public void sendNack(Message msg, int otherId){
+		long t1 = System.currentTimeMillis();
+		
 		netnode.sendMessage(otherId, msg);
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
 	// send to distinguished learner(s)
 	public void sendAcceptNotification(){
+		long t1 = System.currentTimeMillis();
+		
 		Message msg = new Message(MessageType.ACCEPT_NOTIFICATION, state.acceptedProposal.toString(), state.acceptedProposal.number, id);
 		log.fine("Preparing to send out " + msg + " to DLs");
 		for(Integer learnerID : distinguishedLearners){
 			netnode.sendMessage(learnerID, msg);
 		}
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
@@ -364,6 +402,7 @@ public class PaxosNode{
 	
 	// receive from acceptor
 	public synchronized void receiveAcceptNotification(Message msg){
+		long t1 = System.currentTimeMillis();
 		
 		// parse message for accepted proposal
 		int accId = msg.getId();
@@ -385,6 +424,8 @@ public class PaxosNode{
 			
 			if(chosenVal != null){
 				log.fine("Chosen value (" + accId + ") = " + chosenVal);
+				log.info("Determined new chosen value " + chosenVal + " for round " + state.currentRound);
+				updateChosenValue(state.currentRound, chosenVal);
 				sendChosenValue();
 				// increment round number
 				state.currentRound++;
@@ -392,10 +433,13 @@ public class PaxosNode{
 				state.writeToFile();
 			}
 		}
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}	
 	
 	
-	private synchronized String checkForChosenValue(){
+	private String checkForChosenValue(){
 		
 		// reset chosenChecker to check for value
 		Map<String, Float> chosenChecker = new HashMap<>();
@@ -406,10 +450,6 @@ public class PaxosNode{
 				float sum = (chosenChecker.containsKey(p.value)) ? chosenChecker.get(p.value) : 0;
 				sum += acceptorWeights[i];
 				if(sum>0.5){
-					
-					log.info("Determined new chosen value " + p.value + " for round " + p.round);
-					updateChosenValue(p.round, p.value);
-					
 					return p.value;
 				}
 				chosenChecker.put(p.value, sum);
@@ -421,15 +461,22 @@ public class PaxosNode{
 	
 	
 	private void sendChosenValue(){
+		long t1 = System.currentTimeMillis();
+		
 		log.fine("Sending chosen value for round " + state.currentRound + " " + state.chosenValues + " to all");
 		Message msg = new Message(MessageType.CHOSEN_VALUE, state.chosenValues.get(state.currentRound), state.currentRound, id);
 		for(int i=0; i<Nprocs; i++){
 			netnode.sendMessage(i, msg);
 		}
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
 	private synchronized void receiveChosenValue(Message msg){
+		long t1 = System.currentTimeMillis();
+		
 		int theirRound = msg.getNumber();
 		if(!state.chosenValues.containsKey(theirRound)){
 			log.info("Received new chosen value from node " + msg.getId() + " for round " + theirRound + " : " + msg.getValue());
@@ -440,12 +487,14 @@ public class PaxosNode{
 			else
 				log.warning("PROBLEM! CONFLICTING CHOSEN VALUE FROM " + msg.getId() + " for round " + theirRound + " : " + msg.getValue() + ". Current chosen value = " + state.chosenValues.get(theirRound));
 		}
+		
+		long t2 = System.currentTimeMillis();
+		log.finest("Elapsed time = " + (t2-t1));
 	}
 	
 	
 	private void updateChosenValue(int round, String value){
 		state.chosenValues.put(round, value);
-		state.currentRound = round;
 		state.writeToFile();
 		
 		// prepare for next round
