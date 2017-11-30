@@ -53,6 +53,8 @@ abstract public class AbstractApp {
 	// Main app method for derived classes
 	abstract public void run_app();
 	
+	abstract public void processMessage(Message msg);
+	
 	
 	private void setupLogger(){
 		// set logging format
@@ -157,6 +159,7 @@ abstract public class AbstractApp {
 					
 					// process message based on type
 					paxnode.processMessage(msg);
+					processMessage(msg);
 				}
 			} catch (Exception e){
 				log.warning(e.getClass().getSimpleName() + ": " + e.getMessage());

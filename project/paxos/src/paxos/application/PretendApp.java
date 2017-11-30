@@ -2,6 +2,8 @@ package paxos.application;
 
 import java.io.File;
 
+import paxos.messages.Message;
+
 public class PretendApp extends AbstractApp{
 
 	public PretendApp(int id, String nodeListFileName, String statefile) {
@@ -101,6 +103,9 @@ public class PretendApp extends AbstractApp{
 		AbstractApp app = new PretendApp(id, fileName, statefile);
 		app.run();
 	}
+
+	@Override
+	public void processMessage(Message msg) {}
 	
 	
 	
