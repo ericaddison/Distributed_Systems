@@ -35,7 +35,7 @@ public class PretendApp extends AbstractApp{
 					
 					String chosenValue = null;
 					while( (chosenValue = getPaxnode().getChosenValueForRound(round)) == null){
-						Thread.sleep(10);
+						Thread.sleep(1);
 					}
 					long t2 = System.currentTimeMillis();
 					getLog().info("Chosen value for round " + (round+1) + " : " + chosenValue);

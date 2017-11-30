@@ -54,3 +54,8 @@ look for crash messages on all logs
 cat logs/log_*.log | grep -i crash
 ```
 
+
+scrape paxos round times
+```
+cat logs/log_0.log | grep -i pretendapp | grep time | rev | cut -d' ' -f3 | rev > times.dat
+```
