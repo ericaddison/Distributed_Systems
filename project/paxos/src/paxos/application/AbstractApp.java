@@ -6,9 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import paxos.NetworkNode;
-import paxos.PaxosNode;
 import paxos.messages.Message;
+import paxos.network.NetworkNode;
+import paxos.paxos.PaxosNode;
 
 abstract public class AbstractApp {
 
@@ -29,9 +29,9 @@ abstract public class AbstractApp {
 		
 		netnode = new NetworkNode(id, nodeListFileName, (statefile!=null), log);
 		if(statefile==null)
-			paxnode = new PaxosNode(netnode, log);
+			paxnode = new PaxosNode(this, log);
 		else
-			paxnode = new PaxosNode(netnode, log, statefile);
+			paxnode = new PaxosNode(this, log, statefile);
 
 	}
 	
@@ -89,6 +89,23 @@ abstract public class AbstractApp {
 	public PaxosNode getPaxnode() {
 		return paxnode;
 	}
+	
+	public int getTotalNodeCount(){
+		return netnode.getTotalNodeCount();
+	}
+	
+	public String[] getNodeFileTokens(int i){
+		return netnode.getNodeFileTokens(i);
+	}
+	
+	public boolean isRunning(){
+		return netnode.isRunning();
+	}
+	
+	public void sendMessage(int nodeId, Message msg){
+		netnode.sendMessage(nodeId, msg);
+	}
+	
 	
 	
 //*************************************************8

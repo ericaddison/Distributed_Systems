@@ -1,0 +1,1209 @@
+2017-11-30 10:03:46.053 INFO ::: paxos.application.AbstractApp <init> ::: Created new PretendApp with: 
+2017-11-30 10:03:46.056 INFO ::: paxos.application.AbstractApp <init> ::: 	id = 9 
+2017-11-30 10:03:46.062 INFO ::: paxos.network.NetworkNode <init> ::: Created new NetworkNode with: 
+2017-11-30 10:03:46.063 INFO ::: paxos.network.NetworkNode <init> ::: 	id = 9 
+2017-11-30 10:03:46.064 INFO ::: paxos.network.NetworkNode <init> ::: 	nodeListFileName = tenNodes_unreliable_diffweights.txt 
+2017-11-30 10:03:46.064 INFO ::: paxos.network.NetworkNode <init> ::: 	resart = false 
+2017-11-30 10:03:46.065 INFO ::: paxos.network.NetworkNode <init> ::: 	avgMsgDelay = 10 
+2017-11-30 10:03:46.067 INFO ::: paxos.network.NetworkNode <init> ::: 	unreliability = 0.01 
+2017-11-30 10:03:46.068 INFO ::: paxos.network.NetworkNode <init> ::: Node List: 
+2017-11-30 10:03:46.135 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5000 
+2017-11-30 10:03:46.136 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5005 
+2017-11-30 10:03:46.137 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5010 
+2017-11-30 10:03:46.137 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5015 
+2017-11-30 10:03:46.138 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5020 
+2017-11-30 10:03:46.138 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5025 
+2017-11-30 10:03:46.139 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5030 
+2017-11-30 10:03:46.139 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5035 
+2017-11-30 10:03:46.140 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5040 
+2017-11-30 10:03:46.140 INFO ::: paxos.network.NetworkNode <init> ::: 	/127.0.0.1:5045 
+2017-11-30 10:03:46.192 INFO ::: paxos.paxos.PaxosNode <init> ::: Created new PaxosNode with: 
+2017-11-30 10:03:46.192 INFO ::: paxos.paxos.PaxosNode <init> ::: 	id = 9 
+2017-11-30 10:03:46.193 INFO ::: paxos.paxos.PaxosNode <init> ::: 	weight = 0.025 
+2017-11-30 10:03:46.193 INFO ::: paxos.paxos.PaxosNode <init> ::: 	Distinguished Proposer = false 
+2017-11-30 10:03:46.194 INFO ::: paxos.paxos.PaxosNode <init> ::: 	Distinguished Learner = false 
+2017-11-30 10:03:46.240 FINE ::: paxos.application.AbstractApp run ::: Running netnode 
+2017-11-30 10:03:46.245 INFO ::: paxos.network.NetworkNode startConnectionThread ::: Initiating connections 
+2017-11-30 10:03:46.247 FINER ::: paxos.network.NetworkNode connectionLoop ::: Listenining for connection on port 5045 
+2017-11-30 10:03:46.249 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 0 
+2017-11-30 10:03:46.252 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5000 
+2017-11-30 10:03:46.254 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5000 
+2017-11-30 10:03:46.257 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":0}" from /127.0.0.1:5000 
+2017-11-30 10:03:46.260 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 1 
+2017-11-30 10:03:46.261 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5005 
+2017-11-30 10:03:46.261 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5005 
+2017-11-30 10:03:46.263 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":1}" from /127.0.0.1:5005 
+2017-11-30 10:03:46.263 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 2 
+2017-11-30 10:03:46.265 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5010 
+2017-11-30 10:03:46.265 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5010 
+2017-11-30 10:03:46.267 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":2}" from /127.0.0.1:5010 
+2017-11-30 10:03:46.268 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 3 
+2017-11-30 10:03:46.268 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5015 
+2017-11-30 10:03:46.269 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5015 
+2017-11-30 10:03:46.271 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":3}" from /127.0.0.1:5015 
+2017-11-30 10:03:46.272 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 4 
+2017-11-30 10:03:46.273 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5020 
+2017-11-30 10:03:46.274 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5020 
+2017-11-30 10:03:46.276 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":4}" from /127.0.0.1:5020 
+2017-11-30 10:03:46.276 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 5 
+2017-11-30 10:03:46.276 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5025 
+2017-11-30 10:03:46.277 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5025 
+2017-11-30 10:03:46.279 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":5}" from /127.0.0.1:5025 
+2017-11-30 10:03:46.279 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 6 
+2017-11-30 10:03:46.279 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5030 
+2017-11-30 10:03:46.280 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5030 
+2017-11-30 10:03:46.282 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":6}" from /127.0.0.1:5030 
+2017-11-30 10:03:46.282 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 7 
+2017-11-30 10:03:46.283 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5035 
+2017-11-30 10:03:46.283 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5035 
+2017-11-30 10:03:46.285 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":7}" from /127.0.0.1:5035 
+2017-11-30 10:03:46.286 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Entering connect loop for iServer = 8 
+2017-11-30 10:03:46.287 FINER ::: paxos.network.NetworkNode initOutgoingConnection ::: Initializing outgoing connection with node at /127.0.0.1:5040 
+2017-11-30 10:03:46.288 FINEST ::: paxos.network.NetworkNode sendMessage ::: Sending message "{"type":"INIT","value":"id","number":9,"id":9}" to /127.0.0.1:5040 
+2017-11-30 10:03:46.289 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"INIT","value":"ACK","number":0,"id":8}" from /127.0.0.1:5040 
+2017-11-30 10:03:46.290 FINE ::: paxos.network.NetworkNode connectToOtherServers ::: Finished in ctor connection loop 
+2017-11-30 10:03:46.290 FINE ::: paxos.application.AbstractApp run ::: Running paxnode 
+2017-11-30 10:03:46.291 INFO ::: paxos.paxos.PaxosNode run ::: Starting run phase 
+2017-11-30 10:03:46.291 FINE ::: paxos.application.AbstractApp run ::: Starting Listener loops 
+2017-11-30 10:03:46.293 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 0 
+2017-11-30 10:03:46.293 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 1 
+2017-11-30 10:03:46.295 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 0 
+2017-11-30 10:03:46.295 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 2 
+2017-11-30 10:03:46.295 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 0 
+2017-11-30 10:03:46.295 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 3 
+2017-11-30 10:03:46.295 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 1 
+2017-11-30 10:03:46.296 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 4 
+2017-11-30 10:03:46.296 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 2 
+2017-11-30 10:03:46.297 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 5 
+2017-11-30 10:03:46.297 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 3 
+2017-11-30 10:03:46.298 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 3 
+2017-11-30 10:03:46.296 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 1 
+2017-11-30 10:03:46.299 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 5 
+2017-11-30 10:03:46.298 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 6 
+2017-11-30 10:03:46.297 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 4 
+2017-11-30 10:03:46.297 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 2 
+2017-11-30 10:03:46.301 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 4 
+2017-11-30 10:03:46.300 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 7 
+2017-11-30 10:03:46.300 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 5 
+2017-11-30 10:03:46.302 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 8 
+2017-11-30 10:03:46.301 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 6 
+2017-11-30 10:03:46.304 FINEST ::: paxos.application.AbstractApp startListenerLoops ::: Starting App listener thread 9 
+2017-11-30 10:03:46.303 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 7 
+2017-11-30 10:03:46.306 FINE ::: paxos.application.AbstractApp run ::: Running run_app 
+2017-11-30 10:03:46.305 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 8 
+2017-11-30 10:03:46.304 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 6 
+2017-11-30 10:03:46.307 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 8 
+2017-11-30 10:03:46.306 INFO ::: paxos.application.PretendApp run_app ::: PretendApp run phase 
+2017-11-30 10:03:46.306 FINER ::: paxos.application.AbstractApp listenerLoop ::: Entering listener loop for node 9 
+2017-11-30 10:03:46.306 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 7 
+2017-11-30 10:03:46.309 FINER ::: paxos.application.AbstractApp listenerLoop ::: Listener loop connected for node 9 
+2017-11-30 10:03:46.963 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":0}" from node 0 
+2017-11-30 10:03:46.965 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":0} from node 0 
+2017-11-30 10:03:46.966 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":0} 
+2017-11-30 10:03:46.966 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":1}" from node 1 
+2017-11-30 10:03:46.966 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 0 : MyVal0-0 
+2017-11-30 10:03:46.967 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":2}" from node 2 
+2017-11-30 10:03:46.967 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":1} from node 1 
+2017-11-30 10:03:46.969 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":1} 
+2017-11-30 10:03:46.969 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":2} from node 2 
+2017-11-30 10:03:46.969 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-0","number":0,"id":2} 
+2017-11-30 10:03:46.971 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 5 
+2017-11-30 10:03:46.972 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 0 : MyVal0-0 
+2017-11-30 10:03:46.972 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:46.973 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 0 : MyVal0-0 
+2017-11-30 10:03:46.973 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:47.532 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":0}" from node 0 
+2017-11-30 10:03:47.533 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":2}" from node 2 
+2017-11-30 10:03:47.533 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":0} from node 0 
+2017-11-30 10:03:47.535 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":1}" from node 1 
+2017-11-30 10:03:47.535 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":0} 
+2017-11-30 10:03:47.535 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":2} from node 2 
+2017-11-30 10:03:47.536 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 1 : MyVal0-1 
+2017-11-30 10:03:47.536 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":1} from node 1 
+2017-11-30 10:03:47.536 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":2} 
+2017-11-30 10:03:47.537 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-1","number":1,"id":1} 
+2017-11-30 10:03:47.537 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:47.538 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 1 : MyVal0-1 
+2017-11-30 10:03:47.538 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:47.538 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 1 : MyVal0-1 
+2017-11-30 10:03:47.539 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:48.415 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":0}" from node 0 
+2017-11-30 10:03:48.415 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":1}" from node 1 
+2017-11-30 10:03:48.416 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":2}" from node 2 
+2017-11-30 10:03:48.420 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":2} from node 2 
+2017-11-30 10:03:48.420 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":2} 
+2017-11-30 10:03:48.420 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":0} from node 0 
+2017-11-30 10:03:48.420 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":1} from node 1 
+2017-11-30 10:03:48.421 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":0} 
+2017-11-30 10:03:48.420 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 2 : MyVal0-2 
+2017-11-30 10:03:48.421 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-2","number":2,"id":1} 
+2017-11-30 10:03:48.425 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 5 
+2017-11-30 10:03:48.426 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 2 : MyVal0-2 
+2017-11-30 10:03:48.426 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:48.426 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 2 : MyVal0-2 
+2017-11-30 10:03:48.427 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:49.198 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":2}" from node 2 
+2017-11-30 10:03:49.198 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":1}" from node 1 
+2017-11-30 10:03:49.199 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":2} from node 2 
+2017-11-30 10:03:49.199 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":0}" from node 0 
+2017-11-30 10:03:49.199 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":1} from node 1 
+2017-11-30 10:03:49.200 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":0} from node 0 
+2017-11-30 10:03:49.199 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":2} 
+2017-11-30 10:03:49.200 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":0} 
+2017-11-30 10:03:49.200 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-3","number":3,"id":1} 
+2017-11-30 10:03:49.201 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 3 : MyVal0-3 
+2017-11-30 10:03:49.203 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:49.203 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 3 : MyVal0-3 
+2017-11-30 10:03:49.204 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:49.204 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 3 : MyVal0-3 
+2017-11-30 10:03:49.204 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.954 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":2}" from node 2 
+2017-11-30 10:03:49.954 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":0}" from node 0 
+2017-11-30 10:03:49.954 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":1}" from node 1 
+2017-11-30 10:03:49.955 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":0} from node 0 
+2017-11-30 10:03:49.955 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":2} from node 2 
+2017-11-30 10:03:49.956 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":0} 
+2017-11-30 10:03:49.956 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":1} from node 1 
+2017-11-30 10:03:49.956 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 4 : MyVal0-4 
+2017-11-30 10:03:49.956 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":2} 
+2017-11-30 10:03:49.957 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-4","number":4,"id":1} 
+2017-11-30 10:03:49.959 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:49.959 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 4 : MyVal0-4 
+2017-11-30 10:03:49.959 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.960 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 4 : MyVal0-4 
+2017-11-30 10:03:49.960 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.960 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":0}" from node 0 
+2017-11-30 10:03:49.961 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":1}" from node 1 
+2017-11-30 10:03:49.961 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":0} from node 0 
+2017-11-30 10:03:49.961 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":1} from node 1 
+2017-11-30 10:03:49.961 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":0} 
+2017-11-30 10:03:49.962 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":1} 
+2017-11-30 10:03:49.962 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 5 : MyVal0-5 
+2017-11-30 10:03:49.962 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":2}" from node 2 
+2017-11-30 10:03:49.963 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":2} from node 2 
+2017-11-30 10:03:49.963 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-5","number":5,"id":2} 
+2017-11-30 10:03:49.965 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:49.966 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 5 : MyVal0-5 
+2017-11-30 10:03:49.966 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.966 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 5 : MyVal0-5 
+2017-11-30 10:03:49.967 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:49.967 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":1}" from node 1 
+2017-11-30 10:03:49.967 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":0}" from node 0 
+2017-11-30 10:03:49.968 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":2}" from node 2 
+2017-11-30 10:03:49.968 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":0} from node 0 
+2017-11-30 10:03:49.968 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":1} from node 1 
+2017-11-30 10:03:49.968 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":0} 
+2017-11-30 10:03:49.968 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":2} from node 2 
+2017-11-30 10:03:49.969 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 6 : MyVal0-6 
+2017-11-30 10:03:49.968 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":1} 
+2017-11-30 10:03:49.969 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-6","number":6,"id":2} 
+2017-11-30 10:03:49.971 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:49.972 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 6 : MyVal0-6 
+2017-11-30 10:03:49.972 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.972 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 6 : MyVal0-6 
+2017-11-30 10:03:49.972 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.975 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":1}" from node 1 
+2017-11-30 10:03:49.975 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":0}" from node 0 
+2017-11-30 10:03:49.975 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":2}" from node 2 
+2017-11-30 10:03:49.976 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":0} from node 0 
+2017-11-30 10:03:49.976 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":1} from node 1 
+2017-11-30 10:03:49.977 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":0} 
+2017-11-30 10:03:49.977 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":2} from node 2 
+2017-11-30 10:03:49.977 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":2} 
+2017-11-30 10:03:49.977 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 7 : MyVal0-7 
+2017-11-30 10:03:49.977 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-7","number":7,"id":1} 
+2017-11-30 10:03:49.979 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:49.979 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 7 : MyVal0-7 
+2017-11-30 10:03:49.980 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:49.980 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 7 : MyVal0-7 
+2017-11-30 10:03:49.980 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.982 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":0}" from node 0 
+2017-11-30 10:03:49.982 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":1}" from node 1 
+2017-11-30 10:03:49.982 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":0} from node 0 
+2017-11-30 10:03:49.983 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":2}" from node 2 
+2017-11-30 10:03:49.982 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":1} from node 1 
+2017-11-30 10:03:49.983 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":2} from node 2 
+2017-11-30 10:03:49.983 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":0} 
+2017-11-30 10:03:49.983 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":2} 
+2017-11-30 10:03:49.983 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-8","number":8,"id":1} 
+2017-11-30 10:03:49.983 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 8 : MyVal0-8 
+2017-11-30 10:03:49.990 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 7 
+2017-11-30 10:03:49.990 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 8 : MyVal0-8 
+2017-11-30 10:03:49.990 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:49.991 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 8 : MyVal0-8 
+2017-11-30 10:03:49.991 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:50.988 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":0}" from node 0 
+2017-11-30 10:03:50.989 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":0} from node 0 
+2017-11-30 10:03:50.989 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":1}" from node 1 
+2017-11-30 10:03:50.990 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":2}" from node 2 
+2017-11-30 10:03:50.990 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":0} 
+2017-11-30 10:03:50.992 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":1} from node 1 
+2017-11-30 10:03:50.992 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":2} from node 2 
+2017-11-30 10:03:50.993 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":1} 
+2017-11-30 10:03:50.992 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 9 : MyVal0-9 
+2017-11-30 10:03:50.993 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-9","number":9,"id":2} 
+2017-11-30 10:03:50.995 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:50.996 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 9 : MyVal0-9 
+2017-11-30 10:03:50.996 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:50.996 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 9 : MyVal0-9 
+2017-11-30 10:03:50.996 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:51.907 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":0}" from node 0 
+2017-11-30 10:03:51.908 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":1}" from node 1 
+2017-11-30 10:03:51.907 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":2}" from node 2 
+2017-11-30 10:03:51.908 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":0} from node 0 
+2017-11-30 10:03:51.909 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":2} from node 2 
+2017-11-30 10:03:51.909 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":1} from node 1 
+2017-11-30 10:03:51.910 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":2} 
+2017-11-30 10:03:51.910 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":0} 
+2017-11-30 10:03:51.911 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 10 : MyVal0-10 
+2017-11-30 10:03:51.910 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-10","number":10,"id":1} 
+2017-11-30 10:03:51.913 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:51.914 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 10 : MyVal0-10 
+2017-11-30 10:03:51.914 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:51.914 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 10 : MyVal0-10 
+2017-11-30 10:03:51.915 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:52.708 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":2}" from node 2 
+2017-11-30 10:03:52.708 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":1}" from node 1 
+2017-11-30 10:03:52.709 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":2} from node 2 
+2017-11-30 10:03:52.709 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":1} from node 1 
+2017-11-30 10:03:52.709 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":0}" from node 0 
+2017-11-30 10:03:52.710 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":1} 
+2017-11-30 10:03:52.709 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":2} 
+2017-11-30 10:03:52.710 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 11 : MyVal0-11 
+2017-11-30 10:03:52.710 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":0} from node 0 
+2017-11-30 10:03:52.711 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-11","number":11,"id":0} 
+2017-11-30 10:03:52.895 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 185 
+2017-11-30 10:03:52.895 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 11 : MyVal0-11 
+2017-11-30 10:03:52.895 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:52.895 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 11 : MyVal0-11 
+2017-11-30 10:03:52.896 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:53.602 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":2}" from node 2 
+2017-11-30 10:03:53.603 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":2} from node 2 
+2017-11-30 10:03:53.604 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":2} 
+2017-11-30 10:03:53.604 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":1}" from node 1 
+2017-11-30 10:03:53.604 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 12 : MyVal0-12 
+2017-11-30 10:03:53.604 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":1} from node 1 
+2017-11-30 10:03:53.605 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":0}" from node 0 
+2017-11-30 10:03:53.605 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":1} 
+2017-11-30 10:03:53.605 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":0} from node 0 
+2017-11-30 10:03:53.606 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-12","number":12,"id":0} 
+2017-11-30 10:03:53.607 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:53.607 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 12 : MyVal0-12 
+2017-11-30 10:03:53.608 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:53.608 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 12 : MyVal0-12 
+2017-11-30 10:03:53.608 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:54.570 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":2}" from node 2 
+2017-11-30 10:03:54.571 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":0}" from node 0 
+2017-11-30 10:03:54.571 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":2} from node 2 
+2017-11-30 10:03:54.572 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":0} from node 0 
+2017-11-30 10:03:54.573 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":0} 
+2017-11-30 10:03:54.571 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":1}" from node 1 
+2017-11-30 10:03:54.573 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 13 : MyVal0-13 
+2017-11-30 10:03:54.572 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":2} 
+2017-11-30 10:03:54.573 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":1} from node 1 
+2017-11-30 10:03:54.574 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-13","number":13,"id":1} 
+2017-11-30 10:03:54.576 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:54.576 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 13 : MyVal0-13 
+2017-11-30 10:03:54.576 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:54.577 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 13 : MyVal0-13 
+2017-11-30 10:03:54.577 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:55.432 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":0}" from node 0 
+2017-11-30 10:03:55.433 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":1}" from node 1 
+2017-11-30 10:03:55.433 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":0} from node 0 
+2017-11-30 10:03:55.433 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":2}" from node 2 
+2017-11-30 10:03:55.433 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":1} from node 1 
+2017-11-30 10:03:55.434 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":2} from node 2 
+2017-11-30 10:03:55.434 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":0} 
+2017-11-30 10:03:55.435 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":2} 
+2017-11-30 10:03:55.434 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-14","number":14,"id":1} 
+2017-11-30 10:03:55.435 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 14 : MyVal0-14 
+2017-11-30 10:03:55.439 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 4 
+2017-11-30 10:03:55.439 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 14 : MyVal0-14 
+2017-11-30 10:03:55.439 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:55.440 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 14 : MyVal0-14 
+2017-11-30 10:03:55.440 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.284 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":0}" from node 0 
+2017-11-30 10:03:56.285 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":0} from node 0 
+2017-11-30 10:03:56.285 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":0} 
+2017-11-30 10:03:56.286 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 15 : MyVal0-15 
+2017-11-30 10:03:56.288 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:56.288 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":1}" from node 1 
+2017-11-30 10:03:56.288 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":2}" from node 2 
+2017-11-30 10:03:56.289 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":1} from node 1 
+2017-11-30 10:03:56.289 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":2} from node 2 
+2017-11-30 10:03:56.289 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":1} 
+2017-11-30 10:03:56.289 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-15","number":15,"id":2} 
+2017-11-30 10:03:56.289 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 15 : MyVal0-15 
+2017-11-30 10:03:56.290 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:56.290 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 15 : MyVal0-15 
+2017-11-30 10:03:56.290 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.401 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":0}" from node 0 
+2017-11-30 10:03:56.402 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":0} from node 0 
+2017-11-30 10:03:56.402 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":0} 
+2017-11-30 10:03:56.402 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 16 : MyVal0-16 
+2017-11-30 10:03:56.403 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":1}" from node 1 
+2017-11-30 10:03:56.403 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":2}" from node 2 
+2017-11-30 10:03:56.404 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":1} from node 1 
+2017-11-30 10:03:56.404 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":2} from node 2 
+2017-11-30 10:03:56.404 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":1} 
+2017-11-30 10:03:56.404 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-16","number":16,"id":2} 
+2017-11-30 10:03:56.408 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 6 
+2017-11-30 10:03:56.409 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 16 : MyVal0-16 
+2017-11-30 10:03:56.409 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.409 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 16 : MyVal0-16 
+2017-11-30 10:03:56.409 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.514 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":0}" from node 0 
+2017-11-30 10:03:56.514 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":2}" from node 2 
+2017-11-30 10:03:56.515 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":1}" from node 1 
+2017-11-30 10:03:56.514 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":0} from node 0 
+2017-11-30 10:03:56.515 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":1} from node 1 
+2017-11-30 10:03:56.515 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":2} from node 2 
+2017-11-30 10:03:56.515 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":1} 
+2017-11-30 10:03:56.515 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":0} 
+2017-11-30 10:03:56.516 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 17 : MyVal0-17 
+2017-11-30 10:03:56.516 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-17","number":17,"id":2} 
+2017-11-30 10:03:56.518 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:56.518 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 17 : MyVal0-17 
+2017-11-30 10:03:56.518 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.518 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 17 : MyVal0-17 
+2017-11-30 10:03:56.518 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.634 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":1}" from node 1 
+2017-11-30 10:03:56.634 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":2}" from node 2 
+2017-11-30 10:03:56.634 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":0}" from node 0 
+2017-11-30 10:03:56.634 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":1} from node 1 
+2017-11-30 10:03:56.635 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":0} from node 0 
+2017-11-30 10:03:56.635 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":2} from node 2 
+2017-11-30 10:03:56.635 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":0} 
+2017-11-30 10:03:56.635 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":1} 
+2017-11-30 10:03:56.635 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 18 : MyVal0-18 
+2017-11-30 10:03:56.635 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-18","number":18,"id":2} 
+2017-11-30 10:03:56.637 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:56.638 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 18 : MyVal0-18 
+2017-11-30 10:03:56.638 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.638 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 18 : MyVal0-18 
+2017-11-30 10:03:56.639 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:56.675 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":1}" from node 1 
+2017-11-30 10:03:56.677 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":0}" from node 0 
+2017-11-30 10:03:56.678 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":2}" from node 2 
+2017-11-30 10:03:56.677 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":1} from node 1 
+2017-11-30 10:03:56.678 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":0} from node 0 
+2017-11-30 10:03:56.679 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":2} from node 2 
+2017-11-30 10:03:56.679 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":1} 
+2017-11-30 10:03:56.680 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":2} 
+2017-11-30 10:03:56.679 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-19","number":19,"id":0} 
+2017-11-30 10:03:56.680 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 19 : MyVal0-19 
+2017-11-30 10:03:56.683 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:56.684 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 19 : MyVal0-19 
+2017-11-30 10:03:56.684 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.684 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 19 : MyVal0-19 
+2017-11-30 10:03:56.685 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:56.738 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":1}" from node 1 
+2017-11-30 10:03:56.738 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":1} from node 1 
+2017-11-30 10:03:56.738 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":0}" from node 0 
+2017-11-30 10:03:56.739 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":1} 
+2017-11-30 10:03:56.739 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":0} from node 0 
+2017-11-30 10:03:56.739 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 20 : MyVal0-20 
+2017-11-30 10:03:56.739 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":2}" from node 2 
+2017-11-30 10:03:56.739 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":0} 
+2017-11-30 10:03:56.739 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":2} from node 2 
+2017-11-30 10:03:56.740 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-20","number":20,"id":2} 
+2017-11-30 10:03:56.743 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 4 
+2017-11-30 10:03:56.743 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 20 : MyVal0-20 
+2017-11-30 10:03:56.743 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.743 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 20 : MyVal0-20 
+2017-11-30 10:03:56.743 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.792 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":1}" from node 1 
+2017-11-30 10:03:56.792 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":2}" from node 2 
+2017-11-30 10:03:56.793 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":0}" from node 0 
+2017-11-30 10:03:56.793 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":2} from node 2 
+2017-11-30 10:03:56.793 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":0} from node 0 
+2017-11-30 10:03:56.793 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":1} from node 1 
+2017-11-30 10:03:56.794 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":0} 
+2017-11-30 10:03:56.793 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":2} 
+2017-11-30 10:03:56.794 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 21 : MyVal0-21 
+2017-11-30 10:03:56.794 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-21","number":21,"id":1} 
+2017-11-30 10:03:56.797 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:56.797 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 21 : MyVal0-21 
+2017-11-30 10:03:56.797 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.797 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 21 : MyVal0-21 
+2017-11-30 10:03:56.797 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.844 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":0}" from node 0 
+2017-11-30 10:03:56.844 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":2}" from node 2 
+2017-11-30 10:03:56.844 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":1}" from node 1 
+2017-11-30 10:03:56.845 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":2} from node 2 
+2017-11-30 10:03:56.845 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":0} from node 0 
+2017-11-30 10:03:56.846 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":2} 
+2017-11-30 10:03:56.846 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":1} from node 1 
+2017-11-30 10:03:56.846 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 22 : MyVal0-22 
+2017-11-30 10:03:56.846 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":0} 
+2017-11-30 10:03:56.847 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-22","number":22,"id":1} 
+2017-11-30 10:03:56.849 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:56.850 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 22 : MyVal0-22 
+2017-11-30 10:03:56.850 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.850 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 22 : MyVal0-22 
+2017-11-30 10:03:56.851 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:56.916 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":2}" from node 2 
+2017-11-30 10:03:56.916 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":2} from node 2 
+2017-11-30 10:03:56.916 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":2} 
+2017-11-30 10:03:56.916 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 23 : MyVal0-23 
+2017-11-30 10:03:56.916 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":1}" from node 1 
+2017-11-30 10:03:56.917 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":0}" from node 0 
+2017-11-30 10:03:56.918 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":1} from node 1 
+2017-11-30 10:03:56.918 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":1} 
+2017-11-30 10:03:56.918 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":0} from node 0 
+2017-11-30 10:03:56.918 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:56.919 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-23","number":23,"id":0} 
+2017-11-30 10:03:56.919 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 23 : MyVal0-23 
+2017-11-30 10:03:56.920 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:56.920 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 23 : MyVal0-23 
+2017-11-30 10:03:56.920 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.979 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":1}" from node 1 
+2017-11-30 10:03:56.980 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":0}" from node 0 
+2017-11-30 10:03:56.979 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":2}" from node 2 
+2017-11-30 10:03:56.980 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":0} from node 0 
+2017-11-30 10:03:56.980 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":1} from node 1 
+2017-11-30 10:03:56.981 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":0} 
+2017-11-30 10:03:56.981 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 24 : MyVal0-24 
+2017-11-30 10:03:56.981 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":2} from node 2 
+2017-11-30 10:03:56.981 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":1} 
+2017-11-30 10:03:56.981 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-24","number":24,"id":2} 
+2017-11-30 10:03:56.982 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:56.982 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 24 : MyVal0-24 
+2017-11-30 10:03:56.982 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:56.982 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 24 : MyVal0-24 
+2017-11-30 10:03:56.983 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:57.059 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":0}" from node 0 
+2017-11-30 10:03:57.060 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":1}" from node 1 
+2017-11-30 10:03:57.059 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":2}" from node 2 
+2017-11-30 10:03:57.061 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":1} from node 1 
+2017-11-30 10:03:57.060 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":0} from node 0 
+2017-11-30 10:03:57.061 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":1} 
+2017-11-30 10:03:57.061 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":2} from node 2 
+2017-11-30 10:03:57.061 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 25 : MyVal0-25 
+2017-11-30 10:03:57.061 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":0} 
+2017-11-30 10:03:57.062 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-25","number":25,"id":2} 
+2017-11-30 10:03:57.063 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:57.064 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 25 : MyVal0-25 
+2017-11-30 10:03:57.064 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:57.064 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 25 : MyVal0-25 
+2017-11-30 10:03:57.064 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:58.061 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":1}" from node 1 
+2017-11-30 10:03:58.061 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":0}" from node 0 
+2017-11-30 10:03:58.061 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":1} from node 1 
+2017-11-30 10:03:58.061 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":0} from node 0 
+2017-11-30 10:03:58.061 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":2}" from node 2 
+2017-11-30 10:03:58.061 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":1} 
+2017-11-30 10:03:58.061 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":0} 
+2017-11-30 10:03:58.062 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 26 : MyVal0-26 
+2017-11-30 10:03:58.062 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":2} from node 2 
+2017-11-30 10:03:58.063 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-26","number":26,"id":2} 
+2017-11-30 10:03:58.063 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:58.063 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 26 : MyVal0-26 
+2017-11-30 10:03:58.063 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:58.064 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 26 : MyVal0-26 
+2017-11-30 10:03:58.064 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:58.407 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":1}" from node 1 
+2017-11-30 10:03:58.408 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":1} from node 1 
+2017-11-30 10:03:58.408 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":1} 
+2017-11-30 10:03:58.408 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 27 : MyVal0-27 
+2017-11-30 10:03:58.410 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":2}" from node 2 
+2017-11-30 10:03:58.410 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":0}" from node 0 
+2017-11-30 10:03:58.410 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":2} from node 2 
+2017-11-30 10:03:58.411 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":0} from node 0 
+2017-11-30 10:03:58.411 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:58.411 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":2} 
+2017-11-30 10:03:58.411 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 27 : MyVal0-27 
+2017-11-30 10:03:58.411 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:58.411 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-27","number":27,"id":0} 
+2017-11-30 10:03:58.412 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 27 : MyVal0-27 
+2017-11-30 10:03:58.412 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:58.701 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":2}" from node 2 
+2017-11-30 10:03:58.701 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":2} from node 2 
+2017-11-30 10:03:58.701 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":1}" from node 1 
+2017-11-30 10:03:58.701 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":2} 
+2017-11-30 10:03:58.701 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":0}" from node 0 
+2017-11-30 10:03:58.702 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 28 : MyVal0-28 
+2017-11-30 10:03:58.702 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":1} from node 1 
+2017-11-30 10:03:58.702 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":0} from node 0 
+2017-11-30 10:03:58.702 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":1} 
+2017-11-30 10:03:58.702 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-28","number":28,"id":0} 
+2017-11-30 10:03:58.703 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:58.703 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 28 : MyVal0-28 
+2017-11-30 10:03:58.703 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:58.703 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 28 : MyVal0-28 
+2017-11-30 10:03:58.704 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:58.921 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":2}" from node 2 
+2017-11-30 10:03:58.922 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":0}" from node 0 
+2017-11-30 10:03:58.922 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":2} from node 2 
+2017-11-30 10:03:58.922 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":0} from node 0 
+2017-11-30 10:03:58.922 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":2} 
+2017-11-30 10:03:58.922 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":0} 
+2017-11-30 10:03:58.922 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 29 : MyVal0-29 
+2017-11-30 10:03:58.924 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:58.924 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":1}" from node 1 
+2017-11-30 10:03:58.924 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 29 : MyVal0-29 
+2017-11-30 10:03:58.925 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:58.925 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":1} from node 1 
+2017-11-30 10:03:58.925 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-29","number":29,"id":1} 
+2017-11-30 10:03:58.925 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 29 : MyVal0-29 
+2017-11-30 10:03:58.925 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.168 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":2}" from node 2 
+2017-11-30 10:03:59.169 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":0}" from node 0 
+2017-11-30 10:03:59.169 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":2} from node 2 
+2017-11-30 10:03:59.169 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":0} from node 0 
+2017-11-30 10:03:59.169 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":2} 
+2017-11-30 10:03:59.170 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":1}" from node 1 
+2017-11-30 10:03:59.170 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":0} 
+2017-11-30 10:03:59.170 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 30 : MyVal0-30 
+2017-11-30 10:03:59.170 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":1} from node 1 
+2017-11-30 10:03:59.170 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-30","number":30,"id":1} 
+2017-11-30 10:03:59.172 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:59.172 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 30 : MyVal0-30 
+2017-11-30 10:03:59.172 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.172 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 30 : MyVal0-30 
+2017-11-30 10:03:59.173 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:59.348 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":0}" from node 0 
+2017-11-30 10:03:59.348 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":2}" from node 2 
+2017-11-30 10:03:59.348 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":1}" from node 1 
+2017-11-30 10:03:59.348 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":0} from node 0 
+2017-11-30 10:03:59.349 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":1} from node 1 
+2017-11-30 10:03:59.349 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":2} from node 2 
+2017-11-30 10:03:59.349 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":1} 
+2017-11-30 10:03:59.349 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":0} 
+2017-11-30 10:03:59.349 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 31 : MyVal0-31 
+2017-11-30 10:03:59.349 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-31","number":31,"id":2} 
+2017-11-30 10:03:59.353 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 4 
+2017-11-30 10:03:59.353 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 31 : MyVal0-31 
+2017-11-30 10:03:59.354 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:59.354 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 31 : MyVal0-31 
+2017-11-30 10:03:59.354 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.538 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":1}" from node 1 
+2017-11-30 10:03:59.539 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":2}" from node 2 
+2017-11-30 10:03:59.539 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":1} from node 1 
+2017-11-30 10:03:59.539 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":2} from node 2 
+2017-11-30 10:03:59.539 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":0}" from node 0 
+2017-11-30 10:03:59.539 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":1} 
+2017-11-30 10:03:59.540 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":0} from node 0 
+2017-11-30 10:03:59.539 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":2} 
+2017-11-30 10:03:59.540 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-32","number":32,"id":0} 
+2017-11-30 10:03:59.540 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 32 : MyVal0-32 
+2017-11-30 10:03:59.542 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:59.543 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 32 : MyVal0-32 
+2017-11-30 10:03:59.543 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.543 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 32 : MyVal0-32 
+2017-11-30 10:03:59.544 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:59.757 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":1}" from node 1 
+2017-11-30 10:03:59.757 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":1} from node 1 
+2017-11-30 10:03:59.757 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":0}" from node 0 
+2017-11-30 10:03:59.757 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":1} 
+2017-11-30 10:03:59.758 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":0} from node 0 
+2017-11-30 10:03:59.758 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 33 : MyVal0-33 
+2017-11-30 10:03:59.758 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":0} 
+2017-11-30 10:03:59.758 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":2}" from node 2 
+2017-11-30 10:03:59.759 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":2} from node 2 
+2017-11-30 10:03:59.759 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-33","number":33,"id":2} 
+2017-11-30 10:03:59.759 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:59.760 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 33 : MyVal0-33 
+2017-11-30 10:03:59.760 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.760 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 33 : MyVal0-33 
+2017-11-30 10:03:59.760 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.808 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":1}" from node 1 
+2017-11-30 10:03:59.808 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":2}" from node 2 
+2017-11-30 10:03:59.808 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":0}" from node 0 
+2017-11-30 10:03:59.809 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":1} from node 1 
+2017-11-30 10:03:59.809 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":0} from node 0 
+2017-11-30 10:03:59.809 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":2} from node 2 
+2017-11-30 10:03:59.809 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":0} 
+2017-11-30 10:03:59.809 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":1} 
+2017-11-30 10:03:59.809 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 34 : MyVal0-34 
+2017-11-30 10:03:59.809 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-34","number":34,"id":2} 
+2017-11-30 10:03:59.810 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:59.811 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 34 : MyVal0-34 
+2017-11-30 10:03:59.811 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.811 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 34 : MyVal0-34 
+2017-11-30 10:03:59.811 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.852 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":1}" from node 1 
+2017-11-30 10:03:59.852 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":0}" from node 0 
+2017-11-30 10:03:59.852 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":1} from node 1 
+2017-11-30 10:03:59.852 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":2}" from node 2 
+2017-11-30 10:03:59.852 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":0} from node 0 
+2017-11-30 10:03:59.852 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":1} 
+2017-11-30 10:03:59.852 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":0} 
+2017-11-30 10:03:59.852 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":2} from node 2 
+2017-11-30 10:03:59.852 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 35 : MyVal0-35 
+2017-11-30 10:03:59.853 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-35","number":35,"id":2} 
+2017-11-30 10:03:59.854 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:03:59.854 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 35 : MyVal0-35 
+2017-11-30 10:03:59.854 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.855 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 35 : MyVal0-35 
+2017-11-30 10:03:59.855 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.891 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":1}" from node 1 
+2017-11-30 10:03:59.892 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":1} from node 1 
+2017-11-30 10:03:59.892 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":1} 
+2017-11-30 10:03:59.892 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 36 : MyVal0-36 
+2017-11-30 10:03:59.892 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":2}" from node 2 
+2017-11-30 10:03:59.892 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":0}" from node 0 
+2017-11-30 10:03:59.892 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":2} from node 2 
+2017-11-30 10:03:59.892 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":0} from node 0 
+2017-11-30 10:03:59.892 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":2} 
+2017-11-30 10:03:59.893 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-36","number":36,"id":0} 
+2017-11-30 10:03:59.893 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:03:59.893 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 36 : MyVal0-36 
+2017-11-30 10:03:59.893 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.893 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 36 : MyVal0-36 
+2017-11-30 10:03:59.893 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.952 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":1}" from node 1 
+2017-11-30 10:03:59.952 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":0}" from node 0 
+2017-11-30 10:03:59.952 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":1} from node 1 
+2017-11-30 10:03:59.952 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":2}" from node 2 
+2017-11-30 10:03:59.953 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":1} 
+2017-11-30 10:03:59.954 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":0} from node 0 
+2017-11-30 10:03:59.954 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 37 : MyVal0-37 
+2017-11-30 10:03:59.954 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":2} from node 2 
+2017-11-30 10:03:59.954 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":0} 
+2017-11-30 10:03:59.954 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-37","number":37,"id":2} 
+2017-11-30 10:03:59.957 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:03:59.957 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 37 : MyVal0-37 
+2017-11-30 10:03:59.957 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:03:59.957 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 37 : MyVal0-37 
+2017-11-30 10:03:59.957 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:00.010 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":1}" from node 1 
+2017-11-30 10:04:00.010 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":2}" from node 2 
+2017-11-30 10:04:00.010 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":1} from node 1 
+2017-11-30 10:04:00.010 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":1} 
+2017-11-30 10:04:00.010 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":2} from node 2 
+2017-11-30 10:04:00.010 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 38 : MyVal0-38 
+2017-11-30 10:04:00.011 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":0}" from node 0 
+2017-11-30 10:04:00.010 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":2} 
+2017-11-30 10:04:00.011 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":0} from node 0 
+2017-11-30 10:04:00.011 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-38","number":38,"id":0} 
+2017-11-30 10:04:00.011 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:00.012 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 38 : MyVal0-38 
+2017-11-30 10:04:00.012 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:00.012 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 38 : MyVal0-38 
+2017-11-30 10:04:00.012 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:00.080 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":1}" from node 1 
+2017-11-30 10:04:00.080 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":0}" from node 0 
+2017-11-30 10:04:00.080 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":2}" from node 2 
+2017-11-30 10:04:00.080 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":1} from node 1 
+2017-11-30 10:04:00.080 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":1} 
+2017-11-30 10:04:00.081 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 39 : MyVal0-39 
+2017-11-30 10:04:00.081 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":2} from node 2 
+2017-11-30 10:04:00.081 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":2} 
+2017-11-30 10:04:00.082 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:00.082 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 39 : MyVal0-39 
+2017-11-30 10:04:00.082 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:00.082 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":0} from node 0 
+2017-11-30 10:04:00.082 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-39","number":39,"id":0} 
+2017-11-30 10:04:00.083 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 39 : MyVal0-39 
+2017-11-30 10:04:00.083 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:00.147 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":1}" from node 1 
+2017-11-30 10:04:00.147 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":2}" from node 2 
+2017-11-30 10:04:00.147 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":1} from node 1 
+2017-11-30 10:04:00.148 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":1} 
+2017-11-30 10:04:00.148 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 40 : MyVal0-40 
+2017-11-30 10:04:00.148 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":2} from node 2 
+2017-11-30 10:04:00.148 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":2} 
+2017-11-30 10:04:00.148 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":0}" from node 0 
+2017-11-30 10:04:00.149 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":0} from node 0 
+2017-11-30 10:04:00.149 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:00.149 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-40","number":40,"id":0} 
+2017-11-30 10:04:00.149 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 40 : MyVal0-40 
+2017-11-30 10:04:00.149 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:00.149 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 40 : MyVal0-40 
+2017-11-30 10:04:00.149 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:01.139 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":1}" from node 1 
+2017-11-30 10:04:01.139 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":2}" from node 2 
+2017-11-30 10:04:01.140 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":0}" from node 0 
+2017-11-30 10:04:01.140 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":1} from node 1 
+2017-11-30 10:04:01.140 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":0} from node 0 
+2017-11-30 10:04:01.140 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":2} from node 2 
+2017-11-30 10:04:01.140 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":0} 
+2017-11-30 10:04:01.141 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 41 : MyVal0-41 
+2017-11-30 10:04:01.140 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":1} 
+2017-11-30 10:04:01.141 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-41","number":41,"id":2} 
+2017-11-30 10:04:01.143 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:01.143 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 41 : MyVal0-41 
+2017-11-30 10:04:01.143 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:01.143 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 41 : MyVal0-41 
+2017-11-30 10:04:01.143 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.113 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":0}" from node 0 
+2017-11-30 10:04:02.113 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":2}" from node 2 
+2017-11-30 10:04:02.113 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":0} from node 0 
+2017-11-30 10:04:02.114 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":0} 
+2017-11-30 10:04:02.114 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 42 : MyVal0-42 
+2017-11-30 10:04:02.114 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":1}" from node 1 
+2017-11-30 10:04:02.114 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":2} from node 2 
+2017-11-30 10:04:02.114 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":1} from node 1 
+2017-11-30 10:04:02.114 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":2} 
+2017-11-30 10:04:02.114 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-42","number":42,"id":1} 
+2017-11-30 10:04:02.115 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:02.115 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 42 : MyVal0-42 
+2017-11-30 10:04:02.115 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.116 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 42 : MyVal0-42 
+2017-11-30 10:04:02.116 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.362 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":0}" from node 0 
+2017-11-30 10:04:02.363 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":1}" from node 1 
+2017-11-30 10:04:02.363 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":0} from node 0 
+2017-11-30 10:04:02.363 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":1} from node 1 
+2017-11-30 10:04:02.363 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":2}" from node 2 
+2017-11-30 10:04:02.363 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":0} 
+2017-11-30 10:04:02.363 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":1} 
+2017-11-30 10:04:02.364 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":2} from node 2 
+2017-11-30 10:04:02.364 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 43 : MyVal0-43 
+2017-11-30 10:04:02.364 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-43","number":43,"id":2} 
+2017-11-30 10:04:02.366 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:02.366 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 43 : MyVal0-43 
+2017-11-30 10:04:02.367 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:02.367 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 43 : MyVal0-43 
+2017-11-30 10:04:02.367 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.548 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":0}" from node 0 
+2017-11-30 10:04:02.549 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":2}" from node 2 
+2017-11-30 10:04:02.549 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":0} from node 0 
+2017-11-30 10:04:02.549 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":2} from node 2 
+2017-11-30 10:04:02.549 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":1}" from node 1 
+2017-11-30 10:04:02.550 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":2} 
+2017-11-30 10:04:02.550 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":1} from node 1 
+2017-11-30 10:04:02.549 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":0} 
+2017-11-30 10:04:02.550 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-44","number":44,"id":1} 
+2017-11-30 10:04:02.550 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 44 : MyVal0-44 
+2017-11-30 10:04:02.553 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:02.553 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 44 : MyVal0-44 
+2017-11-30 10:04:02.553 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.553 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 44 : MyVal0-44 
+2017-11-30 10:04:02.554 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:02.741 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":2}" from node 2 
+2017-11-30 10:04:02.741 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":1}" from node 1 
+2017-11-30 10:04:02.742 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":2} from node 2 
+2017-11-30 10:04:02.742 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":1} from node 1 
+2017-11-30 10:04:02.742 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":0}" from node 0 
+2017-11-30 10:04:02.742 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":2} 
+2017-11-30 10:04:02.742 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 45 : MyVal0-45 
+2017-11-30 10:04:02.742 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":1} 
+2017-11-30 10:04:02.742 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":0} from node 0 
+2017-11-30 10:04:02.743 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-45","number":45,"id":0} 
+2017-11-30 10:04:02.745 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:02.746 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 45 : MyVal0-45 
+2017-11-30 10:04:02.746 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.747 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 45 : MyVal0-45 
+2017-11-30 10:04:02.747 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.871 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":2}" from node 2 
+2017-11-30 10:04:02.872 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":0}" from node 0 
+2017-11-30 10:04:02.872 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":2} from node 2 
+2017-11-30 10:04:02.872 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":0} from node 0 
+2017-11-30 10:04:02.872 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":1}" from node 1 
+2017-11-30 10:04:02.872 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":2} 
+2017-11-30 10:04:02.872 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":0} 
+2017-11-30 10:04:02.872 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 46 : MyVal0-46 
+2017-11-30 10:04:02.872 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":1} from node 1 
+2017-11-30 10:04:02.873 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-46","number":46,"id":1} 
+2017-11-30 10:04:02.874 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:02.874 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 46 : MyVal0-46 
+2017-11-30 10:04:02.874 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:02.875 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 46 : MyVal0-46 
+2017-11-30 10:04:02.875 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:03.010 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":2}" from node 2 
+2017-11-30 10:04:03.011 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":1}" from node 1 
+2017-11-30 10:04:03.011 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":2} from node 2 
+2017-11-30 10:04:03.011 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":0}" from node 0 
+2017-11-30 10:04:03.011 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":2} 
+2017-11-30 10:04:03.011 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":1} from node 1 
+2017-11-30 10:04:03.011 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":1} 
+2017-11-30 10:04:03.011 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":0} from node 0 
+2017-11-30 10:04:03.011 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 47 : MyVal0-47 
+2017-11-30 10:04:03.012 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-47","number":47,"id":0} 
+2017-11-30 10:04:03.253 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 242 
+2017-11-30 10:04:03.253 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 47 : MyVal0-47 
+2017-11-30 10:04:03.253 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.253 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 47 : MyVal0-47 
+2017-11-30 10:04:03.254 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:03.332 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":2}" from node 2 
+2017-11-30 10:04:03.332 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":0}" from node 0 
+2017-11-30 10:04:03.333 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":1}" from node 1 
+2017-11-30 10:04:03.333 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":0} from node 0 
+2017-11-30 10:04:03.333 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":2} from node 2 
+2017-11-30 10:04:03.333 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":0} 
+2017-11-30 10:04:03.333 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":1} from node 1 
+2017-11-30 10:04:03.334 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 48 : MyVal0-48 
+2017-11-30 10:04:03.333 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":2} 
+2017-11-30 10:04:03.334 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-48","number":48,"id":1} 
+2017-11-30 10:04:03.336 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:03.336 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 48 : MyVal0-48 
+2017-11-30 10:04:03.336 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.337 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 48 : MyVal0-48 
+2017-11-30 10:04:03.337 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.428 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":0}" from node 0 
+2017-11-30 10:04:03.429 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":1}" from node 1 
+2017-11-30 10:04:03.429 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":0} from node 0 
+2017-11-30 10:04:03.429 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":2}" from node 2 
+2017-11-30 10:04:03.429 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":1} from node 1 
+2017-11-30 10:04:03.430 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":2} from node 2 
+2017-11-30 10:04:03.429 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":0} 
+2017-11-30 10:04:03.430 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":2} 
+2017-11-30 10:04:03.430 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-49","number":49,"id":1} 
+2017-11-30 10:04:03.430 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 49 : MyVal0-49 
+2017-11-30 10:04:03.433 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:03.433 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 49 : MyVal0-49 
+2017-11-30 10:04:03.433 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.433 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 49 : MyVal0-49 
+2017-11-30 10:04:03.433 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.516 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":0}" from node 0 
+2017-11-30 10:04:03.516 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":0} from node 0 
+2017-11-30 10:04:03.516 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":1}" from node 1 
+2017-11-30 10:04:03.516 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":0} 
+2017-11-30 10:04:03.517 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 50 : MyVal0-50 
+2017-11-30 10:04:03.517 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":1} from node 1 
+2017-11-30 10:04:03.517 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":1} 
+2017-11-30 10:04:03.517 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":2}" from node 2 
+2017-11-30 10:04:03.517 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":2} from node 2 
+2017-11-30 10:04:03.517 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-50","number":50,"id":2} 
+2017-11-30 10:04:03.519 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:03.519 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 50 : MyVal0-50 
+2017-11-30 10:04:03.519 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.519 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 50 : MyVal0-50 
+2017-11-30 10:04:03.519 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.620 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":0}" from node 0 
+2017-11-30 10:04:03.620 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":2}" from node 2 
+2017-11-30 10:04:03.620 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":0} from node 0 
+2017-11-30 10:04:03.620 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":1}" from node 1 
+2017-11-30 10:04:03.620 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":2} from node 2 
+2017-11-30 10:04:03.621 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":1} from node 1 
+2017-11-30 10:04:03.621 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":0} 
+2017-11-30 10:04:03.621 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":1} 
+2017-11-30 10:04:03.621 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-51","number":51,"id":2} 
+2017-11-30 10:04:03.621 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 51 : MyVal0-51 
+2017-11-30 10:04:03.624 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:03.624 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 51 : MyVal0-51 
+2017-11-30 10:04:03.624 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.624 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 51 : MyVal0-51 
+2017-11-30 10:04:03.624 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.736 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":0}" from node 0 
+2017-11-30 10:04:03.736 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":2}" from node 2 
+2017-11-30 10:04:03.736 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":0} from node 0 
+2017-11-30 10:04:03.737 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":2} from node 2 
+2017-11-30 10:04:03.737 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":1}" from node 1 
+2017-11-30 10:04:03.737 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":2} 
+2017-11-30 10:04:03.737 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":0} 
+2017-11-30 10:04:03.737 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 52 : MyVal0-52 
+2017-11-30 10:04:03.737 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":1} from node 1 
+2017-11-30 10:04:03.738 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-52","number":52,"id":1} 
+2017-11-30 10:04:03.740 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:03.740 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 52 : MyVal0-52 
+2017-11-30 10:04:03.740 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:03.740 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 52 : MyVal0-52 
+2017-11-30 10:04:03.741 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:04.142 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":2}" from node 2 
+2017-11-30 10:04:04.142 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":1}" from node 1 
+2017-11-30 10:04:04.143 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":2} from node 2 
+2017-11-30 10:04:04.143 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":0}" from node 0 
+2017-11-30 10:04:04.143 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":0} from node 0 
+2017-11-30 10:04:04.143 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":1} from node 1 
+2017-11-30 10:04:04.144 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":1} 
+2017-11-30 10:04:04.143 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":2} 
+2017-11-30 10:04:04.144 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 53 : MyVal0-53 
+2017-11-30 10:04:04.143 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-53","number":53,"id":0} 
+2017-11-30 10:04:04.147 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:04.148 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 53 : MyVal0-53 
+2017-11-30 10:04:04.148 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:04.148 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 53 : MyVal0-53 
+2017-11-30 10:04:04.148 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:04.583 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":1}" from node 1 
+2017-11-30 10:04:04.583 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":0}" from node 0 
+2017-11-30 10:04:04.583 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":2}" from node 2 
+2017-11-30 10:04:04.583 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":1} from node 1 
+2017-11-30 10:04:04.583 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":1} 
+2017-11-30 10:04:04.583 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":0} from node 0 
+2017-11-30 10:04:04.583 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 1 for round 54 : MyVal0-54 
+2017-11-30 10:04:04.583 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":2} from node 2 
+2017-11-30 10:04:04.584 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":0} 
+2017-11-30 10:04:04.585 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-54","number":54,"id":2} 
+2017-11-30 10:04:04.587 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 4 
+2017-11-30 10:04:04.588 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 54 : MyVal0-54 
+2017-11-30 10:04:04.588 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:04.588 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 54 : MyVal0-54 
+2017-11-30 10:04:04.588 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:04.957 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":1}" from node 1 
+2017-11-30 10:04:04.957 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":2}" from node 2 
+2017-11-30 10:04:04.957 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":1} from node 1 
+2017-11-30 10:04:04.957 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":2} from node 2 
+2017-11-30 10:04:04.957 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":0}" from node 0 
+2017-11-30 10:04:04.958 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":2} 
+2017-11-30 10:04:04.958 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":0} from node 0 
+2017-11-30 10:04:04.959 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":0} 
+2017-11-30 10:04:04.958 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-55","number":55,"id":1} 
+2017-11-30 10:04:04.958 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 55 : MyVal0-55 
+2017-11-30 10:04:04.961 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:04.961 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 55 : MyVal0-55 
+2017-11-30 10:04:04.961 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:04.961 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 55 : MyVal0-55 
+2017-11-30 10:04:04.961 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:05.274 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":2}" from node 2 
+2017-11-30 10:04:05.274 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":1}" from node 1 
+2017-11-30 10:04:05.274 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":2} from node 2 
+2017-11-30 10:04:05.275 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":1} from node 1 
+2017-11-30 10:04:05.275 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":2} 
+2017-11-30 10:04:05.275 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":1} 
+2017-11-30 10:04:05.275 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":0}" from node 0 
+2017-11-30 10:04:05.275 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 56 : MyVal0-56 
+2017-11-30 10:04:05.276 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":0} from node 0 
+2017-11-30 10:04:05.276 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-56","number":56,"id":0} 
+2017-11-30 10:04:05.280 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 5 
+2017-11-30 10:04:05.280 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 56 : MyVal0-56 
+2017-11-30 10:04:05.280 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:05.280 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 56 : MyVal0-56 
+2017-11-30 10:04:05.280 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:05.541 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":2}" from node 2 
+2017-11-30 10:04:05.541 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":0}" from node 0 
+2017-11-30 10:04:05.541 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":2} from node 2 
+2017-11-30 10:04:05.542 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":1}" from node 1 
+2017-11-30 10:04:05.542 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":2} 
+2017-11-30 10:04:05.542 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":0} from node 0 
+2017-11-30 10:04:05.543 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":1} from node 1 
+2017-11-30 10:04:05.543 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 57 : MyVal0-57 
+2017-11-30 10:04:05.544 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":1} 
+2017-11-30 10:04:05.543 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-57","number":57,"id":0} 
+2017-11-30 10:04:05.547 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 4 
+2017-11-30 10:04:05.548 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 57 : MyVal0-57 
+2017-11-30 10:04:05.548 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:05.548 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 57 : MyVal0-57 
+2017-11-30 10:04:05.548 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:05.831 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":2}" from node 2 
+2017-11-30 10:04:05.831 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":0}" from node 0 
+2017-11-30 10:04:05.831 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":2} from node 2 
+2017-11-30 10:04:05.831 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":2} 
+2017-11-30 10:04:05.831 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":0} from node 0 
+2017-11-30 10:04:05.831 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":1}" from node 1 
+2017-11-30 10:04:05.831 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 58 : MyVal0-58 
+2017-11-30 10:04:05.831 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":1} from node 1 
+2017-11-30 10:04:05.831 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":0} 
+2017-11-30 10:04:05.831 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-58","number":58,"id":1} 
+2017-11-30 10:04:05.833 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:05.833 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 58 : MyVal0-58 
+2017-11-30 10:04:05.833 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:05.833 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 58 : MyVal0-58 
+2017-11-30 10:04:05.833 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:06.412 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":2}" from node 2 
+2017-11-30 10:04:06.412 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":1}" from node 1 
+2017-11-30 10:04:06.412 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":2} from node 2 
+2017-11-30 10:04:06.412 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":0}" from node 0 
+2017-11-30 10:04:06.413 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":2} 
+2017-11-30 10:04:06.413 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":0} from node 0 
+2017-11-30 10:04:06.413 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":1} from node 1 
+2017-11-30 10:04:06.413 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":0} 
+2017-11-30 10:04:06.413 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 59 : MyVal0-59 
+2017-11-30 10:04:06.414 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-59","number":59,"id":1} 
+2017-11-30 10:04:06.416 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:06.416 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 59 : MyVal0-59 
+2017-11-30 10:04:06.417 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:06.417 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 59 : MyVal0-59 
+2017-11-30 10:04:06.417 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:06.968 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":2}" from node 2 
+2017-11-30 10:04:06.969 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":1}" from node 1 
+2017-11-30 10:04:06.969 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":2} from node 2 
+2017-11-30 10:04:06.969 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":0}" from node 0 
+2017-11-30 10:04:06.969 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":2} 
+2017-11-30 10:04:06.970 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 60 : MyVal0-60 
+2017-11-30 10:04:06.969 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":1} from node 1 
+2017-11-30 10:04:06.970 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":0} from node 0 
+2017-11-30 10:04:06.970 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":1} 
+2017-11-30 10:04:06.970 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-60","number":60,"id":0} 
+2017-11-30 10:04:06.974 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 4 
+2017-11-30 10:04:06.974 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 60 : MyVal0-60 
+2017-11-30 10:04:06.974 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:06.974 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 60 : MyVal0-60 
+2017-11-30 10:04:06.975 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:07.477 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":2}" from node 2 
+2017-11-30 10:04:07.477 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":2} from node 2 
+2017-11-30 10:04:07.477 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":0}" from node 0 
+2017-11-30 10:04:07.478 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":1}" from node 1 
+2017-11-30 10:04:07.478 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":2} 
+2017-11-30 10:04:07.479 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":1} from node 1 
+2017-11-30 10:04:07.479 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":0} from node 0 
+2017-11-30 10:04:07.479 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":1} 
+2017-11-30 10:04:07.479 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 61 : MyVal0-61 
+2017-11-30 10:04:07.479 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-61","number":61,"id":0} 
+2017-11-30 10:04:07.481 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:07.481 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 61 : MyVal0-61 
+2017-11-30 10:04:07.482 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:07.482 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 61 : MyVal0-61 
+2017-11-30 10:04:07.482 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:07.938 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":2}" from node 2 
+2017-11-30 10:04:07.939 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":0}" from node 0 
+2017-11-30 10:04:07.939 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":2} from node 2 
+2017-11-30 10:04:07.939 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":1}" from node 1 
+2017-11-30 10:04:07.939 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":2} 
+2017-11-30 10:04:07.940 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":1} from node 1 
+2017-11-30 10:04:07.939 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":0} from node 0 
+2017-11-30 10:04:07.940 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":1} 
+2017-11-30 10:04:07.940 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 62 : MyVal0-62 
+2017-11-30 10:04:07.940 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-62","number":62,"id":0} 
+2017-11-30 10:04:08.110 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 170 
+2017-11-30 10:04:08.110 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 62 : MyVal0-62 
+2017-11-30 10:04:08.110 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:08.110 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 62 : MyVal0-62 
+2017-11-30 10:04:08.111 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:08.430 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":2}" from node 2 
+2017-11-30 10:04:08.430 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":2} from node 2 
+2017-11-30 10:04:08.430 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":0}" from node 0 
+2017-11-30 10:04:08.431 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":2} 
+2017-11-30 10:04:08.431 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":1}" from node 1 
+2017-11-30 10:04:08.431 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":0} from node 0 
+2017-11-30 10:04:08.431 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":1} from node 1 
+2017-11-30 10:04:08.431 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 63 : MyVal0-63 
+2017-11-30 10:04:08.431 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":1} 
+2017-11-30 10:04:08.431 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-63","number":63,"id":0} 
+2017-11-30 10:04:08.436 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 5 
+2017-11-30 10:04:08.437 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 63 : MyVal0-63 
+2017-11-30 10:04:08.437 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:08.437 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 63 : MyVal0-63 
+2017-11-30 10:04:08.437 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:08.685 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":2}" from node 2 
+2017-11-30 10:04:08.685 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":0}" from node 0 
+2017-11-30 10:04:08.685 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":2} from node 2 
+2017-11-30 10:04:08.685 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":1}" from node 1 
+2017-11-30 10:04:08.686 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":0} from node 0 
+2017-11-30 10:04:08.686 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":1} from node 1 
+2017-11-30 10:04:08.685 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":2} 
+2017-11-30 10:04:08.686 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":1} 
+2017-11-30 10:04:08.686 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-64","number":64,"id":0} 
+2017-11-30 10:04:08.686 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 64 : MyVal0-64 
+2017-11-30 10:04:08.689 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:08.689 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 64 : MyVal0-64 
+2017-11-30 10:04:08.690 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:08.690 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 64 : MyVal0-64 
+2017-11-30 10:04:08.690 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:08.960 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":2}" from node 2 
+2017-11-30 10:04:08.961 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":0}" from node 0 
+2017-11-30 10:04:08.961 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":1}" from node 1 
+2017-11-30 10:04:08.961 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":0} from node 0 
+2017-11-30 10:04:08.961 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":2} from node 2 
+2017-11-30 10:04:08.961 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":0} 
+2017-11-30 10:04:08.961 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":1} from node 1 
+2017-11-30 10:04:08.962 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 65 : MyVal0-65 
+2017-11-30 10:04:08.962 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":2} 
+2017-11-30 10:04:08.962 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-65","number":65,"id":1} 
+2017-11-30 10:04:08.965 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:08.965 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 65 : MyVal0-65 
+2017-11-30 10:04:08.965 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:08.965 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 65 : MyVal0-65 
+2017-11-30 10:04:08.966 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:09.185 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":0}" from node 0 
+2017-11-30 10:04:09.185 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":1}" from node 1 
+2017-11-30 10:04:09.185 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":0} from node 0 
+2017-11-30 10:04:09.186 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":1} from node 1 
+2017-11-30 10:04:09.186 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":0} 
+2017-11-30 10:04:09.186 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":1} 
+2017-11-30 10:04:09.186 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 66 : MyVal0-66 
+2017-11-30 10:04:09.187 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":2}" from node 2 
+2017-11-30 10:04:09.188 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":2} from node 2 
+2017-11-30 10:04:09.188 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-66","number":66,"id":2} 
+2017-11-30 10:04:09.188 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:09.188 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 66 : MyVal0-66 
+2017-11-30 10:04:09.189 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:09.189 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 66 : MyVal0-66 
+2017-11-30 10:04:09.189 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:09.412 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":0}" from node 0 
+2017-11-30 10:04:09.412 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":2}" from node 2 
+2017-11-30 10:04:09.412 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":1}" from node 1 
+2017-11-30 10:04:09.412 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":0} from node 0 
+2017-11-30 10:04:09.412 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":2} from node 2 
+2017-11-30 10:04:09.412 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":0} 
+2017-11-30 10:04:09.413 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 67 : MyVal0-67 
+2017-11-30 10:04:09.412 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":1} from node 1 
+2017-11-30 10:04:09.413 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":2} 
+2017-11-30 10:04:09.413 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-67","number":67,"id":1} 
+2017-11-30 10:04:09.415 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:09.415 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 67 : MyVal0-67 
+2017-11-30 10:04:09.415 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:09.415 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 67 : MyVal0-67 
+2017-11-30 10:04:09.416 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:09.573 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":2}" from node 2 
+2017-11-30 10:04:09.573 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":0}" from node 0 
+2017-11-30 10:04:09.573 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":2} from node 2 
+2017-11-30 10:04:09.573 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":0} from node 0 
+2017-11-30 10:04:09.573 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":1}" from node 1 
+2017-11-30 10:04:09.573 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":2} 
+2017-11-30 10:04:09.574 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 68 : MyVal0-68 
+2017-11-30 10:04:09.574 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":1} from node 1 
+2017-11-30 10:04:09.573 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":0} 
+2017-11-30 10:04:09.574 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-68","number":68,"id":1} 
+2017-11-30 10:04:09.576 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:09.576 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 68 : MyVal0-68 
+2017-11-30 10:04:09.576 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:09.576 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 68 : MyVal0-68 
+2017-11-30 10:04:09.576 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:09.742 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":2}" from node 2 
+2017-11-30 10:04:09.742 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":1}" from node 1 
+2017-11-30 10:04:09.742 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":2} from node 2 
+2017-11-30 10:04:09.743 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":1} from node 1 
+2017-11-30 10:04:09.743 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":0}" from node 0 
+2017-11-30 10:04:09.743 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":2} 
+2017-11-30 10:04:09.743 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 69 : MyVal0-69 
+2017-11-30 10:04:09.743 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":1} 
+2017-11-30 10:04:09.743 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":0} from node 0 
+2017-11-30 10:04:09.744 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-69","number":69,"id":0} 
+2017-11-30 10:04:09.745 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:09.745 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 69 : MyVal0-69 
+2017-11-30 10:04:09.745 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:09.745 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 69 : MyVal0-69 
+2017-11-30 10:04:09.745 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:09.944 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":2}" from node 2 
+2017-11-30 10:04:09.944 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":0}" from node 0 
+2017-11-30 10:04:09.944 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":2} from node 2 
+2017-11-30 10:04:09.944 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":1}" from node 1 
+2017-11-30 10:04:09.944 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":0} from node 0 
+2017-11-30 10:04:09.945 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":1} from node 1 
+2017-11-30 10:04:09.945 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":2} 
+2017-11-30 10:04:09.945 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":1} 
+2017-11-30 10:04:09.945 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-70","number":70,"id":0} 
+2017-11-30 10:04:09.945 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 70 : MyVal0-70 
+2017-11-30 10:04:09.948 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:09.948 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 70 : MyVal0-70 
+2017-11-30 10:04:09.948 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:09.948 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 70 : MyVal0-70 
+2017-11-30 10:04:09.948 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:10.427 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":2}" from node 2 
+2017-11-30 10:04:10.427 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":0}" from node 0 
+2017-11-30 10:04:10.427 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":2} from node 2 
+2017-11-30 10:04:10.427 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":1}" from node 1 
+2017-11-30 10:04:10.427 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":2} 
+2017-11-30 10:04:10.427 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":0} from node 0 
+2017-11-30 10:04:10.428 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":1} from node 1 
+2017-11-30 10:04:10.428 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 2 for round 71 : MyVal0-71 
+2017-11-30 10:04:10.428 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":1} 
+2017-11-30 10:04:10.428 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-71","number":71,"id":0} 
+2017-11-30 10:04:10.439 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 11 
+2017-11-30 10:04:10.439 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 0 for round 71 : MyVal0-71 
+2017-11-30 10:04:10.439 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:10.439 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 71 : MyVal0-71 
+2017-11-30 10:04:10.440 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 1 
+2017-11-30 10:04:10.872 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":1}" from node 1 
+2017-11-30 10:04:10.872 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":2}" from node 2 
+2017-11-30 10:04:10.872 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":0}" from node 0 
+2017-11-30 10:04:10.872 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":1} from node 1 
+2017-11-30 10:04:10.873 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":0} from node 0 
+2017-11-30 10:04:10.873 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":2} from node 2 
+2017-11-30 10:04:10.873 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":0} 
+2017-11-30 10:04:10.873 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 72 : MyVal0-72 
+2017-11-30 10:04:10.873 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":1} 
+2017-11-30 10:04:10.873 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-72","number":72,"id":2} 
+2017-11-30 10:04:10.876 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 3 
+2017-11-30 10:04:10.876 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 72 : MyVal0-72 
+2017-11-30 10:04:10.876 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:10.876 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 72 : MyVal0-72 
+2017-11-30 10:04:10.876 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:11.341 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":0}" from node 0 
+2017-11-30 10:04:11.341 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":2}" from node 2 
+2017-11-30 10:04:11.342 FINEST ::: paxos.network.NetworkNode receiveMessage ::: Received message "{"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":1}" from node 1 
+2017-11-30 10:04:11.342 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":0} from node 0 
+2017-11-30 10:04:11.342 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":2} from node 2 
+2017-11-30 10:04:11.342 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":0} 
+2017-11-30 10:04:11.342 INFO ::: paxos.paxos.PaxosNode receiveChosenValue ::: Received new chosen value from node 0 for round 73 : MyVal0-73 
+2017-11-30 10:04:11.342 FINEST ::: paxos.application.AbstractApp listenerLoop ::: Received string {"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":1} from node 1 
+2017-11-30 10:04:11.342 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":2} 
+2017-11-30 10:04:11.343 FINEST ::: paxos.paxos.PaxosNode processMessage ::: Processing message {"type":"CHOSEN_VALUE","value":"MyVal0-73","number":73,"id":1} 
+2017-11-30 10:04:11.344 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 2 
+2017-11-30 10:04:11.345 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 1 for round 73 : MyVal0-73 
+2017-11-30 10:04:11.345 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
+2017-11-30 10:04:11.345 FINE ::: paxos.paxos.PaxosNode receiveChosenValue ::: Chosen value confirmed from node 2 for round 73 : MyVal0-73 
+2017-11-30 10:04:11.345 FINEST ::: paxos.paxos.PaxosNode receiveChosenValue ::: Elapsed time = 0 
