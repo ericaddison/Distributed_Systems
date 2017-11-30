@@ -538,6 +538,11 @@ public class PaxosNode{
 			return state.chosenValues.get(round);
 		return null;
 	}
+
+
+	public String getLatestChosenValue() {
+		return getChosenValueForRound(state.currentRound-1);
+	}
 	
 	
 }

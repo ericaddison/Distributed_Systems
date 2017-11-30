@@ -36,7 +36,7 @@ public class PretendApp extends AbstractApp{
 					initiate_paxos("MyVal" + getId() + "-" + round);
 					
 					String chosenValue = null;
-					while( (chosenValue = getPaxnode().getChosenValueForRound(round)) == null){
+					while( (chosenValue = getPaxnode().getLatestChosenValue()) == null){
 						Thread.sleep(1);
 					}
 					long t2 = System.currentTimeMillis();

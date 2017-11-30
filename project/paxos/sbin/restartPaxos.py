@@ -3,9 +3,10 @@
 
 import sys
 import subprocess
-from os.path import isfile
+from os.path import isfile, dirname, realpath
 import time
 import json
+mydir = dirname(realpath(__file__))
 
 # check args
 if len(sys.argv) != 3:
@@ -25,7 +26,7 @@ node_id = state['id']
 # launch processes
 pids = []
 print("Restarting Paxos node {0}".format(node_id))
-pid = subprocess.Popen(['sbin/runPaxos.sh', str(node_id), str(nodefile), str(statefile)]).pid
+pid = subprocess.Popen(['{0}/runPaxos.sh'.format(mydir), str(node_id), str(nodefile), str(statefile)]).pid
 pids.append(pid)
 
 pidsbase = 'pids_restarted{}_'.format(node_id)
