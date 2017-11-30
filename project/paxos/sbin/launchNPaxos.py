@@ -3,8 +3,9 @@
 
 import sys
 import subprocess
-from os.path import isfile
+from os.path import isfile, dirname, realpath
 import time
+mydir = dirname(realpath(__file__))
 
 # get number of nodes to create
 if len(sys.argv) != 2:
@@ -25,7 +26,7 @@ with open(nodefile, 'r') as f:
 pids = []
 for node_id in range(nprocs):
 	print("Launching Paxos app {0}".format(node_id))
-	pid = subprocess.Popen(['sbin/runPaxos.sh', str(node_id), str(nodefile)]).pid
+	pid = subprocess.Popen(['{0}/runPaxos.sh'.format(mydir), str(node_id), str(nodefile)]).pid
 	pids.append(pid)
 	time.sleep(0.5)
 

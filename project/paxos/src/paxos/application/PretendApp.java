@@ -25,7 +25,7 @@ public class PretendApp extends AbstractApp{
 		
 		// start a Paxos round every 2 seconds, N times
 		
-		int N = 10;
+		int N = 100;
 		for(int round=0; round<N; round++){
 			try {
 				if(getPaxnode().isDistinguishedProposer()){
@@ -40,6 +40,8 @@ public class PretendApp extends AbstractApp{
 					long t2 = System.currentTimeMillis();
 					getLog().info("Chosen value for round " + (round+1) + " : " + chosenValue);
 					getLog().info("Elapsed time for round " + (round+1) + " : " + (t2-t1) + " ms");
+					
+					Thread.sleep(100);
 				}
 			
 			} catch (InterruptedException e) {
