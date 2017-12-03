@@ -1,3 +1,13 @@
+# Weighted Paxos
+
+This is an implementation of weighted Paxos, done as a final project for Distributed Systems at UT Austin, Fall 2017. 
+
+## Building
+This project has an `ant` build file. With `ant` installed, simply running the command `ant` should build the project and create the jar file.
+
+## Running
+There are several scripts for convenience. The list of commands below show how to perform some of the basic tasks. In addition, there are several directories under `./demo/` that have simple `run.sh` scripts which will launch a Paxos system automatically.
+
 ## Common useful commands
 
 
